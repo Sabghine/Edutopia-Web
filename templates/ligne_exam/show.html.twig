@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LigneExam{% endblock %}
+
+{% block body %}
+    <h1>LigneExam</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idligne</th>
+                <td>{{ ligne_exam.idligne }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ ligne_exam.note }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ligne_exam_index') }}">back to list</a>
+
+    <a href="{{ path('ligne_exam_edit', {'idligne': ligne_exam.idligne}) }}">edit</a>
+
+    {{ include('ligne_exam/_delete_form.html.twig') }}
+{% endblock %}

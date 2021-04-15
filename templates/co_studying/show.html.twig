@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CoStudying{% endblock %}
+
+{% block body %}
+    <h1>CoStudying</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ co_studying.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ co_studying.description }}</td>
+            </tr>
+            <tr>
+                <th>File</th>
+                <td>{{ co_studying.file }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ co_studying.type }}</td>
+            </tr>
+            <tr>
+                <th>Niveau</th>
+                <td>{{ co_studying.niveau }}</td>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <td>{{ co_studying.rating }}</td>
+            </tr>
+            <tr>
+                <th>CreatedDate</th>
+                <td>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LastUpdatedDate</th>
+                <td>{{ co_studying.lastUpdatedDate ? co_studying.lastUpdatedDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ArchivedDate</th>
+                <td>{{ co_studying.archivedDate ? co_studying.archivedDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('co_studying_index') }}">back to list</a>
+
+    <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">edit</a>
+
+    {{ include('co_studying/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Complaint{% endblock %}
+
+{% block body %}
+    <h1>Complaint</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ complaint.id }}</td>
+            </tr>
+            <tr>
+                <th>Object</th>
+                <td>{{ complaint.object }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ complaint.description }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ complaint.status }}</td>
+            </tr>
+            <tr>
+                <th>CreatedDate</th>
+                <td>{{ complaint.createdDate ? complaint.createdDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedDate</th>
+                <td>{{ complaint.updatedDate ? complaint.updatedDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ArchivedDate</th>
+                <td>{{ complaint.archivedDate ? complaint.archivedDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('complaint_index') }}">back to list</a>
+
+    <a href="{{ path('complaint_edit', {'id': complaint.id}) }}">edit</a>
+
+    {{ include('complaint/_delete_form.html.twig') }}
+{% endblock %}

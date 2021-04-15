@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question index{% endblock %}
+
+{% block body %}
+    <h1>Question index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Question</th>
+                <th>Proposition1</th>
+                <th>Proposition2</th>
+                <th>Proposition3</th>
+                <th>Proposition4</th>
+                <th>ArchivedDate</th>
+                <th>Bonnereponse</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.question }}</td>
+                <td>{{ question.proposition1 }}</td>
+                <td>{{ question.proposition2 }}</td>
+                <td>{{ question.proposition3 }}</td>
+                <td>{{ question.proposition4 }}</td>
+                <td>{{ question.archivedDate ? question.archivedDate|date('Y-m-d') : '' }}</td>
+                <td>{{ question.bonnereponse }}</td>
+                <td>
+                    <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
+                    <a href="{{ path('question_edit', {'id': question.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('question_new') }}">Create new</a>
+{% endblock %}

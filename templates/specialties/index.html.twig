@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Specialties index{% endblock %}
+
+{% block body %}
+    <h1>Specialties index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Lastname</th>
+                <th>Specialty</th>
+                <th>Niveau</th>
+                <th>CreatedDate</th>
+                <th>UpdateDate</th>
+                <th>ArchivedDate</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for specialty in specialties %}
+            <tr>
+                <td>{{ specialty.id }}</td>
+                <td>{{ specialty.name }}</td>
+                <td>{{ specialty.lastname }}</td>
+                <td>{{ specialty.specialty }}</td>
+                <td>{{ specialty.niveau }}</td>
+                <td>{{ specialty.createdDate ? specialty.createdDate|date('Y-m-d') : '' }}</td>
+                <td>{{ specialty.updateDate ? specialty.updateDate|date('Y-m-d') : '' }}</td>
+                <td>{{ specialty.archivedDate ? specialty.archivedDate|date('Y-m-d') : '' }}</td>
+                <td>{{ specialty.status }}</td>
+                <td>
+                    <a href="{{ path('specialties_show', {'id': specialty.id}) }}">show</a>
+                    <a href="{{ path('specialties_edit', {'id': specialty.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('specialties_new') }}">Create new</a>
+{% endblock %}

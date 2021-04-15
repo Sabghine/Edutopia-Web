@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Costudyingtype index{% endblock %}
+
+{% block body %}
+    <h1>Costudyingtype index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for costudyingtype in costudyingtypes %}
+            <tr>
+                <td>{{ costudyingtype.id }}</td>
+                <td>{{ costudyingtype.name }}</td>
+                <td>
+                    <a href="{{ path('costudyingtype_show', {'id': costudyingtype.id}) }}">show</a>
+                    <a href="{{ path('costudyingtype_edit', {'id': costudyingtype.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('costudyingtype_new') }}">Create new</a>
+{% endblock %}

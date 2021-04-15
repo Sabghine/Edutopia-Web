@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classe index{% endblock %}
+
+{% block body %}
+    <h1>Classe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>ClasseSize</th>
+                <th>CreatedDate</th>
+                <th>LastUpdateDate</th>
+                <th>ArchivedDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for classe in classes %}
+            <tr>
+                <td>{{ classe.id }}</td>
+                <td>{{ classe.name }}</td>
+                <td>{{ classe.classeSize }}</td>
+                <td>{{ classe.createdDate ? classe.createdDate|date('Y-m-d') : '' }}</td>
+                <td>{{ classe.lastUpdateDate ? classe.lastUpdateDate|date('Y-m-d') : '' }}</td>
+                <td>{{ classe.archivedDate ? classe.archivedDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('classe_show', {'id': classe.id}) }}">show</a>
+                    <a href="{{ path('classe_edit', {'id': classe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('classe_new') }}">Create new</a>
+{% endblock %}

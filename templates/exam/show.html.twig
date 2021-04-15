@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exam{% endblock %}
+
+{% block body %}
+    <h1>Exam</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdExam</th>
+                <td>{{ exam.idExam }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ exam.type }}</td>
+            </tr>
+            <tr>
+                <th>StartDate</th>
+                <td>{{ exam.startDate ? exam.startDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FinishDate</th>
+                <td>{{ exam.finishDate ? exam.finishDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedDate</th>
+                <td>{{ exam.createdDate ? exam.createdDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ArchivedDate</th>
+                <td>{{ exam.archivedDate ? exam.archivedDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('exam_index') }}">back to list</a>
+
+    <a href="{{ path('exam_edit', {'idExam': exam.idExam}) }}">edit</a>
+
+    {{ include('exam/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit WorkDone{% endblock %}
+
+{% block body %}
+    <h1>Edit WorkDone</h1>
+
+    {{ include('work_done/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('work_done_index') }}">back to list</a>
+
+    {{ include('work_done/_delete_form.html.twig') }}
+{% endblock %}

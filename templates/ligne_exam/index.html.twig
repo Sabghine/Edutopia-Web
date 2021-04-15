@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LigneExam index{% endblock %}
+
+{% block body %}
+    <h1>LigneExam index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idligne</th>
+                <th>Note</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ligne_exam in ligne_exams %}
+            <tr>
+                <td>{{ ligne_exam.idligne }}</td>
+                <td>{{ ligne_exam.note }}</td>
+                <td>
+                    <a href="{{ path('ligne_exam_show', {'idligne': ligne_exam.idligne}) }}">show</a>
+                    <a href="{{ path('ligne_exam_edit', {'idligne': ligne_exam.idligne}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ligne_exam_new') }}">Create new</a>
+{% endblock %}

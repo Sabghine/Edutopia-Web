@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Costudyingtype{% endblock %}
+
+{% block body %}
+    <h1>Edit Costudyingtype</h1>
+
+    {{ include('costudyingtype/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('costudyingtype_index') }}">back to list</a>
+
+    {{ include('costudyingtype/_delete_form.html.twig') }}
+{% endblock %}

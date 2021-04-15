@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+<title> {% block title %}CoStudying List{% endblock %}</title>
+
+{% block body %}
+    <h1>CoStudying index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>File</th>
+                <th>Type</th>
+                <th>Niveau</th>
+                <th>Rating</th>
+                <th>CreatedDate</th>
+                <th>LastUpdatedDate</th>
+                <th>ArchivedDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for co_studying in co_studyings %}
+            <tr>
+                <td>{{ co_studying.id }}</td>
+                <td>{{ co_studying.description }}</td>
+                <td>{{ co_studying.file }}</td>
+                <td>{{ co_studying.type }}</td>
+                <td>{{ co_studying.niveau }}</td>
+                <td>{{ co_studying.rating }}</td>
+                <td>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</td>
+                <td>{{ co_studying.lastUpdatedDate ? co_studying.lastUpdatedDate|date('Y-m-d') : '' }}</td>
+                <td>{{ co_studying.archivedDate ? co_studying.archivedDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('co_studying_show', {'id': co_studying.id}) }}">show</a>
+                    <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <body></body>
+
+    <a href="{{ path('co_studying_new') }}">Create new</a>
+{% endblock %}
