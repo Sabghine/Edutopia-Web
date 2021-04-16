@@ -7,10 +7,7 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ course.id }}</td>
-            </tr>
+
             <tr>
                 <th>Name</th>
                 <td>{{ course.name }}</td>
@@ -19,14 +16,8 @@
                 <th>CourseFile</th>
                 <td>{{ course.courseFile }}</td>
             </tr>
-            <tr>
-                <th>CreatedDate</th>
-                <td>{{ course.createdDate ? course.createdDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ArchivedDate</th>
-                <td>{{ course.archivedDate ? course.archivedDate|date('Y-m-d') : '' }}</td>
-            </tr>
+
+
             <tr>
                 <th>Description</th>
                 <td>{{ course.description }}</td>

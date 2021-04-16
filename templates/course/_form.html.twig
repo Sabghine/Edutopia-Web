@@ -1,4 +1,32 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<table class="table table-striped">
+    {{ form_start(form) }}
+    <tr>
+        <td>{{ form_label(form.name)  }}</td>
+        <td>{{ form_widget(form.name,{ 'attr': {'class': 'form-control '}})  }}</td>
+    </tr>
+
+    <tr>
+        <td>{{ form_label(form.courseFile)  }}</td>
+        <td>{{ form_widget(form.courseFile,{ 'attr': {'class': 'form-control'}})  }}</td>
+    </tr>
+
+
+
+
+    <tr>
+        <td>{{ form_label(form.description)  }}</td>
+        <td>{{ form_widget(form.description)  }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_label(form.createdBy)  }}</td>
+        <td>{{ form_widget(form.createdBy,{ 'attr': {'class': 'form-control'}})  }}</td>
+    </tr>
+
+
+    <tr>
+
+        <td> <button class="btn btn-success" id="btt">{{ button_label|default('Save') }}</button></td>
+        <td></td>
+    </tr>
+    {{ form_end(form)  }}
+</table>

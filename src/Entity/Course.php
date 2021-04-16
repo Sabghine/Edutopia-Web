@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Course
@@ -22,16 +25,18 @@ class Course
     private $id;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $name;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="course_file", type="string", length=255, nullable=true)
+     * @ORM\Column(name="course_file", type="string", length=255, nullable=false)
+     * @Assert\NotBlank
      */
     private $courseFile;
 
@@ -50,9 +55,10 @@ class Course
     private $archivedDate;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="Description", type="string", length=50, nullable=true)
+     * @ORM\Column(name="Description", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $description;
 
@@ -168,6 +174,11 @@ class Course
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function __construct()
+    {
+        $this->createdDate = new \DateTime();
     }
 
 

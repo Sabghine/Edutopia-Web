@@ -5,12 +5,8 @@
 {% block body %}
     <h1>Exam</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>IdExam</th>
-                <td>{{ exam.idExam }}</td>
-            </tr>
+    <table border="1" class="table table-striped table-bordered dataTable" role="grid" aria-describedby="zero_config_info" id="zero_config">
+    <tbody>
             <tr>
                 <th>Type</th>
                 <td>{{ exam.type }}</td>
@@ -23,14 +19,8 @@
                 <th>FinishDate</th>
                 <td>{{ exam.finishDate ? exam.finishDate|date('Y-m-d') : '' }}</td>
             </tr>
-            <tr>
-                <th>CreatedDate</th>
-                <td>{{ exam.createdDate ? exam.createdDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ArchivedDate</th>
-                <td>{{ exam.archivedDate ? exam.archivedDate|date('Y-m-d') : '' }}</td>
-            </tr>
+
+
         </tbody>
     </table>
 

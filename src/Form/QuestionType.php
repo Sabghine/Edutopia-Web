@@ -17,9 +17,9 @@ class QuestionType extends AbstractType
             ->add('proposition2')
             ->add('proposition3')
             ->add('proposition4')
-            ->add('archivedDate')
+            //->add('archivedDate')
             ->add('bonnereponse')
-            ->add('idExam')
+            //->add('idExam')
         ;
     }
 
