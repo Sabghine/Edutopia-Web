@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Seance
@@ -25,6 +28,8 @@ class Seance
      * @var int
      *
      * @ORM\Column(name="duree", type="integer", nullable=false)
+     * @Assert\LessThanOrEqual(4)
+     * @Assert\GreaterThanOrEqual(1)
      */
     private $duree;
 
@@ -32,6 +37,7 @@ class Seance
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date", nullable=false)
+
      */
     private $date;
 
@@ -39,6 +45,7 @@ class Seance
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=100, nullable=false)
+     * @Assert\Length(min=3,max=15,minMessage="Doit contenir au min 3 caracteres")
      */
     private $url;
 
@@ -46,6 +53,7 @@ class Seance
      * @var string
      *
      * @ORM\Column(name="matiere", type="string", length=100, nullable=false)
+
      */
     private $matiere;
 

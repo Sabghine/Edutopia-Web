@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Classe
@@ -24,7 +26,8 @@ class Classe
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     * @Assert\Length(min=3,max=4,minMessage="Doit contenir au min 3 caracteres")
      */
     private $name;
 
@@ -32,6 +35,8 @@ class Classe
      * @var int
      *
      * @ORM\Column(name="classe_size", type="integer", nullable=false)
+     * @Assert\LessThanOrEqual(30)
+     * @Assert\GreaterThanOrEqual(20)
      */
     private $classeSize;
 
@@ -39,6 +44,7 @@ class Classe
      * @var \DateTime|null
      *
      * @ORM\Column(name="created_date", type="date", nullable=true)
+
      */
     private $createdDate;
 
@@ -186,6 +192,11 @@ class Classe
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 
 
 }

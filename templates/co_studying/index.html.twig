@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-<title> {% block title %}CoStudying List{% endblock %}</title>
+{% block title %}CoStudying index{% endblock %}
 
 {% block body %}
     <h1>CoStudying index</h1>
@@ -44,7 +44,6 @@
         {% endfor %}
         </tbody>
     </table>
-    <body></body>
 
     <a href="{{ path('co_studying_new') }}">Create new</a>
 {% endblock %}

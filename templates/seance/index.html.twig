@@ -1,7 +1,7 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
 {% block title %}Seance index{% endblock %}
-
+{% block content %}
 {% block body %}
     <h1>Seance index</h1>
 
@@ -38,4 +38,5 @@
     </table>
 
     <a href="{{ path('seance_new') }}">Create new</a>
+{% endblock %}
 {% endblock %}

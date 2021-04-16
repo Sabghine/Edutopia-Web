@@ -15,7 +15,12 @@ class ComplaintType extends AbstractType
             ->add('object')
             ->add('description')
             ->add('status')
-
+            ->add('createdDate')
+            ->add('updatedDate')
+            ->add('archivedDate')
+            ->add('createdBy')
+            ->add('updatedBy')
+            ->add('archivedBy')
         ;
     }
 
