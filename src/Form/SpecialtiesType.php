@@ -24,6 +24,7 @@ class SpecialtiesType extends AbstractType
             ->add('archivedBy')
             ->add('updateBy')
             ->add('idteacher')
+            ->add('idDep')
         ;
     }
 

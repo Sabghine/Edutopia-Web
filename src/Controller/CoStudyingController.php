@@ -67,7 +67,7 @@ class CoStudyingController extends AbstractController
             $entityManager->persist($coStudying);
             $entityManager->flush();
 
-            return $this->redirectToRoute('co_studying_index');
+            return $this->redirectToRoute('co_studying_new');
         }
 
         return $this->render('co_studying/new.html.twig', [
@@ -89,12 +89,36 @@ class CoStudyingController extends AbstractController
     /**
      * @Route("/{id}/edit", name="co_studying_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, CoStudying $coStudying): Response
+    public function edit(Request $request, CoStudying $coStudying, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(CoStudyingType::class, $coStudying);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $brochureFile */
+            $brochureFile = $form->get('file')->getData();
+            // this condition is needed because the 'file' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $coStudying->setFile($newFilename);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('co_studying_index');

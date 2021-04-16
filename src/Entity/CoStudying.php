@@ -38,7 +38,7 @@ class CoStudying
      * @var string|null
      *
      * @ORM\Column(name="file", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Import a file please")
+     * @Assert\NotBlank (message="Import a file please")
      */
     private $file;
 
@@ -46,7 +46,6 @@ class CoStudying
      * @var string
      *
      * @ORM\Column(name="niveau", type="string", length=20, nullable=false)
-     * @Assert\NotBlank(message="Level field is required")
      */
     private $niveau;
 
@@ -55,6 +54,8 @@ class CoStudying
      *
      * @ORM\Column(name="rating", type="integer", nullable=true)
      * @Assert\NotBlank(message="Rating field is required")
+     * @Assert\Positive
+     * @Assert\LessThanOrEqual(5)
      */
     private $rating;
 
@@ -62,6 +63,7 @@ class CoStudying
      * @var \DateTime|null
      *
      * @ORM\Column(name="created_date", type="date", nullable=true)
+
      */
     private $createdDate;
 

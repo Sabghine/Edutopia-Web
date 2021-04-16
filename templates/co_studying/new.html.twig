@@ -1,11 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}New CoStudying{% endblock %}
+{% block title %}Nouveau contenu Co-Studying{% endblock %}
+{% block content %}
+    {% block body %}
+        <h1>Creation du contenu</h1>
+        <table class="table" align="center" style="text-align:center;">
+            <tbody>
 
-{% block body %}
-    <h1>Create new CoStudying</h1>
+            <tr>
+                <th>{{ form_start(form) }}
+                    {{ form_label (form.description, "Description:") }}
+                    {{ form_widget(form.description,{'attr':{'placeholder' : ' Description'}} ) }}
+                </th>
+                <td>
+                    {{ form_errors (form.description) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.type, "Type de contenu:") }}
+                    {{ form_widget(form.type,{'attr':{'placeholder' : ' Type '}} ) }}
+                </th>
+                <td>
+                    {{ form_errors (form.type) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.type, "Fichier:") }}
+                    {{ form_widget(form.file,{'attr':{'placeholder' : ' File '}} ) }}
+                </th>
+                <td>
+                    {{ form_errors (form.file) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.niveau, "Niveau:") }}
+                    {{ form_widget(form.niveau,{'attr':{'placeholder' : ' Niveau pédagogique '}} ) }}
 
-    {{ include('co_studying/_form.html.twig') }}
+                </th>
+                <td>
+                    {{ form_errors (form.niveau) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.rating, "Rating:") }}
+                    {{ form_widget(form.rating,{'attr':{'placeholder' : 'Default rating'}} ) }}
+                </th>
+                <td>
+                    {{ form_errors (form.rating) }}
+                </td>
+            </tr>
 
-    <a href="{{ path('co_studying_index') }}">back to list</a>
+            </tbody>
+        </table>
+
+
+
+        {{ include('co_studying/_form.html.twig') }}
+
+    {% endblock %}
 {% endblock %}
+

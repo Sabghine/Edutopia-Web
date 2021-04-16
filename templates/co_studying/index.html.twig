@@ -1,29 +1,26 @@
 {% extends 'base.html.twig' %}
 
-<title> {% block title %}CoStudying List{% endblock %}</title>
-
+{% block title %}CoStudying List{% endblock %}
+{% block content %}
 {% block body %}
-    <h1>CoStudying index</h1>
+    <h1>Contenu Co-Studying : Admin</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Description</th>
-                <th>File</th>
+                <th>Nom de fichiers</th>
                 <th>Type</th>
                 <th>Niveau</th>
                 <th>Rating</th>
-                <th>CreatedDate</th>
-                <th>LastUpdatedDate</th>
-                <th>ArchivedDate</th>
-                <th>actions</th>
+                <th style="width:13%">Date de création</th>
+                <th style="width:20%">Date de dernière mise à jour</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for co_studying in co_studyings %}
             <tr>
-                <td>{{ co_studying.id }}</td>
                 <td>{{ co_studying.description }}</td>
                 <td>{{ co_studying.file }}</td>
                 <td>{{ co_studying.type }}</td>
@@ -31,10 +28,9 @@
                 <td>{{ co_studying.rating }}</td>
                 <td>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</td>
                 <td>{{ co_studying.lastUpdatedDate ? co_studying.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ co_studying.archivedDate ? co_studying.archivedDate|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('co_studying_show', {'id': co_studying.id}) }}">show</a>
-                    <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">edit</a>
+                    <a href="{{ path('co_studying_show', {'id': co_studying.id}) }}">Consulter</a>
+                    <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -46,5 +42,6 @@
     </table>
     <body></body>
 
-    <a href="{{ path('co_studying_new') }}">Create new</a>
+    {# <a href="{{ path('co_studying_new') }}">Create new</a> #}
+{% endblock %}
 {% endblock %}
