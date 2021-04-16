@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Department{% endblock %}
-
+{% block content %}
 {% block body %}
     <h1>Department</h1>
 
@@ -17,9 +17,9 @@
             </tr>
             <tr>
                 <th>Ownername</th>
-                <td>{{ department.ownername }}</td>
+                <td>{{ department.ownerid }}</td>
             </tr>
-            <tr>
+            <!--<tr>
                 <th>Ownerlastname</th>
                 <td>{{ department.ownerlastname }}</td>
             </tr>
@@ -38,7 +38,7 @@
             <tr>
                 <th>Status</th>
                 <td>{{ department.status }}</td>
-            </tr>
+            </tr>-->
             <tr>
                 <th>Specialties</th>
                 <td>{{ department.specialties }}</td>
@@ -51,4 +51,5 @@
     <a href="{{ path('department_edit', {'id': department.id}) }}">edit</a>
 
     {{ include('department/_delete_form.html.twig') }}
+{% endblock %}
 {% endblock %}

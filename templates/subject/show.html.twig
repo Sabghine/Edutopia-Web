@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Subject{% endblock %}
-
+{% block content %}
 {% block body %}
     <h1>Subject</h1>
 
@@ -12,18 +12,22 @@
                 <td>{{ subject.id }}</td>
             </tr>
             <tr>
-                <th>IdSubject</th>
+                <th>Nom Matière</th>
                 <td>{{ subject.idSubject }}</td>
             </tr>
-            <tr>
+            <!--<tr>
                 <th>Courses</th>
                 <td>{{ subject.courses }}</td>
-            </tr>
+            </tr>-->
             <tr>
-                <th>IdClass</th>
+                <th>Classe</th>
                 <td>{{ subject.idClass }}</td>
             </tr>
             <tr>
+                <th>Enseignant</th>
+                <td>{{ subject.idTeacher }}</td>
+            </tr>
+            <!--<tr>
                 <th>CreatedDate</th>
                 <td>{{ subject.createdDate ? subject.createdDate|date('Y-m-d') : '' }}</td>
             </tr>
@@ -38,7 +42,7 @@
             <tr>
                 <th>Status</th>
                 <td>{{ subject.status }}</td>
-            </tr>
+            </tr>-->
         </tbody>
     </table>
 
@@ -47,4 +51,5 @@
     <a href="{{ path('subject_edit', {'id': subject.id}) }}">edit</a>
 
     {{ include('subject/_delete_form.html.twig') }}
+{% endblock %}
 {% endblock %}

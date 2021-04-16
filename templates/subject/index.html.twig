@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Subject index{% endblock %}
-
+{% block content %}
 {% block body %}
     <h1>Subject index</h1>
 
@@ -9,13 +9,13 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>IdSubject</th>
-                <th>Courses</th>
-                <th>IdClass</th>
-                <th>CreatedDate</th>
+                <th>Nom Matiere</th>
+                <th>Enseignant</th>
+                <th>Classe</th>
+                <!--<th>CreatedDate</th>
                 <th>UpdateDate</th>
                 <th>ArchivedDate</th>
-                <th>Status</th>
+                <th>Status</th>-->
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,12 +24,14 @@
             <tr>
                 <td>{{ subject.id }}</td>
                 <td>{{ subject.idSubject }}</td>
-                <td>{{ subject.courses }}</td>
+                <!--<td>{{ subject.courses }}</td>-->
+                <td> {{ subject.idTeacher }}</td>
                 <td>{{ subject.idClass }}</td>
-                <td>{{ subject.createdDate ? subject.createdDate|date('Y-m-d') : '' }}</td>
+
+                <!--<td>{{ subject.createdDate ? subject.createdDate|date('Y-m-d') : '' }}</td>
                 <td>{{ subject.updateDate ? subject.updateDate|date('Y-m-d') : '' }}</td>
                 <td>{{ subject.archivedDate ? subject.archivedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ subject.status }}</td>
+                <td>{{ subject.status }}</td>-->
                 <td>
                     <a href="{{ path('subject_show', {'id': subject.id}) }}">show</a>
                     <a href="{{ path('subject_edit', {'id': subject.id}) }}">edit</a>
@@ -44,4 +46,5 @@
     </table>
 
     <a href="{{ path('subject_new') }}">Create new</a>
+{% endblock %}
 {% endblock %}

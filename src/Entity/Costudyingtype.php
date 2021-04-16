@@ -2,27 +2,29 @@
 
 namespace App\Entity;
 
-use App\Repository\CostudyingtypeRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=CostudyingtypeRepository::class)
+ * Costudyingtype
+ *
  * @ORM\Table(name="costudyingtype", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
- * @UniqueEntity(fields={"name"} , message="Type already exists")
+ * @ORM\Entity
  */
 class Costudyingtype
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
@@ -43,8 +45,5 @@ class Costudyingtype
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->name;
-    }
+
 }

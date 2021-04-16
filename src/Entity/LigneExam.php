@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LigneExam
  *
- * @ORM\Table(name="ligne_exam", indexes={@ORM\Index(name="idexam", columns={"idexam"}), @ORM\Index(name="iduser", columns={"iduser"})})
- * @ORM\Entity(repositoryClass="App\Repository\LigneExamRepository")
+ * @ORM\Table(name="ligne_exam", indexes={@ORM\Index(name="iduser", columns={"iduser"}), @ORM\Index(name="idexam", columns={"idexam"})})
+ * @ORM\Entity
  */
 class LigneExam
 {
@@ -29,18 +29,6 @@ class LigneExam
     private $note;
 
     /**
-     * @var \Exam
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Exam")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idexam", referencedColumnName="id_Exam")
-     * })
-     */
-    private $idexam;
-
-    /**
      * @var \User
      *
      * @ORM\Id
@@ -51,6 +39,18 @@ class LigneExam
      * })
      */
     private $iduser;
+
+    /**
+     * @var \Exam
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Exam")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idexam", referencedColumnName="id_Exam")
+     * })
+     */
+    private $idexam;
 
     public function getIdligne(): ?int
     {
@@ -69,18 +69,6 @@ class LigneExam
         return $this;
     }
 
-    public function getIdexam(): ?Exam
-    {
-        return $this->idexam;
-    }
-
-    public function setIdexam(?Exam $idexam): self
-    {
-        $this->idexam = $idexam;
-
-        return $this;
-    }
-
     public function getIduser(): ?User
     {
         return $this->iduser;
@@ -89,6 +77,18 @@ class LigneExam
     public function setIduser(?User $iduser): self
     {
         $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    public function getIdexam(): ?Exam
+    {
+        return $this->idexam;
+    }
+
+    public function setIdexam(?Exam $idexam): self
+    {
+        $this->idexam = $idexam;
 
         return $this;
     }

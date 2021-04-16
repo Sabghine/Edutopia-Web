@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Activity
  *
- * @ORM\Table(name="activity", indexes={@ORM\Index(name="updated_by_act", columns={"last_updated_by"}), @ORM\Index(name="id_course", columns={"id_course"}), @ORM\Index(name="created_by_act", columns={"created_by"}), @ORM\Index(name="archived_by_act", columns={"archived_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
+ * @ORM\Table(name="activity", indexes={@ORM\Index(name="archived_by_act", columns={"archived_by"}), @ORM\Index(name="id_course", columns={"id_course"}), @ORM\Index(name="created_by_act", columns={"created_by"}), @ORM\Index(name="updated_by_act", columns={"last_updated_by"})})
+ * @ORM\Entity
  */
 class Activity
 {

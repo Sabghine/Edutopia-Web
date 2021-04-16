@@ -1,4 +1,12 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_start(form, {'attr': {'novalidate':'novalidate'}}) }}
+    {{ form_label(form.name,"département :") }}
+    {{ form_widget(form.name, {'attr': {'placeholder' : 'departement'}}) }}
+    {{ form_errors(form.name) }} <html><br></html>
+    {{ form_label(form.specialties,"Les spécialités :") }}
+    {{ form_widget(form.specialties, {'attr': {'placeholder' : 'specialités'}}) }}
+    {{ form_errors(form.specialties) }} <html><br></html>
+    {{ form_label(form.ownerid,"Chef département:") }}
+    {{ form_widget(form.ownerid, {'attr': {'placeholder' : 'Chef département'}}) }}
+    {{ form_errors(form.ownerid) }} <html><br></html>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

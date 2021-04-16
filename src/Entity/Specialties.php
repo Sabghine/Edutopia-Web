@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Specialties
  *
- * @ORM\Table(name="specialties", indexes={@ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="idTeacher", columns={"idTeacher"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="update_by", columns={"update_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\SpecialitiesRepository")
+ * @ORM\Table(name="specialties", indexes={@ORM\Index(name="update_by", columns={"update_by"}), @ORM\Index(name="idTeacher", columns={"idTeacher"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="IDX_410754B066B4BC6A", columns={"id_dep"}), @ORM\Index(name="archived_by", columns={"archived_by"})})
+ * @ORM\Entity
  */
 class Specialties
 {
@@ -39,6 +40,8 @@ class Specialties
      * @var string
      *
      * @ORM\Column(name="specialty", type="string", length=3000, nullable=false)
+     * @Assert\NotBlank(message="Vous devez donnez un nom de specialité")
+     * @Assert\Length(min=3,minMessage="Doit contenir au min 3 caracteres")
      */
     private $specialty;
 
@@ -46,6 +49,8 @@ class Specialties
      * @var string
      *
      * @ORM\Column(name="niveau", type="string", length=3000, nullable=false)
+     * @Assert\NotBlank(message="Vous devez donnez un niveau... par exemple:1ére,2éme")
+     * @Assert\Length(min=4,minMessage="Au moins 4 caractères")
      */
     private $niveau;
 
@@ -82,16 +87,6 @@ class Specialties
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
-     * })
-     */
-    private $createdBy;
-
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="archived_by", referencedColumnName="id")
      * })
      */
@@ -114,8 +109,30 @@ class Specialties
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idTeacher", referencedColumnName="id")
      * })
+     * @Assert\NotBlank(message="Vous devez choisir un enseignant")
      */
     private $idteacher;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * })
+     */
+    private $createdBy;
+
+    /**
+     * @var \Department
+     *
+     * @ORM\ManyToOne(targetEntity="Department")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_dep", referencedColumnName="id")
+     * })
+     * @Assert\NotBlank(message="vous devez choisir un département")
+     */
+    private $idDep;
 
     public function getId(): ?int
     {
@@ -218,18 +235,6 @@ class Specialties
         return $this;
     }
 
-    public function getCreatedBy(): ?User
-    {
-        return $this->createdBy;
-    }
-
-    public function setCreatedBy(?User $createdBy): self
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
     public function getArchivedBy(): ?User
     {
         return $this->archivedBy;
@@ -262,6 +267,30 @@ class Specialties
     public function setIdteacher(?User $idteacher): self
     {
         $this->idteacher = $idteacher;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getIdDep(): ?Department
+    {
+        return $this->idDep;
+    }
+
+    public function setIdDep(?Department $idDep): self
+    {
+        $this->idDep = $idDep;
 
         return $this;
     }

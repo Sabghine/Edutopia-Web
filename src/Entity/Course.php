@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Course
  *
- * @ORM\Table(name="course", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="id_Subject", columns={"id_Subject"})})
- * @ORM\Entity(repositoryClass="App\Repository\CourseRepository")
+ * @ORM\Table(name="course", indexes={@ORM\Index(name="id_Subject", columns={"id_Subject"}), @ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Entity
  */
 class Course
 {
@@ -163,11 +163,6 @@ class Course
         $this->createdBy = $createdBy;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
     }
 
 

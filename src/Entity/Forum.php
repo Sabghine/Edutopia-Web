@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Forum
  *
- * @ORM\Table(name="forum", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="id_course", columns={"id_course"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\ForumRepository")
+ * @ORM\Table(name="forum", indexes={@ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="id_course", columns={"id_course"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Entity
  */
 class Forum
 {
@@ -57,6 +57,16 @@ class Forum
     private $archivedDate;
 
     /**
+     * @var \Course
+     *
+     * @ORM\ManyToOne(targetEntity="Course")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_course", referencedColumnName="id")
+     * })
+     */
+    private $idCourse;
+
+    /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -85,16 +95,6 @@ class Forum
      * })
      */
     private $lastUpdatedBy;
-
-    /**
-     * @var \Course
-     *
-     * @ORM\ManyToOne(targetEntity="Course")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_course", referencedColumnName="id")
-     * })
-     */
-    private $idCourse;
 
     public function getId(): ?int
     {
@@ -161,6 +161,18 @@ class Forum
         return $this;
     }
 
+    public function getIdCourse(): ?Course
+    {
+        return $this->idCourse;
+    }
+
+    public function setIdCourse(?Course $idCourse): self
+    {
+        $this->idCourse = $idCourse;
+
+        return $this;
+    }
+
     public function getArchivedBy(): ?User
     {
         return $this->archivedBy;
@@ -193,18 +205,6 @@ class Forum
     public function setLastUpdatedBy(?User $lastUpdatedBy): self
     {
         $this->lastUpdatedBy = $lastUpdatedBy;
-
-        return $this;
-    }
-
-    public function getIdCourse(): ?Course
-    {
-        return $this->idCourse;
-    }
-
-    public function setIdCourse(?Course $idCourse): self
-    {
-        $this->idCourse = $idCourse;
 
         return $this;
     }

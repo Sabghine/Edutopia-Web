@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Complaint
  *
- * @ORM\Table(name="complaint", indexes={@ORM\Index(name="updated_by", columns={"updated_by"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="archived_by", columns={"archived_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\ComplaintRepository")
+ * @ORM\Table(name="complaint", indexes={@ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="updated_by", columns={"updated_by"})})
+ * @ORM\Entity
  */
 class Complaint
 {
@@ -68,16 +68,6 @@ class Complaint
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
-     * })
-     */
-    private $createdBy;
-
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
      * })
      */
@@ -92,6 +82,16 @@ class Complaint
      * })
      */
     private $archivedBy;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * })
+     */
+    private $createdBy;
 
     public function getId(): ?int
     {
@@ -170,18 +170,6 @@ class Complaint
         return $this;
     }
 
-    public function getCreatedBy(): ?User
-    {
-        return $this->createdBy;
-    }
-
-    public function setCreatedBy(?User $createdBy): self
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
     public function getUpdatedBy(): ?User
     {
         return $this->updatedBy;
@@ -202,6 +190,18 @@ class Complaint
     public function setArchivedBy(?User $archivedBy): self
     {
         $this->archivedBy = $archivedBy;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

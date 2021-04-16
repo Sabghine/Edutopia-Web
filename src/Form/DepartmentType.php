@@ -13,17 +13,17 @@ class DepartmentType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('ownername')
-            ->add('ownerlastname')
-            ->add('createdDate')
-            ->add('lastUpdatedDate')
-            ->add('archivedDate')
-            ->add('status')
+//            ->add('ownername')
+//            ->add('ownerlastname')
+//           ->add('createdDate')
+//            ->add('lastUpdatedDate')
+//            ->add('archivedDate')
+//            ->add('status')
             ->add('specialties')
             ->add('ownerid')
-            ->add('archivedBy')
-            ->add('createdBy')
-            ->add('lastUpdatedBy')
+//            ->add('archivedBy')
+//            ->add('createdBy')
+//            ->add('lastUpdatedBy')
         ;
     }
 

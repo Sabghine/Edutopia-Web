@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Department index{% endblock %}
-
+{% block content %}
 {% block body %}
     <h1>Department index</h1>
 
@@ -9,13 +9,12 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Ownername</th>
-                <th>Ownerlastname</th>
-                <th>CreatedDate</th>
+                <th>Department</th>
+                <th>owner name </th>
+                <!--<th>CreatedDate</th>
                 <th>LastUpdatedDate</th>
                 <th>ArchivedDate</th>
-                <th>Status</th>
+                <th>Status</th>-->
                 <th>Specialties</th>
                 <th>actions</th>
             </tr>
@@ -25,12 +24,12 @@
             <tr>
                 <td>{{ department.id }}</td>
                 <td>{{ department.name }}</td>
-                <td>{{ department.ownername }}</td>
-                <td>{{ department.ownerlastname }}</td>
+                <td>{{ department.ownerid }}</td>
+                <!--<td>{{ department.ownerlastname }}</td>
                 <td>{{ department.createdDate ? department.createdDate|date('Y-m-d') : '' }}</td>
                 <td>{{ department.lastUpdatedDate ? department.lastUpdatedDate|date('Y-m-d') : '' }}</td>
                 <td>{{ department.archivedDate ? department.archivedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ department.status }}</td>
+                <td>{{ department.status }}</td>-->
                 <td>{{ department.specialties }}</td>
                 <td>
                     <a href="{{ path('department_show', {'id': department.id}) }}">show</a>
@@ -46,4 +45,5 @@
     </table>
 
     <a href="{{ path('department_new') }}">Create new</a>
+{% endblock %}
 {% endblock %}

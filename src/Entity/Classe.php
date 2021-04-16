@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Classe
  *
- * @ORM\Table(name="classe", indexes={@ORM\Index(name="updated_by_classe", columns={"last_update_by"}), @ORM\Index(name="created_by_classe", columns={"created_by"}), @ORM\Index(name="archived_by_classe", columns={"archived_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\ClasseRepository")
+ * @ORM\Table(name="classe", indexes={@ORM\Index(name="archived_by_classe", columns={"archived_by"}), @ORM\Index(name="created_by_classe", columns={"created_by"}), @ORM\Index(name="updated_by_classe", columns={"last_update_by"})})
+ * @ORM\Entity
  */
 class Classe
 {
@@ -185,6 +185,9 @@ class Classe
         $this->lastUpdateBy = $lastUpdateBy;
 
         return $this;
+    }
+    public function __toString() {
+        return $this->name;
     }
 
 
