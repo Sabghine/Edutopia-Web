@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
 {% block title %}Liste activités{% endblock %}
 {% block content %}
@@ -23,9 +23,11 @@
                 <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
                 <td>{{ activity.status }}</td>
                 <td>
-                    <a href="{{ path('activity_show', {'id': activity.id}) }}">Ouvrir</a>
-                    <a href="{{ path('activity_edit', {'id': activity.id}) }}">Modifier</a>
-                    <a href="{{ path('work_done_new' ,{'idActivity': activity.id}) }}">Ajouter un travail </a>
+                    <a href="{{ path('activity_show', {'id': activity.id}) }}">Détails</a>
+                </td>
+                <td><a href="{{ path('activity_edit', {'id': activity.id}) }}">Modifier</a></td>
+                <td>
+                <a href="{{ path('work_done_new' ,{'idActivity': activity.id}) }}">Ajouter un travail </a>
                 </td>
             </tr>
         {% else %}
@@ -35,6 +37,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('activity_new') }}">Ajouter une nouvelle activité</a>
+    <a href="{{ path('activity_new') }}">Ajouter une nouvelle activité</a><br>
+    <a href="{{ path('forum_index') }}">Liste des forums</a>
 {% endblock %}
 {% endblock %}

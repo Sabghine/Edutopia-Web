@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Activity
@@ -25,6 +26,8 @@ class Activity
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="Vous devez entrer un nom pour l'activité")
+     * @Assert\Length(min=4,minMessage="Doit contenir au min 4 caracteres")
      */
     private $name;
 
@@ -32,6 +35,7 @@ class Activity
      * @var \DateTime
      *
      * @ORM\Column(name="deadline", type="date", nullable=false)
+     * @Assert\NotBlank
      */
     private $deadline;
 

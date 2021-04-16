@@ -1,13 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}Edit Comment{% endblock %}
-
+{% block title %}Modifier commentaire{% endblock %}
+{% block content %}
 {% block body %}
-    <h1>Edit Comment</h1>
+    <h1>Modifier commentaire</h1>
 
-    {{ include('comment/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('comment/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('comment_index') }}">back to list</a>
+    <a href="{{ path('comment_index') }}">Retourner</a>
 
     {{ include('comment/_delete_form.html.twig') }}
+{% endblock %}
 {% endblock %}

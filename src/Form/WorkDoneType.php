@@ -15,6 +15,7 @@ class WorkDoneType extends AbstractType
     {
         $builder
 
+            ->add('idActivity')
             ->add('workFile',FileType::class, [
                 'label' => 'Fichier à ajouter',
 
