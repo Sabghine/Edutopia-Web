@@ -19,6 +19,10 @@ class CostudyingtypeRepository extends ServiceEntityRepository
         parent::__construct($registry, Costudyingtype::class);
     }
 
+    public function findById($name){
+
+    }
+
     // /**
     //  * @return Costudyingtype[] Returns an array of Costudyingtype objects
     //  */

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class CoStudyingType extends AbstractType
 {
@@ -54,7 +55,9 @@ class CoStudyingType extends AbstractType
                     '5eme' => '5eme',
                 ],
             ])
-            ->add('rating');
+            ->add('rating')
+            ->add('captcha', CaptchaType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

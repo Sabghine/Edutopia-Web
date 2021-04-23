@@ -19,6 +19,17 @@ class CoStudyingRepository extends ServiceEntityRepository
         parent::__construct($registry, CoStudying::class);
     }
 
+    public function OrderByName()
+    {
+        return $this->createQueryBuilder('CoStudying')
+
+            ->orderBy('CoStudying.rating','DESC')
+            ->getQuery()->getResult();
+        $this->addFlash('success', 'Tri affectué!');
+    }
+
+
+
     // /**
     //  * @return CoStudying[] Returns an array of CoStudying objects
     //  */

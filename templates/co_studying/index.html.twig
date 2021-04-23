@@ -2,11 +2,28 @@
 
 {% block title %}CoStudying List{% endblock %}
 {% block content %}
-{% block body %}
-    <h1>Contenu Co-Studying : Admin</h1>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% block body %}
+        <h1>Contenu Co-Studying : Admin</h1>
+        <input type="text" id="search" name="search" class="form-control" placeholder="Search contenu">
+        <br>
+        <form role="search" id="nav-search-form" method="post" action="{{ path('triCategorieB') }}">
+            <div class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+                <div class="btn-group btn-group-sm" aria-label="Set Select2 option">
+                    <button class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1">
+                        Trier par rating
+                    </button>
 
-    <table class="table">
-        <thead>
+                </div>
+            </div>
+        </form>
+        <br>
+        <table id="tableac" class="table">
+            <thead>
             <tr>
                 <th>Description</th>
                 <th>Nom de fichiers</th>
@@ -17,31 +34,61 @@
                 <th style="width:20%">Date de dernière mise à jour</th>
                 <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for co_studying in co_studyings %}
-            <tr>
-                <td>{{ co_studying.description }}</td>
-                <td>{{ co_studying.file }}</td>
-                <td>{{ co_studying.type }}</td>
-                <td>{{ co_studying.niveau }}</td>
-                <td>{{ co_studying.rating }}</td>
-                <td>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</td>
-                <td>{{ co_studying.lastUpdatedDate ? co_studying.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('co_studying_show', {'id': co_studying.id}) }}">Consulter</a>
-                    <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <body></body>
+            </thead>
+            <tbody>
+            {% for co_studying in co_studyings %}
+                <tr>
+                    <td>{{ co_studying.description }}</td>
+                    <td>{{ co_studying.file }}</td>
+                    <td>{{ co_studying.type }}</td>
+                    <td>{{ co_studying.niveau }}</td>
+                    <td>{{ co_studying.rating }}</td>
+                    <td>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ co_studying.lastUpdatedDate ? co_studying.lastUpdatedDate|date('Y-m-d') : '' }}</td>
+                    <td>
+                        <a href="{{ path('co_studying_show', {'id': co_studying.id}) }}">Consulter</a>
+                        <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <body></body>
 
-    {# <a href="{{ path('co_studying_new') }}">Create new</a> #}
-{% endblock %}
+        {# <a href="{{ path('co_studying_new') }}">Create new</a> #}
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#search').keyup(function () {
+                    search_table($(this).val());
+                });
+
+                function search_table(value) {
+                    $('#tableac tbody tr').each(function () {
+                        var found = 'false';
+                        $(this).each(function () {
+                            if ($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+                                found = 'true';
+                            }
+                        });
+                        if (found === 'true') {
+                            $(this).show();
+
+                        } else {
+                            $(this).hide();
+
+                        }
+                    });
+                }
+            });
+        </script>
+
+
+
+    {% endblock %}
 {% endblock %}

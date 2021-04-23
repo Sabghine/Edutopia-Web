@@ -38,7 +38,6 @@ class CoStudying
      * @var string|null
      *
      * @ORM\Column(name="file", type="string", length=255, nullable=true)
-     * @Assert\NotBlank (message="Import a file please")
      */
     private $file;
 
