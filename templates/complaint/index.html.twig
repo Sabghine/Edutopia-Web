@@ -1,8 +1,17 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Complaint index{% endblock %}
 {% block content %}
 {% block body %}
+    {% for message in app.flashes ('success') %}
+    <div class ="alert alert-success">
+
+    {{ message }}
+    </div>
+    {% endfor %}
+
+
     <h1>Réclamation</h1>
 
     <table class="table">
@@ -43,6 +52,8 @@
     </table>
 
     <a href="{{ path('complaint_new') }}">Ajouter une réclamation</a>
+    <a href="{{ path('stats') }}">Statistiques</a>
+
 {% endblock %}
 {% endblock %}
 

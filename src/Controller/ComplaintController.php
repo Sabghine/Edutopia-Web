@@ -15,6 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ComplaintController extends AbstractController
 {
+
+    /**
+     * @Route("/stats", name="stats")
+     */
+    public function stat(){
+        return $this->render('complaint/stats.html.twig', [
+            ]);
+    }
+
     /**
      * @Route("/", name="complaint_index", methods={"GET"})
      */
@@ -41,7 +50,7 @@ class ComplaintController extends AbstractController
 
             return $this->redirectToRoute('complaint_index');
         }
-
+$this->addFlash('success', 'Ajouté avec succées');
         return $this->render('complaint/new.html.twig', [
             'complaint' => $complaint,
             'form' => $form->createView(),
@@ -91,4 +100,6 @@ class ComplaintController extends AbstractController
 
         return $this->redirectToRoute('complaint_index');
     }
+
+
 }
