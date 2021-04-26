@@ -97,7 +97,7 @@ class ActivityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $brochureFile */
+
             $brochureFile = $form->get('workTodo')->getData();
 
             // this condition is needed because the 'brochure' field is not required
@@ -114,6 +114,7 @@ class ActivityController extends AbstractController
                         $this->getParameter('brochures_directory'),
                         $newFilename
                     );
+
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
@@ -124,6 +125,7 @@ class ActivityController extends AbstractController
                 $activity->setStatus("Available");
                 $activity->setCeatedDate(new \DateTime('now'));
             }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($activity);
             $entityManager->flush();
@@ -169,10 +171,12 @@ class ActivityController extends AbstractController
 
                 // Move the file to the directory where brochures are stored
                 try {
+
                     $brochureFile->move(
                         $this->getParameter('brochures_directory'),
                         $newFilename
                     );
+
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }

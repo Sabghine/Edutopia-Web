@@ -28,7 +28,9 @@
         <tbody>
         {% for activity in activities %}
             <tr>
-                <td>{{ activity.name }}</td>
+
+
+                <td><a href="/uploads/{{ activity.workTodo }}" style="color: green" target="_blank">{{ activity.name }}.pdf</a></td>
                 <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
                 <td>{{ activity.status }}</td>
                 <td>

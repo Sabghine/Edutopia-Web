@@ -19,7 +19,8 @@
         <tbody>
         {% for work_done in work_dones %}
             <tr>
-                <td>{{ work_done.workFile }}</td>
+                <td><a href="{{asset('/uploads/brochures/') ~ work_done.workFile }}" style="color: green" target="_blank">{{ work_done.workFile }}</a></td>
+
                 <td>{{ work_done.status }}</td>
                 <td>
                     {{ include('work_done/_details_form.html.twig') }}
