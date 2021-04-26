@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumController extends AbstractController
 {
     /**
-     * @Route("/", name="forum_index", methods={"GET"})
+     * @Route("/", name="forum_index", methods={"GET","POST"})
      */
     public function index(ForumRepository $forumRepository): Response
     {
@@ -35,6 +35,8 @@ class ForumController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $forum->setStatus("Available");
+            $forum->getCreatedDate(new \DateTime('now'));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($forum);
             $entityManager->flush();

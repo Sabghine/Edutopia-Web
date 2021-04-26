@@ -4,6 +4,8 @@
 {% block content %}
 {% block body %}
     <h1>Liste des travails rendus</h1>
+    <h5 style="float: right">Nombre des travails notés : <b>{{ nbrN }}</b></h5><br><p></p>
+    <h5 style="float: right">Nombre des travails rendus : <b>{{ nbr }}</b></h5>
 
     <table class="table">
         <thead>
@@ -20,10 +22,20 @@
                 <td>{{ work_done.workFile }}</td>
                 <td>{{ work_done.status }}</td>
                 <td>
-                    <a href="{{ path('work_done_show', {'id': work_done.id}) }}">Details</a>
+                    {{ include('work_done/_details_form.html.twig') }}
                 </td>
                 <td>
-                    <a href="{{ path('work_done_edit', {'id': work_done.id}) }}">Modifier</a>
+                    {{ include('work_done/_edit_form.html.twig') }}
+                </td>
+                <td>
+                    {% if work_done.status =="ScoreAdded" %}
+                        <button disabled class="btn btn-primary" style="background-color: #1aa179">
+                        <a style="color: white" href="{{ path('work_done_score', {'id': work_done.id}) }}">Noter </a>
+                        </button>
+                    {% endif %}
+                    {% if work_done.status =="Available" %}
+                        {{ include('work_done/_score_form.html.twig') }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -33,6 +45,13 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('activity_index')}}">Liste des activités</a>
+    <div  style="display: flex; width: 100%;justify-content: center">
+        <div style="margin-right: 20px">
+            {{ include('activity/_list_form.html.twig') }}
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('forum/_list_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
 {% endblock %}

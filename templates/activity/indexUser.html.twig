@@ -1,0 +1,40 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Liste activités{% endblock %}
+{% block content %}
+    {% block body %}
+        <h1>Liste des activités</h1>
+        <h5 style="float: right">Nombre des activités: <b>{{ nbr }}</b></h5><br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date limite</th>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for activity in activities %}
+                <tr>
+                    <td>{{ activity.name }}</td>
+                    <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
+                    <td align="center">
+                        {{ include('work_done/_add_form.html.twig') }}
+                    </td>
+                </tr>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucune ligne trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div  style="display: flex; width: 100%;justify-content: center">
+            <div style="margin-right: 20px">
+                {{ include('forum/_list_form.html.twig') }}
+            </div>
+        </div>
+
+    {% endblock %}
+{% endblock %}

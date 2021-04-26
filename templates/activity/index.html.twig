@@ -4,13 +4,22 @@
 {% block content %}
 {% block body %}
     <h1>Liste des activités</h1>
-
+    <h5 style="float: right">Nombre des activités disponibles : <b>{{ nbr }}</b></h5><br>
+<div  style="display: flex; width: 0%;justify-content: left;float: right">
+    {{ include('activity/_refresh_form.html.twig') }}
+    <p>   </p>
+    {{ form_start(form) }}
+    {{ form_row(form.trier,{'attr': {'class': 'btn btn-primary','style':'background-color: #1aa179'}}) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
     <table class="table">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Date limite</th>
                 <th>Statut</th>
+                <th> </th>
+                <th> </th>
                 <th> </th>
                 <th> </th>
                 <th> </th>
@@ -23,12 +32,18 @@
                 <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
                 <td>{{ activity.status }}</td>
                 <td>
-                    <a href="{{ path('activity_show', {'id': activity.id}) }}">Détails</a>
+                    {{ include('activity/_details_form.html.twig') }}
                 </td>
-                <td><a href="{{ path('activity_edit', {'id': activity.id}) }}">Modifier</a></td>
                 <td>
-                <a href="{{ path('work_done_new' ,{'idActivity': activity.id}) }}">Ajouter un travail </a>
+                    {{ include('activity/_edit_form.html.twig') }}
                 </td>
+                <td>
+                    {{ include('work_done/_list_form.html.twig') }}
+                </td>
+                <td>
+                    {{ include('activity/_archive_form.html.twig') }}
+                </td>
+            </tr>
             </tr>
         {% else %}
             <tr>
@@ -37,7 +52,18 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('activity_new') }}">Ajouter une nouvelle activité</a><br>
-    <a href="{{ path('forum_index') }}">Liste des forums</a>
+    <div  style="display: flex; width: 100%;justify-content: center">
+    <!--<a style="margin-right: 20px" href="{{ path('activity_new') }}">Ajouter une nouvelle activité</a>-->
+       <div style="margin-right: 20px">
+           {{ include('activity/_add_form.html.twig') }}
+       </div>
+        <div style="margin-right: 20px">
+            {{ include('activity/_archivedList_form.html.twig') }}
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('forum/_list_form.html.twig') }}
+        </div>
+    </div>
+
 {% endblock %}
 {% endblock %}

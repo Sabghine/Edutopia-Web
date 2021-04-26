@@ -47,4 +47,17 @@ class WorkDoneRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countStatus($value,$idActivity)
+    {
+        return (int)$this->createQueryBuilder('a')
+            ->andWhere('a.status = :val')
+            ->andWhere('a.idActivity = :id')
+            ->setParameter('val', $value)
+            ->setParameter('id',$idActivity)
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+
+    }
 }

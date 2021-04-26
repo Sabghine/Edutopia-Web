@@ -26,7 +26,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('comment_index') }}">Retourner</a>
+    <a href="{{ path('comment_index',{'idForum': comment.idForum}) }}">Retourner</a>
 
     <a href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a>
 
