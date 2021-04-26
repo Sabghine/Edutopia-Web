@@ -1,40 +1,38 @@
 {% extends 'base_front.html.twig' %}
 
 {% block title %}Liste activités{% endblock %}
-{% block content %}
-    {% block body %}
-        <h1>Liste des activités</h1>
-        <h5 style="float: right">Nombre des activités: <b>{{ nbr }}</b></h5><br>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Date limite</th>
-                <th> </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for activity in activities %}
-                <tr>
-                    <td>{{ activity.name }}</td>
-                    <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
-                    <td align="center">
-                        {{ include('work_done/_add_form.html.twig') }}
-                    </td>
-                </tr>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="9">Aucune ligne trouvée</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+{% block nouractivity %}
+    <section class="probootstrap-section" style="padding-top: 0%">
+        <h1 align="center">Liste des activités</h1>
+        <div class="container">
+            <h5 style="padding-left: 80%; width: 100%" >Nombre des activités: <b>{{ nbr }}</b></h5>
+            <div class="row">
+    {% for activity in activities %}
+                <div class="col-md-6">
+                    <div class="probootstrap-service-2 probootstrap-animate fadeInUp probootstrap-animated">
+                        <div class="image">
+                            <div class="image-bg">
+                                <a target="_blank" href="/uploads/{{ activity.workTodo }}">
+                                <img src="/img/pdflogo.png" >
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text">
+                            <span class="probootstrap-meta"><i class="icon-calendar2"></i> <a href="/uploads/{{ activity.workTodo }}" style="color: green" target="_blank">{{ activity.name }}.pdf</a></span>
+                            <h3>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</h3>
+                                {{ include('work_done/_add_form.html.twig') }}
+                            </div>
+                    </div>
+                </div>{% else %}
+        <h4>Aucune ligne trouvée</h4>
+    {% endfor %}
+            </div>
+        </div>
         <div  style="display: flex; width: 100%;justify-content: center">
             <div style="margin-right: 20px">
                 {{ include('forum/_list_form.html.twig') }}
             </div>
         </div>
+    </section>
 
-    {% endblock %}
 {% endblock %}
