@@ -3,13 +3,15 @@
 {% block title %}Liste forums{% endblock %}
 {% block content %}
 {% block body %}
+    <br>
     <h1>Liste des forums</h1>
-
-    <table class="table">
+<br><br>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Sujet</th>
                 <th>Statut</th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -21,22 +23,22 @@
                 <td>{{ forum.subject }}</td>
                 <td>{{ forum.status }}</td>
                 <td>
-                    <button class="btn btn-primary" style="background-color: #1aa179">
+                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
                         <a style="color: white" href="{{ path('forum_show', {'id': forum.id}) }}">Details</a>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-primary" style="background-color: #1aa179">
+                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
                         <a style="color: white" href="{{ path('forum_edit', {'id': forum.id}) }}">Modifier</a>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-primary" style="background-color: #1aa179">
+                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
                         <a style="color: white" href="{{ path('comment_index', {'idForum': forum.id}) }}">Liste des commentaires</a>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-primary" style="background-color: #1aa179">
+                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
                         <a style="color: white" href="{{ path('comment_new', {'idForum': forum.id}) }}">Ajouter un commentaire</a>
                     </button>
                 </td>
@@ -50,7 +52,7 @@
     </table>
 <div  style="display: flex; width: 100%;justify-content: center">
     <div style="margin-right: 20px">
-    <button class="btn btn-primary" style="background-color: #1aa179">
+    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
         <a style="color: white" href="{{ path('forum_new') }}">Ajouter un nouveau forum</a>
     </button>
     </div>
