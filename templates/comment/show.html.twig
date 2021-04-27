@@ -1,22 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}Comment{% endblock %}
-
+{% block title %}Details commentaire{% endblock %}
+{% block content %}
 {% block body %}
-    <h1>Comment</h1>
+    <h1>Details du commentaire</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ comment.id }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
+                <th>Commentaire</th>
                 <td>{{ comment.content }}</td>
             </tr>
             <tr>
-                <th>Status</th>
+                <th>Statut</th>
                 <td>{{ comment.status }}</td>
             </tr>
             <tr>
@@ -27,24 +23,13 @@
                 <th>Dislike</th>
                 <td>{{ comment.dislike }}</td>
             </tr>
-            <tr>
-                <th>CreatedDate</th>
-                <td>{{ comment.createdDate ? comment.createdDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LastUpdatedDate</th>
-                <td>{{ comment.lastUpdatedDate ? comment.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ArchivedDate</th>
-                <td>{{ comment.archivedDate ? comment.archivedDate|date('Y-m-d') : '' }}</td>
-            </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('comment_index') }}">back to list</a>
+    <a href="{{ path('comment_index') }}">Retourner</a>
 
-    <a href="{{ path('comment_edit', {'id': comment.id}) }}">edit</a>
+    <a href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a>
 
     {{ include('comment/_delete_form.html.twig') }}
+{% endblock %}
 {% endblock %}

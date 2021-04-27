@@ -2,10 +2,12 @@
 
 {% block title %}New Specialties{% endblock %}
 
-{% block body %}
+{% block content %}
+    {% block body %}
     <h1>Create new Specialties</h1>
 
     {{ include('specialties/_form.html.twig') }}
 
     <a href="{{ path('specialties_index') }}">back to list</a>
+{% endblock %}
 {% endblock %}

@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
  *
- * @ORM\Table(name="comment", indexes={@ORM\Index(name="created_by_comment", columns={"created_by"}), @ORM\Index(name="archived_by_comment", columns={"archived_by"}), @ORM\Index(name="id_forum", columns={"id_forum"}), @ORM\Index(name="updated_by_comment", columns={"last_updated_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
+ * @ORM\Table(name="comment", indexes={@ORM\Index(name="updated_by_comment", columns={"last_updated_by"}), @ORM\Index(name="archived_by_comment", columns={"archived_by"}), @ORM\Index(name="id_forum", columns={"id_forum"}), @ORM\Index(name="created_by_comment", columns={"created_by"})})
+ * @ORM\Entity
  */
 class Comment
 {
@@ -25,6 +26,8 @@ class Comment
      * @var string|null
      *
      * @ORM\Column(name="content", type="string", length=200, nullable=true)
+     * @Assert\NotBlank(message="Vous devez entrer un commentaire")
+     * @Assert\Length(min=10,minMessage="le commentaire doit contenir au min 10 caracteres")
      */
     private $content;
 

@@ -91,13 +91,41 @@ class WorkDoneController extends AbstractController
     /**
      * @Route("/{id}/edit", name="work_done_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, WorkDone $workDone): Response
+    public function edit(Request $request, WorkDone $workDone,SluggerInterface $slugger): Response
     {
         $form = $this->createForm(WorkDoneType::class, $workDone);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            /** @var UploadedFile $brochureFile */
+            $brochureFile = $form->get('workFile')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $workDone->setWorkFile($newFilename);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($workDone);
+            $entityManager->flush();
 
             return $this->redirectToRoute('work_done_index');
         }

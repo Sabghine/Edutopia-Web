@@ -1,0 +1,10 @@
+    {{ form_start(form, {'attr': {'novalidate':'novalidate'}}) }}
+    {{ form_label(form.idSubject,"Matière :") }}
+    {{ form_widget(form.idSubject, {'attr': {'placeholder' : 'Matière'}}) }}
+    {{ form_errors(form.idSubject) }} <html><br></html>
+    {{ form_label(form.idClass,"Classe :") }}
+    {{ form_widget(form.idClass, {'attr': {'placeholder' : 'Classe'}}) }}
+    {{ form_errors(form.idClass) }} <html><br></html>
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

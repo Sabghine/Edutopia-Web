@@ -36,7 +36,6 @@ class Course
      * @var string
      *
      * @ORM\Column(name="course_file", type="string", length=255, nullable=false)
-     * @Assert\NotBlank
      */
     private $courseFile;
 

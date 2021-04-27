@@ -1,0 +1,8 @@
+{% if results is defined and results is iterable and results|length >= 1 %}
+{% for result in results %}
+<p style="display:inline-block;width:200px;">{{ subject.id }}</p>
+<p style="display:inline-block;width:100px;">{{ result.idSubject }}</p>
+<p style="display:inline-block;width:300px;">{{ result.idClass }}</p>
+<p style="display:inline-block;width:120px;">{{ result.idTeacher }}</p>
+{% endfor %}
+{% endif %}

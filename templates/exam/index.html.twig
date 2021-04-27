@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Exam index{% endblock %}
+{% block content %}
 
 {% block body %}
     <h1>Exam index</h1>
@@ -9,7 +10,6 @@
 
     <thead>
             <tr>
-                <th>IdExam</th>
                 <th>Type</th>
                 <th>StartDate</th>
                 <th>FinishDate</th>
@@ -21,7 +21,6 @@
         <tbody>
         {% for exam in exams %}
             <tr>
-                <td>{{ exam.idExam }}</td>
                 <td>{{ exam.type }}</td>
                 <td>{{ exam.startDate ? exam.startDate|date('Y-m-d') : '' }}</td>
                 <td>{{ exam.finishDate ? exam.finishDate|date('Y-m-d') : '' }}</td>
@@ -30,6 +29,7 @@
                 <td>
                     <a href="{{ path('exam_show', {'idExam': exam.idExam}) }}">show</a>
                     <a href="{{ path('exam_edit', {'idExam': exam.idExam}) }}">edit</a>
+                    <a href="{{ path ('question_ByExamnew',{'id': exam.idExam}) }}">ajouter des questions</a>
                 </td>
             </tr>
         {% else %}
@@ -40,5 +40,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('exam_new') }}">Create new</a>
+    <a href="{{ path('exam_new',{'id':subject.id}) }}">Create new</a>
 {% endblock %}
+{% endblock %}
+

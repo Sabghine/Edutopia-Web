@@ -3,17 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CoStudying
  *
- * @ORM\Table(name="co_studying", indexes={@ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="id_student", columns={"id_student"})})
- * @ORM\Entity(repositoryClass="App\Repository\CoStudyingRepository")
- *
+ * @ORM\Table(name="co_studying", indexes={@ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="IDX_5B8A12508CDE5729", columns={"type"}), @ORM\Index(name="id_student", columns={"id_student"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"})})
+ * @ORM\Entity
  */
-
 class CoStudying
 {
     /**
@@ -22,7 +18,6 @@ class CoStudying
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     *
      */
     private $id;
 
@@ -30,7 +25,6 @@ class CoStudying
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=false)
-     * @Assert\NotBlank(message="Description field is required")
      */
     private $description;
 
@@ -38,7 +32,6 @@ class CoStudying
      * @var string|null
      *
      * @ORM\Column(name="file", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Import a file please")
      */
     private $file;
 
@@ -46,7 +39,6 @@ class CoStudying
      * @var string
      *
      * @ORM\Column(name="niveau", type="string", length=20, nullable=false)
-     * @Assert\NotBlank(message="Level field is required")
      */
     private $niveau;
 
@@ -54,7 +46,6 @@ class CoStudying
      * @var int|null
      *
      * @ORM\Column(name="rating", type="integer", nullable=true)
-     * @Assert\NotBlank(message="Rating field is required")
      */
     private $rating;
 
@@ -100,16 +91,6 @@ class CoStudying
     private $archivedBy;
 
     /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_student", referencedColumnName="id")
-     * })
-     */
-    private $idStudent;
-
-    /**
      * @var \Costudyingtype
      *
      * @ORM\ManyToOne(targetEntity="Costudyingtype")
@@ -118,6 +99,16 @@ class CoStudying
      * })
      */
     private $type;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_student", referencedColumnName="id")
+     * })
+     */
+    private $idStudent;
 
     public function getId(): ?int
     {
@@ -144,18 +135,6 @@ class CoStudying
     public function setFile(?string $file): self
     {
         $this->file = $file;
-
-        return $this;
-    }
-
-    public function getType(): ?Costudyingtype
-    {
-        return $this->type;
-    }
-
-    public function setType(Costudyingtype $type): self
-    {
-        $this->type = $type;
 
         return $this;
     }
@@ -240,6 +219,18 @@ class CoStudying
     public function setArchivedBy(?User $archivedBy): self
     {
         $this->archivedBy = $archivedBy;
+
+        return $this;
+    }
+
+    public function getType(): ?Costudyingtype
+    {
+        return $this->type;
+    }
+
+    public function setType(?Costudyingtype $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

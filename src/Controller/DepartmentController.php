@@ -5,10 +5,15 @@ namespace App\Controller;
 use App\Entity\Department;
 use App\Form\DepartmentType;
 use App\Repository\DepartementRepository;
+use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 /**
  * @Route("/department")
@@ -49,12 +54,59 @@ class DepartmentController extends AbstractController
     }
 
     /**
+     * @Route("/stat", name="stat", methods={"GET","POST"})
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @return Response
+     */
+    public function statistique(Request $request, NormalizerInterface $Normalizer): Response
+    {
+        $namedep = $request->get('q');
+        $em=$this->getDoctrine()->getManager();
+        $department = $em->getRepository('App:Department')->findOneByName($namedep);
+        if( is_null($department)) {
+            $id=0;
+        } else {
+            $id=$department->getId();
+        }
+        $users = $em->getRepository('App:User')->findByDepid($id);
+        $jsonContent = $Normalizer->normalize($users, 'json',['groups'=>'students']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+
+    /**
      * @Route("/{id}", name="department_show", methods={"GET"})
      */
     public function show(Department $department): Response
     {
+        $twenties=0;
+        $thirties=0;
+        $fourties=0;
+        $plus=0;
+        $em=$this->getDoctrine()->getManager();
+        $users = $em->getRepository('App:User')->findByDepid($department->getId());
+        foreach ($users as $user) {
+
+            $year=$user->getBirthDate()->format("Y");
+            if($year>=1991 and $year<=2000) {
+                $twenties++;
+            } elseif ($year>=1981 and $year<=1990) {
+                $thirties++;
+            } elseif ($year>=1971 and $year<=1980) {
+                $fourties++;
+            } elseif ($year<=1970) {
+                $plus++;
+            }
+        }
         return $this->render('department/show.html.twig', [
             'department' => $department,
+            'users' => $users,
+            'twenties' => $twenties,
+            'thirties' => $thirties,
+            'fourties' => $fourties,
+            'plus' => $plus,
         ]);
     }
 

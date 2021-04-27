@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Exam;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
@@ -16,35 +17,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/", name="question_index", methods={"GET"})
+     * @Route("/questions/{id}", name="question_index", methods={"GET"})
      */
-    public function index(QuestionRepository $questionRepository): Response
+    public function index(Exam $exam): Response
     {
+        $questions=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idExam'=>$exam->getIdExam()]);
+
         return $this->render('question/index.html.twig', [
-            'questions' => $questionRepository->findAll(),
-        ]);
-    }
+            'questions' => $questions,
+            'exam' => $exam,
 
-    /**
-     * @Route("/new", name="question_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $question = new Question();
-        $form = $this->createForm(QuestionType::class, $question);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($question);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('question_index');
-        }
-
-        return $this->render('question/new.html.twig', [
-            'question' => $question,
-            'form' => $form->createView(),
         ]);
     }
 
@@ -55,6 +37,7 @@ class QuestionController extends AbstractController
     {
         return $this->render('question/show.html.twig', [
             'question' => $question,
+            'exam' => $question->getIdExam(),
         ]);
     }
 
@@ -69,12 +52,19 @@ class QuestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('question_index');
+            $questions=$this->getDoctrine()->getManager()->getRepository(Question::class)->findBy(['idExam'=>$question->getIdExam()->getIdExam()]);
+
+
+            return $this->render('exam/show.html.twig', [
+                'exam' => $question->getIdExam(),
+                'questions'=>$questions
+            ]);
         }
 
         return $this->render('question/edit.html.twig', [
             'question' => $question,
             'form' => $form->createView(),
+            'exam'=> $question->getIdExam()
         ]);
     }
 
@@ -83,12 +73,51 @@ class QuestionController extends AbstractController
      */
     public function delete(Request $request, Question $question): Response
     {
+        $exam=$question->getIdExam();
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($question);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('question_index');
+        $questions=$this->getDoctrine()->getManager()->getRepository(Question::class)->findBy(['idExam'=>$exam->getIdExam()]);
+
+
+        return $this->render('exam/show.html.twig', [
+            'exam' => $exam,
+            'questions'=>$questions
+        ]);
     }
+
+    /**
+     * @Route("/question_ByExamnew/{id}", name="question_ByExamnew", methods={"GET","POST"})
+     */
+    public function question_ByExamnew(Request $request,Exam $exam): Response
+    {
+        $question = new Question();
+        $form = $this->createForm(QuestionType::class, $question);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $question->setIdExam($exam);
+            $entityManager->persist($question);
+            $entityManager->flush();
+
+            $questions=$this->getDoctrine()->getManager()->createQuery("select distinct q from App\Entity\Question q where  q.idExam =".$exam->getIdExam())->getResult();
+
+            return $this->render('exam/show.html.twig', [
+                'exam' => $exam,
+                'questions'=>$questions
+            ]);
+        }
+
+        return $this->render('question/new.html.twig', [
+            'question' => $question,
+            'form' => $form->createView(),
+            'exam'=>$exam
+        ]);
+    }
+
+
 }

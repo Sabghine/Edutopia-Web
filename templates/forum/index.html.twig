@@ -1,43 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}Forum index{% endblock %}
-
+{% block title %}Liste forums{% endblock %}
+{% block content %}
 {% block body %}
-    <h1>Forum index</h1>
+    <h1>Liste des forums</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Subject</th>
-                <th>Status</th>
-                <th>CreatedDate</th>
-                <th>LastUpdatedDate</th>
-                <th>ArchivedDate</th>
-                <th>actions</th>
+                <th>Sujet</th>
+                <th>Statut</th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for forum in forums %}
             <tr>
-                <td>{{ forum.id }}</td>
                 <td>{{ forum.subject }}</td>
                 <td>{{ forum.status }}</td>
-                <td>{{ forum.createdDate ? forum.createdDate|date('Y-m-d') : '' }}</td>
-                <td>{{ forum.lastUpdatedDate ? forum.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ forum.archivedDate ? forum.archivedDate|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('forum_show', {'id': forum.id}) }}">show</a>
-                    <a href="{{ path('forum_edit', {'id': forum.id}) }}">edit</a>
+                    <a href="{{ path('forum_show', {'id': forum.id}) }}">Details</a>
+                </td>
+                <td>
+                    <a href="{{ path('forum_edit', {'id': forum.id}) }}">Modifier</a>
+                </td>
+                <td>
+                    <a href="{{ path('comment_new', {'idForum': forum.id}) }}">Ajouter un commentaire</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">aucun forum</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('forum_new') }}">Create new</a>
+    <a href="{{ path('forum_new') }}">Ajouter un nouveau forum</a>
+{% endblock %}
 {% endblock %}

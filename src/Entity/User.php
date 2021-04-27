@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * User
  *
- * @ORM\Table(name="user", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="depId", columns={"depId"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="user", indexes={@ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="depId", columns={"depId"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="created_by", columns={"created_by"})})
+ * @ORM\Entity
  */
 class User
 {
@@ -418,14 +418,10 @@ class User
 
         return $this;
     }
-
     public function __toString()
-    {   $fullname = $this->name;
-        $fullname .= " ";
-        $fullname .= $this->lastName;
-        return $fullname;
+    {
+        return $this->name.' '.$this->lastName;
     }
-
 
 
 }

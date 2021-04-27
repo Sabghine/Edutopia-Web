@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Department{% endblock %}
-
+{% block content %}
 {% block body %}
     <h1>Department</h1>
 
@@ -16,10 +16,10 @@
                 <td>{{ department.name }}</td>
             </tr>
             <tr>
-                <th>Ownername</th>
-                <td>{{ department.ownername }}</td>
+                <th>Chef département</th>
+                <td>{{ department.ownerid }}</td>
             </tr>
-            <tr>
+            <!--<tr>
                 <th>Ownerlastname</th>
                 <td>{{ department.ownerlastname }}</td>
             </tr>
@@ -38,10 +38,19 @@
             <tr>
                 <th>Status</th>
                 <td>{{ department.status }}</td>
-            </tr>
+            </tr>-->
+
             <tr>
                 <th>Specialties</th>
                 <td>{{ department.specialties }}</td>
+            </tr>
+            <tr>
+                <th>Enseignants</th>
+                <td>
+                    {% for user in users %}
+                        {{ user.name }} {{ user.lastname }},
+                    {% endfor %}
+                </td>
             </tr>
         </tbody>
     </table>
@@ -51,4 +60,33 @@
     <a href="{{ path('department_edit', {'id': department.id}) }}">edit</a>
 
     {{ include('department/_delete_form.html.twig') }}
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['20\'s', {{ twenties }} ],
+                ['30\'s', {{ thirties }} ],
+                ['40\'s', {{ fourties }} ],
+                ['50+', {{ plus }} ],
+
+            ]);
+
+            var options = {
+                title: 'Users age stats'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+    <center><div id="piechart" style="width: 900px; height: 500px;"></div></center>
+
+{% endblock %}
 {% endblock %}

@@ -17,7 +17,7 @@ class LigneExam
      *
      * @ORM\Column(name="idligne", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idligne;
 
@@ -29,10 +29,8 @@ class LigneExam
     private $note;
 
     /**
-     * @var \Exam
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+
      * @ORM\OneToOne(targetEntity="Exam")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexam", referencedColumnName="id_Exam")
@@ -43,8 +41,6 @@ class LigneExam
     /**
      * @var \User
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
@@ -69,12 +65,12 @@ class LigneExam
         return $this;
     }
 
-    public function getIdexam(): ?Exam
+    public function getIdexam()
     {
         return $this->idexam;
     }
 
-    public function setIdexam(?Exam $idexam): self
+    public function setIdexam( $idexam): self
     {
         $this->idexam = $idexam;
 

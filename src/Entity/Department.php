@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Department
  *
- * @ORM\Table(name="department", indexes={@ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="ownerId", columns={"ownerId"}), @ORM\Index(name="created_by", columns={"created_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\DepartementRepository")
+ * @ORM\Table(name="department", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="ownerId", columns={"ownerId"}), @ORM\Index(name="archived_by", columns={"archived_by"})})
+ * @ORM\Entity
  */
 class Department
 {
@@ -25,6 +27,8 @@ class Department
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=20, nullable=false)
+     * @Assert\NotBlank(message="Donnez le nom de département")
+     * @Assert\Length(min=4,minMessage="Au moins 4 caractères")
      */
     private $name;
 
@@ -74,6 +78,8 @@ class Department
      * @var string
      *
      * @ORM\Column(name="specialties", type="string", length=3000, nullable=false)
+     * @Assert\NotBlank(message="Au moins une spécialité")
+     * @Assert\Length(min=2,minMessage="au moins 2 caractères")
      */
     private $specialties;
 
@@ -84,6 +90,8 @@ class Department
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ownerId", referencedColumnName="id")
      * })
+     * @Assert\NotBlank(message="donnez un chef de département")
+     * @Assert\Length(min=5,minMessage="au min 5 caractères")
      */
     private $ownerid;
 
@@ -264,6 +272,10 @@ class Department
         $this->lastUpdatedBy = $lastUpdatedBy;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->name;
     }
 
 

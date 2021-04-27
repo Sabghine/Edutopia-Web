@@ -18,6 +18,18 @@ class DepartementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Department::class);
     }
+    public function findOneByName($str) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT d
+                FROM App:Department d
+                WHERE d.name LIKE :str'
+            )
+            ->setParameter('str','%'.$str.'%')
+            ->getResult();
+    }
+
+
 
     // /**
     //  * @return Department[] Returns an array of Department objects

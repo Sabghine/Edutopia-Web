@@ -1,4 +1,17 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+
+{{ form_start(form, {'attr': {'novalidate':'novalidate'}}) }}
+    {{ form_label(form.specialty,"Spécialité :") }}
+    {{ form_widget(form.specialty, {'attr': {'placeholder' : 'Spécialté'}}) }}
+    {{ form_errors(form.specialty) }} <html><br></html>
+    {{ form_label(form.niveau,"Niveau :") }}
+    {{ form_widget(form.niveau, {'attr': {'placeholder' : 'Niveau'}}) }}
+    {{ form_errors(form.niveau) }} <html><br></html>
+    {{ form_label(form.idteacher,"Enseingant :") }}
+    {{ form_widget(form.idteacher, {'attr': {'placeholder' : 'Enseignant'}}) }}
+    {{ form_errors(form.idteacher) }} <html><br></html>
+    {{ form_label(form.idDep,"Departement :") }}
+    {{ form_widget(form.idDep, {'attr': {'placeholder' : 'Departement'}}) }}
+    {{ form_errors(form.idDep) }} <html><br></html>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+

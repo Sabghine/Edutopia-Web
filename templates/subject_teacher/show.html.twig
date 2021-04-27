@@ -1,0 +1,51 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Subject{% endblock %}
+{% block content %}
+{% block body %}
+    <h1>Subject</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ subject.id }}</td>
+            </tr>
+            <tr>
+                <th>Matière</th>
+                <td>{{ subject.idSubject }}</td>
+            </tr>
+            <tr>
+                <th> Classe </th>
+                <td>{{ subject.idClass }}</td>
+            </tr>
+<!--            <tr>
+                <th>Courses</th>
+                <td>{{ subject.courses }}</td>
+            </tr>
+            <tr>
+                <th>CreatedDate</th>
+                <td>{{ subject.createdDate ? subject.createdDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdateDate</th>
+                <td>{{ subject.updateDate ? subject.updateDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ArchivedDate</th>
+                <td>{{ subject.archivedDate ? subject.archivedDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ subject.status }}</td>
+            </tr> -->
+        </tbody>
+    </table>
+
+    <a href="{{ path('subject_teacher_index') }}">back to list</a>
+
+    <a href="{{ path('subject_teacher_edit', {'id': subject.id}) }}">edit</a>
+
+    {{ include('subject_teacher/_delete_form.html.twig') }}
+{% endblock %}
+{% endblock %}

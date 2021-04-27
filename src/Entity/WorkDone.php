@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * WorkDone
  *
- * @ORM\Table(name="work_done", indexes={@ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="uploaded_by", columns={"uploaded_by"}), @ORM\Index(name="id_activity", columns={"id_activity"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"})})
- * @ORM\Entity(repositoryClass="App\Repository\WorkDoneRepository")
+ * @ORM\Table(name="work_done", indexes={@ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="uploaded_by", columns={"uploaded_by"}), @ORM\Index(name="id_activity", columns={"id_activity"}), @ORM\Index(name="archived_by", columns={"archived_by"})})
+ * @ORM\Entity
  */
 class WorkDone
 {
@@ -64,16 +65,6 @@ class WorkDone
     private $archivedDate;
 
     /**
-     * @var \Activity
-     *
-     * @ORM\ManyToOne(targetEntity="Activity")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_activity", referencedColumnName="id")
-     * })
-     */
-    private $idActivity;
-
-    /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -88,20 +79,30 @@ class WorkDone
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="last_updated_by", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="uploaded_by", referencedColumnName="id")
      * })
      */
-    private $lastUpdatedBy;
+    private $uploadedBy;
+
+    /**
+     * @var \Activity
+     *
+     * @ORM\ManyToOne(targetEntity="Activity")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_activity", referencedColumnName="id")
+     * })
+     */
+    private $idActivity;
 
     /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uploaded_by", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="last_updated_by", referencedColumnName="id")
      * })
      */
-    private $uploadedBy;
+    private $lastUpdatedBy;
 
     public function getId(): ?int
     {
@@ -180,18 +181,6 @@ class WorkDone
         return $this;
     }
 
-    public function getIdActivity(): ?Activity
-    {
-        return $this->idActivity;
-    }
-
-    public function setIdActivity(?Activity $idActivity): self
-    {
-        $this->idActivity = $idActivity;
-
-        return $this;
-    }
-
     public function getArchivedBy(): ?User
     {
         return $this->archivedBy;
@@ -204,18 +193,6 @@ class WorkDone
         return $this;
     }
 
-    public function getLastUpdatedBy(): ?User
-    {
-        return $this->lastUpdatedBy;
-    }
-
-    public function setLastUpdatedBy(?User $lastUpdatedBy): self
-    {
-        $this->lastUpdatedBy = $lastUpdatedBy;
-
-        return $this;
-    }
-
     public function getUploadedBy(): ?User
     {
         return $this->uploadedBy;
@@ -224,6 +201,30 @@ class WorkDone
     public function setUploadedBy(?User $uploadedBy): self
     {
         $this->uploadedBy = $uploadedBy;
+
+        return $this;
+    }
+
+    public function getIdActivity(): ?Activity
+    {
+        return $this->idActivity;
+    }
+
+    public function setIdActivity(?Activity $idActivity): self
+    {
+        $this->idActivity = $idActivity;
+
+        return $this;
+    }
+
+    public function getLastUpdatedBy(): ?User
+    {
+        return $this->lastUpdatedBy;
+    }
+
+    public function setLastUpdatedBy(?User $lastUpdatedBy): self
+    {
+        $this->lastUpdatedBy = $lastUpdatedBy;
 
         return $this;
     }

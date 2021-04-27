@@ -1,0 +1,12 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}New Subject{% endblock %}
+{% block content %}
+{% block body %}
+    <h1>Create new Subject</h1>
+
+    {{ include('subject_teacher/_form.html.twig') }}
+
+    <a href="{{ path('subject_teacher_index') }}">back to list</a>
+{% endblock %}
+{% endblock %}

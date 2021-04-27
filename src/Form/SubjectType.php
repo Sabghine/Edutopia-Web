@@ -13,15 +13,15 @@ class SubjectType extends AbstractType
     {
         $builder
             ->add('idSubject')
-            ->add('courses')
+     //       ->add('courses')
             ->add('idClass')
-            ->add('createdDate')
-            ->add('updateDate')
-            ->add('archivedDate')
-            ->add('status')
-            ->add('archivedBy')
-            ->add('createdBy')
-            ->add('updateBy')
+   //         ->add('createdDate')
+  //          ->add('updateDate')
+   //         ->add('archivedDate')
+     //       ->add('status')
+       //     ->add('archivedBy')
+     //       ->add('createdBy')
+         //   ->add('updateBy')
             ->add('idTeacher')
         ;
     }

@@ -13,14 +13,6 @@ class ForumType extends AbstractType
     {
         $builder
             ->add('subject')
-            ->add('status')
-            ->add('createdDate')
-            ->add('lastUpdatedDate')
-            ->add('archivedDate')
-            ->add('archivedBy')
-            ->add('createdBy')
-            ->add('lastUpdatedBy')
-            ->add('idCourse')
         ;
     }
 

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Question index{% endblock %}
+{% block content %}
 
 {% block body %}
     <h1>Question index</h1>
@@ -42,5 +43,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('question_new') }}">Create new</a>
+    <a href="{{ path('question_ByExamnew',{'idExam': exam.idExam}) }}">Create new</a>
+{% endblock %}
 {% endblock %}

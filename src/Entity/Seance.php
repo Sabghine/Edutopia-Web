@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Seance
  *
- * @ORM\Table(name="seance", indexes={@ORM\Index(name="id_teacher", columns={"id_teacher"}), @ORM\Index(name="id_classe", columns={"id_classe"})})
- * @ORM\Entity(repositoryClass="App\Repository\SeanceRepository")
+ * @ORM\Table(name="seance", indexes={@ORM\Index(name="id_classe", columns={"id_classe"}), @ORM\Index(name="id_teacher", columns={"id_teacher"})})
+ * @ORM\Entity
  */
 class Seance
 {
@@ -50,16 +50,6 @@ class Seance
     private $matiere;
 
     /**
-     * @var \Classe
-     *
-     * @ORM\ManyToOne(targetEntity="Classe")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_classe", referencedColumnName="id")
-     * })
-     */
-    private $idClasse;
-
-    /**
      * @var \User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -68,6 +58,16 @@ class Seance
      * })
      */
     private $idTeacher;
+
+    /**
+     * @var \Classe
+     *
+     * @ORM\ManyToOne(targetEntity="Classe")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_classe", referencedColumnName="id")
+     * })
+     */
+    private $idClasse;
 
     public function getId(): ?int
     {
@@ -122,18 +122,6 @@ class Seance
         return $this;
     }
 
-    public function getIdClasse(): ?Classe
-    {
-        return $this->idClasse;
-    }
-
-    public function setIdClasse(?Classe $idClasse): self
-    {
-        $this->idClasse = $idClasse;
-
-        return $this;
-    }
-
     public function getIdTeacher(): ?User
     {
         return $this->idTeacher;
@@ -142,6 +130,18 @@ class Seance
     public function setIdTeacher(?User $idTeacher): self
     {
         $this->idTeacher = $idTeacher;
+
+        return $this;
+    }
+
+    public function getIdClasse(): ?Classe
+    {
+        return $this->idClasse;
+    }
+
+    public function setIdClasse(?Classe $idClasse): self
+    {
+        $this->idClasse = $idClasse;
 
         return $this;
     }

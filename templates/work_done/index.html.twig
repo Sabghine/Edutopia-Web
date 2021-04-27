@@ -1,16 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}WorkDone index{% endblock %}
+{% block title %}Liste travail rendu{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>WorkDone index</h1>
+    <h1>Liste des travails rendus</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>WorkFile</th>
-                <th>Status</th>
-                <th>actions</th>
+                <th>Travail rendu</th>
+                <th>Statut</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,8 @@
                 <td>{{ work_done.status }}</td>
                 <td>
                     <a href="{{ path('work_done_show', {'id': work_done.id}) }}">Details</a>
+                </td>
+                <td>
                     <a href="{{ path('work_done_edit', {'id': work_done.id}) }}">Modifier</a>
                 </td>
             </tr>
@@ -30,5 +33,6 @@
         {% endfor %}
         </tbody>
     </table>
+    <a href="{{ path('activity_index')}}">Liste des activités</a>
 {% endblock %}
 {% endblock %}

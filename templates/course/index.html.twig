@@ -1,41 +1,104 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Course index{% endblock %}
+{% block content %}
 
-{% block body %}
-    <h1>Course index</h1>
+    {% block body %}
 
-    <table border="1" class="table table-striped table-bordered dataTable" role="grid" aria-describedby="zero_config_info" id="zero_config">
-    <thead>
+
+        <div class="sidebar-search">
+            <h3>Search</h3>
+            <div class="input-group custom-search-form">
+
+                <input type="text" id="1" class="form-control" placeholder="Search here">
+            </div>
+            <!-- /input-group -->
+        </div>
+        <ul class="nav" id="side-menu">
+            <li>
+                <a href="#" > <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" id="entitiesNav">
+                </ul>
+            </li>
+        </ul>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+
+                var searchRequest = null;
+                $("#1").keyup(function() {
+
+                    var minlength = 1;
+                    var that = this;
+                    var value = $(this).val();
+                    var entitySelector = $("#entitiesNav").html('');
+                    if (value.length >= minlength ) {
+
+                        if (searchRequest != null)
+                            searchRequest.abort();
+                        searchRequest = $.ajax({
+                            type: "GET",
+                            url: "{{ path('ajax_search_course') }}",
+                            data: {
+                                'q' : value
+                            },
+                            dataType: "text",
+                            success: function(msg){
+                                if (value===$(that).val()) {
+                                    var result = JSON.parse(msg);
+                                    $.each(result, function(key, arr) {
+                                        $.each(arr, function(id, value) {
+                                            if (key === 'posts') {
+                                                if (id !== 'error') {
+                                                    console.log(value[1]);
+                                                    entitySelector.append('<li><a href="/course/'+id+'"><b>'+value+'</b></a></li>');
+                                                } else {
+                                                    entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+        <h1>Course index</h1>
+
+        <table border="1" class="table table-striped table-bordered dataTable" role="grid" aria-describedby="zero_config_info" id="zero_config">
+            <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>CourseFile</th>
                 <th>CreatedDate</th>
                 <th>Description</th>
                 <th>actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for course in courses %}
-            <tr>
-                <td>{{ course.id }}</td>
-                <td>{{ course.name }}</td>
-                <td>{{ course.courseFile }}</td>
-                <td>{{ course.createdDate ? course.createdDate|date('Y-m-d') : '' }}</td>
-                 <td>{{ course.description }}</td>
-                <td>
-                    <a href="{{ path('course_show', {'id': course.id}) }}">show</a>
-                    <a href="{{ path('course_edit', {'id': course.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.courseFile }}</td>
+                    <td>{{ course.createdDate ? course.createdDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>
+                        <a href="{{ path('course_show', {'id': course.id}) }}">show</a>
+                        <a href="{{ path('course_edit', {'id': course.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('course_new') }}">Create new</a>
+        <a href="{{ path('course_new',{'id': subject.id}) }}">Create new</a>
+    {% endblock %}
 {% endblock %}
+

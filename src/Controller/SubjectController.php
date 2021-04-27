@@ -8,10 +8,14 @@ use App\Repository\SubjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+
 
 /**
- * @Route("/subject")
+ * @Route("/subjectAdmin")
  */
 class SubjectController extends AbstractController
 {
@@ -23,6 +27,27 @@ class SubjectController extends AbstractController
         return $this->render('subject/index.html.twig', [
             'subjects' => $subjectRepository->findAll(),
         ]);
+    }
+    /**
+     * @Route ("/search", name="ajax_search")
+     */
+    public function searchAction( Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $posts =  $em->getRepository('App:Subject')->findSubjectsByName($requestString);
+        if(!$posts) {
+            $result['posts']['error'] = "Subject Not found :( ";
+        } else {
+            $result['posts'] = $this->getRealEntities($posts);
+        }
+        return new Response(json_encode($result));
+
+    }
+    public function getRealEntities($subjects) {
+        foreach ($subjects as $subject) {
+            $realSubjects[$subject->getId()] =[$subject->getIdSubject()];
+        }
+        return $realSubjects;
     }
 
     /**
@@ -50,6 +75,8 @@ class SubjectController extends AbstractController
 
     /**
      * @Route("/{id}", name="subject_show", methods={"GET"})
+     * @param Subject $subject
+     * @return Response
      */
     public function show(Subject $subject): Response
     {
@@ -91,4 +118,7 @@ class SubjectController extends AbstractController
 
         return $this->redirectToRoute('subject_index');
     }
+
+
+
 }

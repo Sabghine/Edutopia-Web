@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}New Question{% endblock %}
+{% block content %}
 
 {% block body %}
-    <h1>Create new Question</h1>
+    <h1>Create new Question pour {{ exam.type }} </h1>
+
 
     {{ include('question/_form.html.twig') }}
 
-    <a href="{{ path('question_index') }}">back to list</a>
+    <a href="{{ path('exam_show',{'idExam': exam.idExam}) }}">back to list</a>
+
+{% endblock %}
 {% endblock %}

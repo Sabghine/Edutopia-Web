@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Subject
  *
- * @ORM\Table(name="subject", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="id_teacher", columns={"id_teacher"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="update_by", columns={"update_by"})})
+ * @ORM\Table(name="subject", indexes={@ORM\Index(name="update_by", columns={"update_by"}), @ORM\Index(name="id_teacher", columns={"id_teacher"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="subject_ibfk_5", columns={"id_class"}), @ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
  */
 class Subject
@@ -25,6 +26,8 @@ class Subject
      * @var string
      *
      * @ORM\Column(name="id_Subject", type="string", length=30, nullable=false)
+     * @Assert\NotBlank(message="Vous devez donner le nom de la matière")
+     * @Assert\Length(min=3,minMessage="Doit contenir au min 3 caracteres")
      */
     private $idSubject;
 
@@ -34,13 +37,6 @@ class Subject
      * @ORM\Column(name="courses", type="string", length=50, nullable=true)
      */
     private $courses;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id_class", type="integer", nullable=true)
-     */
-    private $idClass;
 
     /**
      * @var \DateTime|null
@@ -107,8 +103,20 @@ class Subject
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_teacher", referencedColumnName="id")
      * })
+     * @Assert\NotBlank(message="Vous devez choisir un enseignant")
      */
     private $idTeacher;
+
+    /**
+     * @var \Classe
+     *
+     * @ORM\ManyToOne(targetEntity="Classe")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_class", referencedColumnName="id")
+     * })
+     * @Assert\NotBlank(message="vous devez choisir une classe")
+     */
+    private $idClass;
 
     public function getId(): ?int
     {
@@ -135,18 +143,6 @@ class Subject
     public function setCourses(?string $courses): self
     {
         $this->courses = $courses;
-
-        return $this;
-    }
-
-    public function getIdClass(): ?int
-    {
-        return $this->idClass;
-    }
-
-    public function setIdClass(?int $idClass): self
-    {
-        $this->idClass = $idClass;
 
         return $this;
     }
@@ -243,6 +239,18 @@ class Subject
     public function setIdTeacher(?User $idTeacher): self
     {
         $this->idTeacher = $idTeacher;
+
+        return $this;
+    }
+
+    public function getIdClass(): ?Classe
+    {
+        return $this->idClass;
+    }
+
+    public function setIdClass(?Classe $idClass): self
+    {
+        $this->idClass = $idClass;
 
         return $this;
     }

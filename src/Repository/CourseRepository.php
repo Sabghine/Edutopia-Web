@@ -12,11 +12,26 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Course[]    findAll()
  * @method Course[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
 class CourseRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Course::class);
+    }
+    public function findCourseByName($str)
+
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c
+                FROM App:Course c
+                WHERE c.name LIKE :str'
+
+            )
+            ->setParameter('str','%'.$str.'%')
+            ->getResult();
+
     }
 
     // /**

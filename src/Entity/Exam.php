@@ -170,6 +170,8 @@ class Exam
 
     public function __construct()
     {
+        $this->startDate = new \DateTime();
+        $this->finishDate = new \DateTime();
         $this->createdDate = new \DateTime();
     }
 }
