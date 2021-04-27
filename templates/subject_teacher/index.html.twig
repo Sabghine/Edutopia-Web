@@ -1,0 +1,104 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Subject index{% endblock %}
+{% block content %}
+    {% block body %}
+        <h2>Search</h2>
+        <div class="sidebar-search">
+
+            <div class="input-group custom-search-form">
+
+                <input type="text" id="1" class="form-control" placeholder="Search here">
+            </div>
+            <!-- /input-group -->
+        </div>
+        <ul class="nav" id="side-menu">
+            <li>
+                <a href="#" > Entities<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" id="entitiesNav">
+                </ul>
+            </li>
+        </ul>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function() {
+
+                var searchRequest = null;
+                $("#1").keyup(function() {
+
+                    var minlength = 1;
+                    var that = this;
+                    var value = $(this).val();
+                    var entitySelector = $("#entitiesNav").html('');
+                    if (value.length >= minlength ) {
+
+                        if (searchRequest != null)
+                            searchRequest.abort();
+                        searchRequest = $.ajax({
+                            type: "GET",
+                            url: "{{ path('ajax_search') }}",
+                            data: {
+                                'q' : value
+                            },
+                            dataType: "text",
+                            success: function(msg){
+                                if (value===$(that).val()) {
+                                    var result = JSON.parse(msg);
+                                    $.each(result, function(key, arr) {
+                                        $.each(arr, function(id, value) {
+                                            if (key === 'posts') {
+                                                if (id !== 'error') {
+                                                    console.log(value[1]);
+                                                    entitySelector.append('<li><a href="/subjectStudent/'+id+'"><b>'+value+'</b></a></li>');
+                                                } else {
+                                                    entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+        <h1>Subject index</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matière</th>
+                <th>Classe</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for subject in subjects %}
+                <tr>
+                    <td>{{ subject.id }}</td>
+                    <td>{{ subject.idSubject }}</td>
+                    <td>{{ subject.idClass }}</td>
+
+                    <td>
+                        <a href="{{ path('subject_teacher_show', {'id': subject.id}) }}">show</a>
+                        <a href="{{ path('subject_teacher_edit', {'id': subject.id}) }}">edit</a>
+                        <a href="{{ path('exam_bysubject', {'id': subject.id}) }}">exams</a>
+                        <a href="{{ path('course_bysubject', {'id': subject.id}) }}">courses</a>
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('subject_teacher_new') }}">Create new</a>
+
+    {% endblock %}
+{% endblock %}
+
