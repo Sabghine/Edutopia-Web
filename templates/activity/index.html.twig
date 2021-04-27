@@ -3,16 +3,17 @@
 {% block title %}Liste activités{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>Liste des activités</h1>
+    <h1>Liste des activités</h1><br>
     <h5 style="float: right">Nombre des activités disponibles : <b>{{ nbr }}</b></h5><br>
-<div  style="display: flex; width: 0%;justify-content: left;float: right">
+<div  style="display: flex; width: 0%;justify-content: left;float: left ">
     {{ include('activity/_refresh_form.html.twig') }}
     <p>   </p>
     {{ form_start(form) }}
     {{ form_row(form.trier,{'attr': {'class': 'btn btn-primary','style':'background-color: #1aa179'}}) }}
     {{ form_end(form, {'render_rest': false}) }}
 </div>
-    <table class="table">
+    <br><br>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Nom</th>

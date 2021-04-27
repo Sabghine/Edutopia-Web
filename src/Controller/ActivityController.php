@@ -229,7 +229,7 @@ class ActivityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="activity_delete", methods={"POST"})
+     * @Route("/{id}/delete", name="activity_delete", methods={"POST"})
      */
     public function delete(Request $request, Activity $activity): Response
     {

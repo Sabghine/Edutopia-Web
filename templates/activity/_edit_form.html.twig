@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('activity_edit', {'id': activity.id}) }}">
     <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ activity.id) }}">
-    <button class="btn btn-primary" style="background-color: #1aa179">Modifier</button>
+    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">Modifier</button>
 </form>

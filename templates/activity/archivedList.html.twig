@@ -1,16 +1,16 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste activités{% endblock %}
 {% block content %}
     {% block body %}
-        <h1>Liste des activités archivés</h1>
-        <h5 style="float: right">Nombre des activités archivés : <b>{{ nbr }}</b></h5>
+        <h1>Liste des activités archivés</h1><br>
+        <h5 style="float: right">Nombre des activités archivés : <b>{{ nbr }}</b></h5><br>
         <table class="table">
             <thead>
             <tr>
                 <th>Nom</th>
                 <th>Date limite</th>
-                <th>Statut</th>
+                <th> </th>
                 <th> </th>
             </tr>
             </thead>
@@ -19,9 +19,11 @@
                 <tr>
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
-                    <td>{{ activity.status }}</td>
-                    <td align="center">
+                    <td>
                         {{ include('activity/_active_form.html.twig') }}
+                    </td>
+                    <td >
+                        {{ include('activity/_delete_form.html.twig') }}
                     </td>
                 </tr>
             {% else %}

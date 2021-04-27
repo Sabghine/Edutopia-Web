@@ -1,15 +1,15 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Details activité{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>Details d'une activité</h1>
+    <h1>Details d'une activité</h1><br><br>
 
-    <table class="table">
+    <table class="table table-avatar">
         <tbody>
             <tr>
                 <th>Nom</th>
-                <td>{{ activity.name }}</td>
+                <td><span class="probootstrap-meta"><i class="icon-calendar2"></i> <a href="/uploads/{{ activity.workTodo }}" style="color: green" target="_blank">{{ activity.name }}.pdf</a></span></td>
             </tr>
             <tr>
                 <th>Date Limite</th>
@@ -21,11 +21,16 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('activity_index') }}">Retourner</a>
-    <a href="{{ path('activity_edit', {'id': activity.id}) }}">Télécharger</a>
-    <a href="{{ path('activity_edit', {'id': activity.id}) }}">Modifier</a>
-
-    {{ include('activity/_delete_form.html.twig') }}
+    <div  style="display: flex; width: 100%;justify-content: center">
+        <div style="margin-right: 20px">
+            <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179"><a href="{{ path('activity_index') }}" style="color: white">Retourner</a></button>
+        </div>
+        <div style="margin-right: 20px">
+            <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179"><a href="{{ path('activity_edit', {'id': activity.id}) }}" style="color: white">Modifier</a></button>
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('activity/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
 {% endblock %}
