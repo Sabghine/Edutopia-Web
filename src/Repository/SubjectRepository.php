@@ -18,6 +18,18 @@ class SubjectRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Subject::class);
     }
+    public function findSubjectsByName($str)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT s
+                FROM App:Subject s
+                WHERE s.idSubject LIKE :str'
+            )
+            ->setParameter('str','%'.$str.'%')
+            ->getResult();
+
+    }
 
     // /**
     //  * @return Subject[] Returns an array of Subject objects

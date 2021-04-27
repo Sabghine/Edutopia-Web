@@ -24,6 +24,19 @@ class ExamController extends AbstractController
             'exams' => $examRepository->findAll(),
         ]);
     }
+    /**
+     * @Route("/exam_bysubject/{id}", name="exam_bysubject", methods={"GET"})
+     */
+    public function exam_bysubject(Subject $subject): Response
+    {
+
+        $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$subject->getId()]);
+
+        return $this->render('exam/index.html.twig', [
+            'exams' => $exams,
+            'subject' => $subject,
+        ]);
+    }
 
     /**
      * @Route("/new", name="exam_new", methods={"GET","POST"})

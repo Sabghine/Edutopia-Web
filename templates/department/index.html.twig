@@ -2,8 +2,25 @@
 
 {% block title %}Department index{% endblock %}
 {% block content %}
+    {% block header %}
+
+    {% endblock %}
 {% block body %}
     <h1>Department index</h1>
+    <a href="{{ path('department_index') }}">back to list</a>
+    <div>
+
+        <div>
+            <input type="text" id="1" name="depname" class="form-control" placeholder="Enter Department Name">
+        </div>
+        <!-- /input-group -->
+    </div>
+    <ul class="nav" id="side-menu">
+        <li>
+            <button type="submit" value="submit" name="submit" id="submit">Submit</button>
+        </li>
+    </ul>
+
 
     <table class="table">
         <thead>
@@ -45,5 +62,63 @@
     </table>
 
     <a href="{{ path('department_new') }}">Create new</a>
+    <br>
+    <a href="{{ path('stat') }}">Statiqtique</a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#1").keyup(function() {
+                var $twenties=0;
+                var $thirties=0;
+                var $fourties=0;
+                var $plus=0;
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('stat') }}",
+                    data: {
+                        'q' : value
+                    },
+                    success : function (retour) {
+                        $.each(JSON.parse(retour), function (i , obj) {
+                            $twenties++;
+                            $thirties++;
+                            $fourties++;
+                            $plus++;
+                            alert("hazebi");
+                        });
+                    }
+                });
+            });
+        });
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['20\'s', $twenties ],
+                ['30\'s', $thirties ],
+                ['40\'s', $fourties ],
+                ['50+', $plus ],
+
+            ]);
+
+            var options = {
+                title: 'Users age stats'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+
+    </script>
+
 {% endblock %}
 {% endblock %}

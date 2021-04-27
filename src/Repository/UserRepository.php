@@ -18,6 +18,18 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+    public function findByDepid($int) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT u
+                FROM App:User u
+                WHERE d.depId LIKE :int AND role LIKE :role AND status != :status '
+            )
+            ->setParameter('int','%'.$int.'%')
+            ->setParameter('role',Teacher)
+            ->setParameter('status',Archived)
+            ->getResult();
+    }
 
     // /**
     //  * @return User[] Returns an array of User objects
