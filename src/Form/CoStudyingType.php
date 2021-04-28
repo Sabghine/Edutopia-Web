@@ -55,7 +55,6 @@ class CoStudyingType extends AbstractType
                     '5eme' => '5eme',
                 ],
             ])
-            ->add('rating')
             ->add('captcha', CaptchaType::class);
 
     }

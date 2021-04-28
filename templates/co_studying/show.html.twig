@@ -41,11 +41,10 @@
     {{ include('co_studying/_delete_form.html.twig') }}
     <br>
     <br>
+    <a class="btn btn-primary" href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">Modifier</a>
     <br>
-    <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">Modifier</a>
     <br>
-    <br>
-    <a href="{{ path('co_studying_index') }}">Retourner</a>
+    <a class="btn btn-primary" href="{{ path('co_studying_index') }}">Retourner</a>
 
 
 {% endblock %}

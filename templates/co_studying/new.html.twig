@@ -2,63 +2,76 @@
 
 {% block title %}Nouveau contenu Co-Studying{% endblock %}
 {% block content %}
+    <a class="btn btn-primary" href="{{ path('co_studying_font') }}" style="position:relative">Retourner</a>
     {% block body %}
         <h1>Creation du contenu</h1>
-        <table class="table" align="center" style="text-align:center;">
+        <table class="table">
             <tbody>
 
             <tr>
                 <th>{{ form_start(form) }}
                     {{ form_label (form.description, "Description:") }}
-                    {{ form_widget(form.description,{'attr':{'placeholder' : ' Description'}} ) }}
+
                 </th>
                 <td>
+                    {{ form_widget(form.description,{'attr':{'placeholder' : ' Description'}} ) }}
                     {{ form_errors (form.description) }}
                 </td>
             </tr>
             <tr>
                 <th>
                     {{ form_label (form.type, "Type de contenu:") }}
-                    {{ form_widget(form.type,{'attr':{'placeholder' : ' Type '}} ) }}
                 </th>
                 <td>
+                    {{ form_widget(form.type,{'attr':{'placeholder' : ' Type '}} ) }}
                     {{ form_errors (form.type) }}
                 </td>
             </tr>
             <tr>
                 <th>
                     {{ form_label (form.type, "Fichier:") }}
-                    {{ form_widget(form.file,{'attr':{'placeholder' : ' File '}} ) }}
                 </th>
                 <td>
+                    {{ form_widget(form.file,{'attr':{'placeholder' : ' File '}} ) }}
                     {{ form_errors (form.file) }}
                 </td>
             </tr>
             <tr>
                 <th>
                     {{ form_label (form.niveau, "Niveau:") }}
-                    {{ form_widget(form.niveau,{'attr':{'placeholder' : ' Niveau pédagogique '}} ) }}
-
                 </th>
                 <td>
+                    {{ form_widget(form.niveau,{'attr':{'placeholder' : ' Niveau pédagogique '}} ) }}
                     {{ form_errors (form.niveau) }}
                 </td>
             </tr>
             <tr>
                 <th>
-                    {{ form_label (form.rating, "Rating:") }}
-                    {{ form_widget(form.rating,{'attr':{'placeholder' : 'Default rating'}} ) }}
+                    {{ form_label (form.captcha, "Captcha:") }}
                 </th>
                 <td>
-                    {{ form_errors (form.rating) }}
+                    {{ form_widget(form.captcha,{'attr':{'placeholder' : 'Entrez le code ici'}} ) }}
+                    {{ form_errors (form.captcha) }}
                 </td>
             </tr>
-
             </tbody>
         </table>
 
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
 
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
 
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
         {{ include('co_studying/_form.html.twig') }}
 
     {% endblock %}

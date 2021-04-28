@@ -52,9 +52,6 @@ class CoStudying
      * @var int|null
      *
      * @ORM\Column(name="rating", type="integer", nullable=true)
-     * @Assert\NotBlank(message="Rating field is required")
-     * @Assert\Positive
-     * @Assert\LessThanOrEqual(5)
      */
     private $rating;
 
@@ -62,7 +59,6 @@ class CoStudying
      * @var \DateTime|null
      *
      * @ORM\Column(name="created_date", type="date", nullable=true)
-
      */
     private $createdDate;
 
@@ -256,6 +252,12 @@ class CoStudying
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->description;
+    }
+
 
 
 }

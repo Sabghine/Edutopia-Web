@@ -112,7 +112,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             {% for co_studying in co_studyings %}
-                            {#    <div class="probootstrap-service-2 probootstrap-animate">
+                                {# <div class="probootstrap-service-2 probootstrap-animate">
                                     <div class="image">
                                         <div class="image-bg">
                                             <img src="../img/img_sm_1.jpg"
@@ -131,17 +131,51 @@
                                 </div> #}
 
                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
-                                    <a href="#" class="probootstrap-featured-news-box">
-                                        <figure class="probootstrap-media"><img src="/img/img_sm_1.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive"></figure>
+                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}" class="probootstrap-featured-news-box">
+                                        {% if co_studying.type == "Résumé"%}
+                                        <figure class="probootstrap-media"><img src="/img/img_sm_1.jpg"
+                                                                                alt="Free Bootstrap Template by uicookies.com"
+                                                                                class="img-responsive"></figure>
+                                        {% endif %}
+                                        {% if co_studying.type == "Opportunité"%}
+                                            <figure class="probootstrap-media"><img src="/img/headhunter.png"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
+                                        {% endif %}
+                                        {% if co_studying.type == "Freelance"%}
+                                            <figure class="probootstrap-media"><img src="/img/salary.png"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
+                                        {% endif %}
+                                        {% if co_studying.type == "Offre Stage"%}
+                                            <figure class="probootstrap-media"><img src="/img/job-offer.png"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
+                                        {% endif %}
                                         <div class="probootstrap-text">
                                             <h3>{{ co_studying.type }}</h3>
-                                            <span class="probootstrap-date"><i class="icon-calendar"></i>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</span>
-                                            <span class="probootstrap-location"><i class="icon-location2"></i>{{ co_studying.description }}</span>
-
-
+                                            <span class="probootstrap-date">
+                                                <i class="icon-calendar"></i>
+                                                {{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}
+                                            </span>
+                                            <span class="probootstrap-location">
+                                                <i class="icon-books"></i>
+                                                {{ co_studying.description }}
+                                            </span>
+                                            <span class="probootstrap-location">
+                                                <i class="icon-profile"></i>
+                                                {{ 'Propriétaire : ' ~ co_studying.idstudent }}
+                                            </span>
+                                            <span class="probootstrap-date">
+                                                {{ 'Rating :    ' ~ co_studying.rating }}
+                                                <i class="icon-star"></i>
+                                            </span>
                                         </div>
                                     </a>
-                                    <a href="#" class="btn btn-primary">Download</a>
+                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}"
+                                       class="btn btn-primary">Download</a>
+                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}"
+                                       class="btn btn-primary">Voir plus</a>
                                     <br>
                                     <br>
                                 </div>
@@ -263,14 +297,14 @@
     {% endblock %}
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            s1.src='https://embed.tawk.to/608216395eb20e09cf35b9fe/1f3u2dkqf';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/608216395eb20e09cf35b9fe/1f3u2dkqf';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
         })();
     </script>
     <!--End of Tawk.to Script-->

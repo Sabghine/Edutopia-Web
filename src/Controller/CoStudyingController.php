@@ -109,6 +109,16 @@ class CoStudyingController extends AbstractController
     }
 
     /**
+     * @Route("/front/{id}", name="co_studying_front", methods={"GET"})
+     */
+    public function show_front(CoStudying $coStudying): Response
+    {
+        return $this->render('co_studying/show_front.html.twig', [
+            'co_studying' => $coStudying,
+        ]);
+    }
+
+    /**
      * @Route("/{id}/edit", name="co_studying_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, CoStudying $coStudying, SluggerInterface $slugger): Response
@@ -214,13 +224,13 @@ class CoStudyingController extends AbstractController
     {
 
         $data = $request->get('myText');
-        if($data == "Opportunity"){
+        if ($data == "Opportunity") {
             $abc = 1;
-        }elseif ($data == "Summary"){
+        } elseif ($data == "Summary") {
             $abc = 2;
-        }elseif ($data == "Freelance"){
+        } elseif ($data == "Freelance") {
             $abc = 3;
-        }else {
+        } else {
             $abc = 4;
         }
 
@@ -236,6 +246,14 @@ class CoStudyingController extends AbstractController
         return $this->render('co_studying/index_front.html.twig', [
             'co_studyings' => $costudyings, 'co_studyingtypes' => $costudyingtypes,
         ]);
+    }
+
+    public function UpdateRating(CoStudying $costudying, int $sum, int $total)
+    {
+        $NewRating = $sum / $total;
+        $NewRating = $sum / $total;
+        $costudying->setRating($NewRating);
+        $this->getDoctrine()->getManager()->flush();
     }
 
 
