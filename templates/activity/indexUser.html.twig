@@ -6,6 +6,8 @@
         <h1 align="center">Liste des activités</h1>
         <div class="container">
             <h5 style="padding-left: 80%; width: 100%" >Nombre des activités: <b>{{ nbr }}</b></h5>
+            <input type="text" id="search" name="search" class="form-control" placeholder="Chercher une activité">
+            <br><br>
             <div class="row">
     {% for activity in activities %}
                 <div class="col-md-6">
@@ -18,9 +20,30 @@
                             </div>
                         </div>
                         <div class="text">
+                            <table id="tabact">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <h3>{{ activity.name }}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                             <span class="probootstrap-meta"><i class="icon-calendar2"></i> <a href="/uploads/{{ activity.workTodo }}" style="color: green" target="_blank">{{ activity.name }}.pdf</a></span>
-                            <h3>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h3>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                 {{ include('work_done/_add_form.html.twig') }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                             </div>
                     </div>
                 </div>{% else %}
@@ -30,6 +53,36 @@
         </div>
 
     </section>
+    {#  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tabact tbody').each(function(){
+                    var found = 'false';
+                    $(this).each(function(){
+                        if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                        {
+                            found = 'true';
+                        }
+                    });
+                    if(found === 'true')
+                    {
+                        $(this).show();
+
+                    }
+                    else
+                    {
+                        $(this).hide();
+
+                    }
+                });
+            }
+        });
+    </script>
+    #}
     <div  style="display: flex; width: 100%;justify-content: center">
         <div style="margin-right: 20px">
             {{ include('forum/_list_form.html.twig') }}
