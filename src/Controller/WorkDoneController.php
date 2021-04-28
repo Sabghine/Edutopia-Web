@@ -72,6 +72,7 @@ class WorkDoneController extends AbstractController
             $idActivity=$workDone->getIdActivity()->getId();
             $workDone2->setStatus("Available");
             $workDone2->setUploadedDate(new \DateTime('now'));
+            $workDone->setLastUpdatedDate(new \DateTime('now'));
             $workDone2->setIdActivity($idActivity);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($workDone2);
@@ -153,7 +154,7 @@ class WorkDoneController extends AbstractController
         $form = $this->createForm(WorkDoneScoreType::class, $workDone);
         $form->handleRequest($request);
         $deadline=$workDone->getIdActivity()->getDeadline();
-        $uploadedDate=$workDone->getUploadedDate();
+        $uploadedDate=$workDone->setLastUpdatedDate();
         if ($form->isSubmitted() && $form->isValid()) {
             if ($uploadedDate<$deadline)
             {
