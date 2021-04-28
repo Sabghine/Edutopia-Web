@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste forums archivés{% endblock %}
+{% block content %}
+    {% block body %}
+        <br>
+        <h1>Liste des forums archivés</h1>
+        <br><br>
+        <h5 style="float: right">Nombre des forums archivés : <b>{{ nbr }}</b></h5><br>
+        <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un forum">
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Sujet</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for forum in forums %}
+                <tr>
+                    <td>{{ forum.subject }}</td>
+                    <td>
+                        {{ include('forum/_active_form.html.twig') }}
+                    </td>
+                    <td >
+                        {{ include('forum/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">aucun forum</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div  style="display: flex; width: 100%;justify-content: center">
+            <div style="margin-right: 20px">
+                {{ include('forum/_list_form.html.twig') }}
+            </div>
+            <div style="margin-right: 20px">
+                {{ include('activity/_list_form.html.twig') }}
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}

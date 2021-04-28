@@ -20,8 +20,21 @@ class ForumController extends AbstractController
      */
     public function index(ForumRepository $forumRepository): Response
     {
+        $nbr=$forumRepository->countStatus("Available");
         return $this->render('forum/index.html.twig', [
-            'forums' => $forumRepository->findAll(),
+            'forums' => $forumRepository->findBy(["status" => "Available"]),
+            'nbr' => $nbr,
+        ]);
+    }
+    /**
+     * @Route("/ArchivedList", name="forum_ArchivedList", methods={"GET","POST"})
+     */
+    public function ArchivedList(ForumRepository $forumRepository): Response
+    {
+        $nbr=$forumRepository->countStatus("Archived");
+        return $this->render('forum/archivedList.html.twig', [
+            'forums' => $forumRepository->findBy(["status" => "Archived"]),
+            'nbr' => $nbr,
         ]);
     }
 
@@ -51,7 +64,7 @@ class ForumController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="forum_show", methods={"GET"})
+     * @Route("/{id}/details", name="forum_show", methods={"GET"})
      */
     public function show(Forum $forum): Response
     {
@@ -79,9 +92,36 @@ class ForumController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/{id}/archive", name="forum_archive", methods={"POST"})
+     */
+    public function archive(Request $request, Forum $forum): Response
+    {
+        $forum->setStatus("Archived");
+        $forum->setArchivedDate(new \DateTime('now'));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($forum);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('forum_ArchivedList');
+    }
 
     /**
-     * @Route("/{id}", name="forum_delete", methods={"POST"})
+     * @Route("/{id}", name="forum_active", methods={"POST"})
+     */
+    public function active(Request $request, Forum $forum): Response
+    {
+        $forum->setStatus("Available");
+        $forum->setLastUpdatedDate(new \DateTime('now'));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($forum);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('forum_index');
+    }
+
+    /**
+     * @Route("/{id}/delete", name="forum_delete", methods={"POST"})
      */
     public function delete(Request $request, Forum $forum): Response
     {

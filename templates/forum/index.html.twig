@@ -5,12 +5,14 @@
 {% block body %}
     <br>
     <h1>Liste des forums</h1>
-<br><br>
+    <br><br>
+    <h5 style="float: right">Nombre des forums disponibles : <b>{{ nbr }}</b></h5><br>
+    <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un forum">
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Sujet</th>
-                <th>Statut</th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -21,7 +23,6 @@
         {% for forum in forums %}
             <tr>
                 <td>{{ forum.subject }}</td>
-                <td>{{ forum.status }}</td>
                 <td>
                     <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
                         <a style="color: white" href="{{ path('forum_show', {'id': forum.id}) }}">Details</a>
@@ -42,6 +43,9 @@
                         <a style="color: white" href="{{ path('comment_new', {'idForum': forum.id}) }}">Ajouter un commentaire</a>
                     </button>
                 </td>
+                <td>
+                    {{ include('forum/_archive_form.html.twig') }}
+                </td>
             </tr>
         {% else %}
             <tr>
@@ -55,6 +59,9 @@
     <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
         <a style="color: white" href="{{ path('forum_new') }}">Ajouter un nouveau forum</a>
     </button>
+    </div>
+    <div style="margin-right: 20px">
+        {{ include('forum/_archivedList_form.html.twig') }}
     </div>
     <div style="margin-right: 20px">
         {{ include('activity/_list_form.html.twig') }}
