@@ -152,12 +152,30 @@ class WorkDoneController extends AbstractController
     {
         $form = $this->createForm(WorkDoneScoreType::class, $workDone);
         $form->handleRequest($request);
+        $deadline=$workDone->getIdActivity()->getDeadline();
+        $uploadedDate=$workDone->getUploadedDate();
         if ($form->isSubmitted() && $form->isValid()) {
-            $idActivity = $workDone->getIdActivity()->getId();
-            $workDone->setStatus("ScoreAdded");
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($workDone);
-            $entityManager->flush();
+            if ($uploadedDate<$deadline)
+            {
+                $score=$workDone->getScore();
+                $moyenneScore=($score+10)/3;
+                $workDone->setScore($moyenneScore);
+                $idActivity = $workDone->getIdActivity()->getId();
+                $workDone->setStatus("ScoreAdded");
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($workDone);
+                $entityManager->flush();
+            }
+            else {
+                $score=$workDone->getScore();
+                $moyenneScore=$score/3;
+                $workDone->setScore($moyenneScore);
+                $idActivity = $workDone->getIdActivity()->getId();
+                $workDone->setStatus("ScoreAdded");
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($workDone);
+                $entityManager->flush();
+            }
 
             return $this->redirectToRoute('work_done_index', ['idActivity' => $idActivity]);
         }

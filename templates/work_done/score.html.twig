@@ -1,10 +1,9 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Noter travail rendu{% endblock %}
 {% block content %}
     {% block body %}
         <h1>Noter travail rendu</h1>
-
         {{ form_start(form) }}
         {{ form_row(form.score) }}
         {{ form_end(form) }}
