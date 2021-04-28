@@ -157,8 +157,11 @@ class WorkDoneController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($uploadedDate<$deadline)
             {
-                $score=$workDone->getScore();
-                $moyenneScore=($score+10)/3;
+                $score=$workDone->getScore()*80;
+                $depot=20*20;
+                $notescore=$score/100;
+                $notedepot=$depot/100;
+                $moyenneScore=$notescore+$notedepot;
                 $workDone->setScore($moyenneScore);
                 $idActivity = $workDone->getIdActivity()->getId();
                 $workDone->setStatus("ScoreAdded");
@@ -167,8 +170,11 @@ class WorkDoneController extends AbstractController
                 $entityManager->flush();
             }
             else {
-                $score=$workDone->getScore();
-                $moyenneScore=$score/3;
+                $score=$workDone->getScore()*80;
+                $depot=0*20;
+                $notescore=$score/100;
+                $notedepot=$depot/100;
+                $moyenneScore=$notescore+$notedepot;
                 $workDone->setScore($moyenneScore);
                 $idActivity = $workDone->getIdActivity()->getId();
                 $workDone->setStatus("ScoreAdded");
