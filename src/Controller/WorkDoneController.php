@@ -72,6 +72,7 @@ class WorkDoneController extends AbstractController
             $idActivity=$workDone->getIdActivity()->getId();
             $workDone2->setStatus("Available");
             $workDone2->setUploadedDate(new \DateTime('now'));
+            //lastudateDate=UploadedDate=now
             $workDone->setLastUpdatedDate(new \DateTime('now'));
             $workDone2->setIdActivity($idActivity);
             $entityManager = $this->getDoctrine()->getManager();
