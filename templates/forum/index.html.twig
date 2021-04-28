@@ -6,9 +6,9 @@
     <br>
     <h1>Liste des forums</h1>
     <br><br>
-    <h5 style="float: right">Nombre des forums disponibles : <b>{{ nbr }}</b></h5><br>
-    <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un forum">
-    <table class="table table-striped">
+    <h5 style="float: right">Nombre des forums disponibles : <b>{{ nbr }}</b></h5><br><br>
+    <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un forum disponible">
+    <table class="table table-striped" id="tabfr">
         <thead>
             <tr>
                 <th>Sujet</th>
@@ -54,6 +54,35 @@
         {% endfor %}
         </tbody>
     </table>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tabfr tbody tr').each(function(){
+                    var found = 'false';
+                    $(this).each(function(){
+                        if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                        {
+                            found = 'true';
+                        }
+                    });
+                    if(found === 'true')
+                    {
+                        $(this).show();
+
+                    }
+                    else
+                    {
+                        $(this).hide();
+
+                    }
+                });
+            }
+        });
+    </script>
 <div  style="display: flex; width: 100%;justify-content: center">
     <div style="margin-right: 20px">
     <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
