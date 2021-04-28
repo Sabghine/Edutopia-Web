@@ -47,6 +47,29 @@ class ExamController extends AbstractController
     }
 
     /**
+     * @Route ("/search", name="ajax_search_exam")
+     */
+    public function searchAction( Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $posts =  $em->getRepository('App:Exam')->findCourseByType($requestString);
+        if(!$posts) {
+            $result['posts']['error'] = "Exam Not found :( ";
+        } else {
+            $result['posts'] = $this->getRealEntities($posts);
+        }
+        return new Response(json_encode($result));
+
+    }
+    public function getRealEntities($Exam) {
+        foreach ($Exam as $Exams) {
+            $realExam[$Exams->getIdExam()] =[$Exams->getType()];
+        }
+        return $realExam;
+    }
+
+
+    /**
      * @Route("/exam_consultertoday/", name="exam_consultertoday", methods={"GET"})
      */
     public function exam_consultertoday(): Response
