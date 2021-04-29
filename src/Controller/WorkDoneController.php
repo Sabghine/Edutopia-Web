@@ -155,7 +155,7 @@ class WorkDoneController extends AbstractController
         $form = $this->createForm(WorkDoneScoreType::class, $workDone);
         $form->handleRequest($request);
         $deadline=$workDone->getIdActivity()->getDeadline();
-        $uploadedDate=$workDone->setLastUpdatedDate();
+        $uploadedDate=$workDone->getLastUpdatedDate();
         if ($form->isSubmitted() && $form->isValid()) {
             if ($uploadedDate<$deadline)
             {

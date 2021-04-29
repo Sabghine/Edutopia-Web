@@ -427,5 +427,4 @@ class User
     }
 
 
-
 }

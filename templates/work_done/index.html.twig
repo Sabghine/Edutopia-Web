@@ -31,7 +31,7 @@
                 <td>
                     {% if work_done.status =="ScoreAdded" %}
                         <button disabled class="btn btn-primary" style="background-color: #1aa179">
-                        <a style="color: white" href="{{ path('work_done_score', {'id': work_done.id}) }}">Noter </a>
+                        <a style="color: white">Noter </a>
                         </button>
                     {% endif %}
                     {% if work_done.status =="Available" %}

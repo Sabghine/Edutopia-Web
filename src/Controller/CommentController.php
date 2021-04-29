@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Forum;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,18 +23,23 @@ class CommentController extends AbstractController
      */
     public function index(CommentRepository $commentRepository,Comment $comment): Response
     {
+        $subject=$comment->getIdForum()->getSubject();
+        $forum=$comment->getIdForum();
         $nbr=$commentRepository->countAvailable("Available",$comment->getIdForum());
         return $this->render('comment/index.html.twig', [
             'comments' => $commentRepository->tri("Available",$comment->getIdForum()->getId()),
             'nbr'=>$nbr,
+            'subject'=>$subject,
+            'forum'=>$forum,
         ]);
     }
 
     /**
      * @Route("/new/{idForum}", name="comment_new", methods={"GET","POST"})
      */
-    public function new(Request $request,Comment $comment): Response
+    public function new(Request $request,Comment $comment,UserRepository $userRepository): Response
     {
+        $user = $userRepository->findOneBy(['id' => 1]);
         $comment2 = new Comment();
         $idForum=$comment->getIdForum();
         $comment2->setIdForum($idForum);
@@ -41,6 +47,7 @@ class CommentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $comment2->setCreatedBy($user);
             $comment2->setStatus("Available");
             $comment2->setLikes(0);
             $comment2->setDislike(0);
@@ -48,7 +55,7 @@ class CommentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment2);
             $entityManager->flush();
-            return $this->redirectToRoute('comment_index',['idForum'=>$idForum]);
+            return $this->redirectToRoute('comment_index',['idForum'=>$idForum->getId()]);
         }
 
         return $this->render('comment/new.html.twig', [
@@ -70,13 +77,18 @@ class CommentController extends AbstractController
     /**
      * @Route("/{id}/edit", name="comment_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Comment $comment): Response
+    public function edit(Request $request, Comment $comment,UserRepository $userRepository): Response
     {
+        $user = $userRepository->findOneBy(['id' => 1]);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $comment->setLastUpdatedDate(new \DateTime('now'));
+            $comment->setLastUpdatedBy($user);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
 
             return $this->redirectToRoute('comment_index', ['idForum' => $comment->getIdForum()->getId()]);
         }
@@ -103,7 +115,7 @@ class CommentController extends AbstractController
      */
     public function dislike(Request $request, Comment $comment): Response
     {
-        $comment->setDislike($comment->getLikes()+1);
+        $comment->setDislike($comment->getDislike()+1);
         $comment->setLastUpdatedDate(new \DateTime('now'));
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($comment);
