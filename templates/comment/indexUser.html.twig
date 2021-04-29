@@ -6,9 +6,7 @@
         <section class="probootstrap-section" style="padding-top: 0%">
             <h1 align="center">Liste des commentaires</h1>
             <div class="container">
-                <h5 style="float: right">Nombre des commentaires disponibles : <b>{{ nbr }}</b></h5></h5>
-                <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un commentaire">
-                <br><br>
+                <h5 style="float: right">Nombre des commentaires disponibles : <b>{{ nbr }}</b></h5></h5><br><br>
                 {% for comment in comments %}
                 <div class="col-md-6" style="width: 100%">
                     <div class="probootstrap-service-2 probootstrap-animate fadeInUp probootstrap-animated" style="width: 100%">
@@ -96,10 +94,9 @@
                 </button>
             </div>
             <div style="margin-right: 20px">
-                <form method="post" action="{{ path('activity_indexUser')}}">
-                    <input type="hidden" name="_token">
-                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">Liste des activités disponibles</button>
-                </form>
+                <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                    <a style="color: white" href="{{ path('activity_indexUser') }}">Liste des activités disponibles</a>
+                </button>
             </div>
             <div style="margin-right: 20px">
                 <form method="post" action="{{ path('forum_indexUser')}}">
@@ -108,6 +105,6 @@
                 </form>
             </div>
         </div>
-
+<br><br>
     {% endblock %}
 {% endblock %}

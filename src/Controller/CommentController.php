@@ -12,6 +12,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use \Expalmer\PhpBadWords\PhpBadWords as BadWords;
 
 /**
  * @Route("/comment")
@@ -67,6 +68,20 @@ class CommentController extends AbstractController
             $comment2->setLikes(0);
             $comment2->setDislike(0);
             $comment2->setCreatedDate(new \DateTime('now'));
+            $filterWords = new BadWords();
+            $commentt = $form->get('content')->getData();
+            $filterWords->setText($commentt);
+            $testCommentt = $filterWords->checkAmong();
+            $nn= $filterWords->dictionary;
+            $ss=array('amine');
+
+            if($testCommentt ==  true)
+            {
+                $replace=str_ireplace(implode(" ",$nn),'*******',$commentt);
+                $replace2=str_ireplace(implode(" ",$ss),'*******',$replace);
+                $comment2->setContent($replace2);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment2);
             $entityManager->flush();
@@ -96,6 +111,19 @@ class CommentController extends AbstractController
             $comment2->setLikes(0);
             $comment2->setDislike(0);
             $comment2->setCreatedDate(new \DateTime('now'));
+            $filterWords = new BadWords();
+            $commentt = $form->get('content')->getData();
+            $filterWords->setText($commentt);
+            $testCommentt = $filterWords->checkAmong();
+            $nn= $filterWords->dictionary;
+            $ss=array('amine');
+
+            if($testCommentt ==  true)
+            {
+                $replace=str_ireplace(implode(" ",$nn),'*******',$commentt);
+                $replace2=str_ireplace(implode(" ",$ss),'*******',$replace);
+                $comment2->setContent($replace2);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment2);
             $entityManager->flush();
@@ -130,6 +158,55 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setLastUpdatedDate(new \DateTime('now'));
             $comment->setLastUpdatedBy($user);
+            $filterWords = new BadWords();
+            $commentt = $form->get('content')->getData();
+            $filterWords->setText($commentt);
+            $testCommentt = $filterWords->checkAmong();
+            $nn= $filterWords->dictionary;
+            $ss=array('amine');
+
+            if($testCommentt ==  true)
+            {
+                $replace=str_ireplace(implode(" ",$nn),'*******',$commentt);
+                $replace2=str_ireplace(implode(" ",$ss),'*******',$replace);
+                $comment->setContent($replace2);
+            }
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('comment_indexUser', ['idForum' => $comment->getIdForum()->getId()]);
+        }
+        return $this->render('comment/editUser.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
+        ]);
+    }
+    /**
+     * @Route("/{id}/editUser", name="comment_editUser", methods={"GET","POST"})
+     */
+    public function editUser(Request $request, Comment $comment,UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findOneBy(['id' => 1]);
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setLastUpdatedDate(new \DateTime('now'));
+            $comment->setLastUpdatedBy($user);
+            $filterWords = new BadWords();
+            $commentt = $form->get('content')->getData();
+            $filterWords->setText($commentt);
+            $testCommentt = $filterWords->checkAmong();
+            $nn= $filterWords->dictionary;
+            $ss=array('amine');
+
+            if($testCommentt ==  true)
+            {
+                $replace=str_ireplace(implode(" ",$nn),'*******',$commentt);
+                $replace2=str_ireplace(implode(" ",$ss),'*******',$replace);
+                $comment->setContent($replace2);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($comment);
             $entityManager->flush();

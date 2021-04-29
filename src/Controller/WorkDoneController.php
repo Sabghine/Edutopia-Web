@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Form\WorkDoneScoreType;
+use Twilio\Rest\Client;
 
 /**
  * @Route("/workDone")
@@ -35,7 +36,7 @@ class WorkDoneController extends AbstractController
     }
 
     /**
-     * @Route("/new/{idActivity}", name="work_done_new", methods={"GET","POST"})
+     * @Route("/new/{idActivity}", name="work_done_new", methods={"GET","POST"},requirements={"idActivity"="\d+"})
      */
     public function new(Request $request,WorkDone $workDone, SluggerInterface $slugger): Response
     {
@@ -73,13 +74,31 @@ class WorkDoneController extends AbstractController
             $workDone2->setStatus("Available");
             $workDone2->setUploadedDate(new \DateTime('now'));
             //lastudateDate=UploadedDate=now
-            $workDone->setLastUpdatedDate(new \DateTime('now'));
-            $workDone2->setIdActivity($idActivity);
+            $workDone2->setLastUpdatedDate(new \DateTime('now'));
+            $workDone2->setIdActivity($workDone->getIdActivity());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($workDone2);
             $entityManager->flush();
 
-            return $this->redirectToRoute('work_done_index' ,['idActivity'=>$$idActivity]);
+// Your Account SID and Auth Token from twilio.com/console
+            $account_sid = 'AC9fca576beefd8208037bf04db9b0f366';
+            $auth_token = '50f7450f3746f6c51b75fa733243ee90';
+// In production, these should be environment variables. E.g.:
+// $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
+
+// A Twilio number you own with SMS capabilities
+            $twilio_number = "+17542128962";
+
+            $client = new Client($account_sid, $auth_token);
+            $client->messages->create(
+            // Where to send a text message (your cell phone?)
+                '+21658720616',
+                array(
+                    'from' => $twilio_number,
+                    'body' => 'travail rendu avec succès'
+                )
+            );
+            return $this->redirectToRoute('work_done_indexUser' ,['idActivity'=>$idActivity]);
         }
 
         return $this->render('work_done/new.html.twig', [
