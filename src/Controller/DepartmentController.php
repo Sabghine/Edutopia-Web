@@ -116,6 +116,29 @@ class DepartmentController extends AbstractController
     }
 
     /**
+     * @Route("/stat", name="stat", methods={"GET","POST"})
+     * @param Request $request
+     * @param NormalizerInterface $normalizer
+     * @return Response
+     */
+    public function statistique(Request $request, NormalizerInterface $Normalizer): Response
+    {
+        $namedep = $request->get('q');
+        $em=$this->getDoctrine()->getManager();
+        $department = $em->getRepository('App:Department')->findOneByName($namedep);
+        if( is_null($department)) {
+            $id=0;
+        } else {
+            $id=$department->getId();
+        }
+        $users = $em->getRepository('App:User')->findByDepid($id);
+        $jsonContent = $Normalizer->normalize($users, 'json',['groups'=>'students']);
+
+        return new Response(json_encode($jsonContent));
+
+    }
+
+    /**
      * @Route("/{id}", name="department_show", methods={"GET"})
      */
     public function show(Department $department): Response

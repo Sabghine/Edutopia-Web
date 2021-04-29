@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="department", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="ownerId", columns={"ownerId"}), @ORM\Index(name="archived_by", columns={"archived_by"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ *
  */
 class Department
 {
@@ -290,8 +291,6 @@ class Department
     {
         $this->setLastUpdatedDate(new \DateTime('now'));
     }
-
-
 
 
 

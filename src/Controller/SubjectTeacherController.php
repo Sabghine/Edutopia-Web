@@ -114,6 +114,7 @@ class SubjectTeacherController extends AbstractController
      * @Route("/{id}", name="subject_teacher_delete", methods={"POST"})
      */
     public function delete(Request $request, Subject $subject, FlashyNotifier $flashy): Response
+
     {
         if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -121,6 +122,7 @@ class SubjectTeacherController extends AbstractController
             $entityManager->flush();
         }
         $flashy->success('matiere supprimé!');
+
 
         return $this->redirectToRoute('subject_teacher_index');
     }

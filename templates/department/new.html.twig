@@ -5,6 +5,7 @@
     {% block head %}
         <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
     {% endblock %}
+
 {% block body %}
 
     <h1>Create new Department</h1>
@@ -19,5 +20,6 @@
     <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
     <!-- Include Flashy default partial -->
     {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+{% endblock %}
 {% endblock %}
 {% endblock %}

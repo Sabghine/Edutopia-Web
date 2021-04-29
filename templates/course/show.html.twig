@@ -1,32 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Course{% endblock %}
+{% block content %}
 
 {% block body %}
     <h1>Course</h1>
 
     <table class="table">
         <tbody>
+
             <tr>
-                <th>Id</th>
-                <td>{{ course.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>Nom du cours</th>
                 <td>{{ course.name }}</td>
             </tr>
             <tr>
-                <th>CourseFile</th>
+                <th>Fichier </th>
                 <td>{{ course.courseFile }}</td>
             </tr>
-            <tr>
-                <th>CreatedDate</th>
-                <td>{{ course.createdDate ? course.createdDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ArchivedDate</th>
-                <td>{{ course.archivedDate ? course.archivedDate|date('Y-m-d') : '' }}</td>
-            </tr>
+
+
             <tr>
                 <th>Description</th>
                 <td>{{ course.description }}</td>
@@ -34,9 +26,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('course_index') }}">back to list</a>
+    <a href="{{ path('course_bysubject',{'id': subject.id}) }}">back to list</a>
 
     <a href="{{ path('course_edit', {'id': course.id}) }}">edit</a>
 
     {{ include('course/_delete_form.html.twig') }}
 {% endblock %}
+{% endblock %}
+

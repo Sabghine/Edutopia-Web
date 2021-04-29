@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Exam
@@ -25,6 +27,7 @@ class Exam
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $type;
 
@@ -165,5 +168,10 @@ class Exam
         return $this;
     }
 
-
+    public function __construct()
+    {
+        $this->startDate = new \DateTime();
+        $this->finishDate = new \DateTime();
+        $this->createdDate = new \DateTime();
+    }
 }

@@ -15,10 +15,10 @@ class ExamType extends AbstractType
             ->add('type')
             ->add('startDate')
             ->add('finishDate')
-            ->add('createdDate')
-            ->add('archivedDate')
+            //->add('createdDate')
+           // ->add('archivedDate')
             ->add('createdBy')
-            ->add('idSubject')
+           // ->add('idSubject')
         ;
     }
 

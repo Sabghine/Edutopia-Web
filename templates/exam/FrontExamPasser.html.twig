@@ -1,0 +1,32 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Exam index{% endblock %}
+
+{% block content %}
+    {% block body %}
+
+        <h1>Passage Examen</h1>
+    <table border="1" class="table table-striped table-bordered dataTable" role="grid" aria-describedby="zero_config_info" id="zero_config">
+    <tr>
+            <th>Type</th>
+           <th> Sujet </th>
+           <th> Date</th>
+           <th> Note </th>
+       </tr>
+       {% for ligne in lignes %}
+       <tr>
+           <th> {{  ligne.idexam.type }}  </th>
+           <th> {{  ligne.idexam.idSubject.idSubject }} </th>
+           <th>  {{  ligne.idexam.startDate | date('Y-m-d') }}</th>
+           {% if ligne.note >=10  %}
+           <th style="color: green">  {{  ligne.note }}</th>
+           {% else %}
+               <th style="color: red">  {{  ligne.note }}</th>
+               {% endif %}
+       </tr>
+       {% endfor %}
+   </table>
+        <a href="exam_consultertoday">passer examen</a>
+
+{%  endblock %}
+{%  endblock %}

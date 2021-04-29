@@ -255,6 +255,7 @@ class Subject
 
         return $this;
     }
+    
     /**
      * @ORM\PrePersist
      */
@@ -269,6 +270,7 @@ class Subject
     {
         $this->setUpdateDate(new \DateTime('now'));
     }
+
 
 
 }

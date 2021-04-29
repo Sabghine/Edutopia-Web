@@ -1,0 +1,109 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Exam index{% endblock %}
+
+{% block content %}
+    {% block body %}
+        <input type="hidden" id="client" value="{{ u.id }}">
+        <input type="hidden" id="exam" value="{{ exam.idExam }}">
+        <input type="hidden" id="nombreq" value="{{ questions | length }}">
+        <table border="1" class="table table-striped table-dark">
+        <tr>
+            <th>
+                <p> Type:{{ exam.type }}</p>
+                <p> Sujet:{{ exam.idSubject.idSubject }}</p>
+
+            </th>
+
+            <th>
+                <p> Date Examen:{{ exam.startDate |date('Y-m-d') }}</p>
+                <p> Enseignant:{{ exam.createdBy.name }}</p>
+
+            </th>
+
+            <th>
+                <p id="notef"> note:../20</p>
+            </th>
+        </tr>
+        </table>{%  set compteur=0 %}
+        {% for ques in questions %}
+            {%  set compteur=compteur+1 %}
+            <div>
+                <p style="color: red"> Question {{ compteur }} :  {{ ques.question }} </p>
+                <input type="radio" name="{{ ques.id }}"  class="{{ ques.id }}" value="{{ ques.proposition1 == ques.bonnereponse }}" />   {{ ques.proposition1 }} <br>
+                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}" value="{{ ques.proposition2== ques.bonnereponse }}" />   {{ ques.proposition2 }} <br>
+                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}" value="{{ ques.proposition3== ques.bonnereponse }}" />   {{ ques.proposition3 }} <br>
+                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}" value="{{ ques.proposition4== ques.bonnereponse }}" />   {{ ques.proposition4 }} <br><br>
+            </div>
+
+
+        {% endfor %}
+        <button id="valider"> Valider </button>
+
+        <div id="final" style="display: none;">
+            {%  set compteurfinal=0 %}
+            {% for ques in questions %}
+                {%  set compteurfinal=compteurfinal+1 %}
+                <span style="color: #ff0000"> Question( {{ compteurfinal }} )   {{ ques.question }}  ?</span> : {{ ques.bonnereponse }}
+                <br>
+            {% endfor %}
+        </div>
+
+    {%  endblock %}
+
+    {% block javascripts %}
+        <script>
+            $(document).ready(function() {
+
+                var count=0;
+                var exist=[];
+                $('#valider').on("click",function(){
+                        var client=    $('#client').val();
+                        var exam=    $('#exam').val();
+                        var nombreq=    $('#nombreq').val();
+                        var note= (count*20)/parseInt(nombreq);
+                        $.ajax({
+                            url: 'exam_resultat',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                'iduser': client, 'idexam': exam, 'note': note,
+                                async: true,
+                                success: function (data) {
+                                    $("#notef").html(' <p>'+note+' /20 </p>');
+                                    alert("vous avez"+note+"/20");
+                                    $("#valider").hide();
+                                    $("#final").css("display", "block");
+
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    //alert('Ajax request failed.');
+                                }
+
+
+                            }
+                        });
+                    }
+                );
+                $("input[value='1']").on("change",function () {
+                    count++;
+                    exist.push($(this).attr('class'));
+                    //   alert(count);
+                })
+
+                $("input[value!='1']").on("change",function () {
+                    if(count>0){
+                        const index = exist.indexOf($(this).attr('class'));
+                        if (index > -1) {
+                            exist.splice(index, 1);
+                            count--;
+                        }
+                    }
+
+                    //    alert(count);
+                })
+
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

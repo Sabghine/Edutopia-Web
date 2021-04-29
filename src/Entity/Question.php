@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Question
@@ -25,6 +27,7 @@ class Question
      * @var string
      *
      * @ORM\Column(name="question", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $question;
 
@@ -32,6 +35,7 @@ class Question
      * @var string
      *
      * @ORM\Column(name="proposition1", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $proposition1;
 
@@ -39,6 +43,7 @@ class Question
      * @var string
      *
      * @ORM\Column(name="proposition2", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $proposition2;
 
@@ -46,6 +51,7 @@ class Question
      * @var string
      *
      * @ORM\Column(name="proposition3", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $proposition3;
 
@@ -53,6 +59,7 @@ class Question
      * @var string
      *
      * @ORM\Column(name="proposition4", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $proposition4;
 

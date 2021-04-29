@@ -5,10 +5,12 @@
     {% block head %}
         <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
 
+
     {% endblock %}
 {% block body %}
 
     <h1>Department index</h1>
+
     <!-- Flashy depends on jQuery -->
     <script src="//code.jquery.com/jquery.js"></script>
     <!-- Load Flashy default JavaScript -->
@@ -25,6 +27,7 @@
             flashy("{{ message.message }}", "{{ message.link }}");
         </script>
     {% endfor %}
+
     <a href="{{ path('department_index') }}">back to list</a>
     <div>
 
@@ -138,8 +141,6 @@
         }
 
     </script>
-
-
 
 {% endblock %}
 {% endblock %}

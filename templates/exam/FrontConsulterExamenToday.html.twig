@@ -1,0 +1,18 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Exam index{% endblock %}
+
+{% block content %}
+    {% block body %}
+
+        <h1>Passage Examen</h1>
+    {% if exams | length >0%}
+    {% for e in exams %}
+    <a href="{{ path('exam_passage', {'idExam': e.idexam}) }}"> {{  e.type }}</a>
+        <br>
+    {% endfor %}
+      {% else %}
+        <p> Pas des examen pour aujourd'hui </p>
+    {% endif %}
+{%  endblock %}
+{%  endblock %}

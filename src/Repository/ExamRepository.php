@@ -18,6 +18,20 @@ class ExamRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Exam::class);
     }
+    public function findCourseByType($str)
+
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT e
+                FROM App:Exam e
+                WHERE e.type LIKE :str'
+
+            )
+            ->setParameter('str','%'.$str.'%')
+            ->getResult();
+
+    }
 
     // /**
     //  * @return Exam[] Returns an array of Exam objects

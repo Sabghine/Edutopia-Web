@@ -1,0 +1,9 @@
+{% if results is defined and results is iterable and results|length >= 1 %}
+{% for result in results %}
+
+<p style="display:inline-block;width:100px;">{{ course.name }}</p>
+<p style="display:inline-block;width:300px;">{{ course.courseFile }}</p>
+<p style="display:inline-block;width:120px;">{{ course.description }}</p>
+
+{% endfor %}
+{% endif %}

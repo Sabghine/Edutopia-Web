@@ -17,7 +17,7 @@ class LigneExam
      *
      * @ORM\Column(name="idligne", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idligne;
 
@@ -29,11 +29,7 @@ class LigneExam
     private $note;
 
     /**
-     * @var \User
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\OneToOne(targetEntity="Exam")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
      * })
@@ -43,15 +39,14 @@ class LigneExam
     /**
      * @var \Exam
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Exam")
+     * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexam", referencedColumnName="id_Exam")
      * })
      */
     private $idexam;
 
+    
     public function getIdligne(): ?int
     {
         return $this->idligne;
@@ -69,6 +64,18 @@ class LigneExam
         return $this;
     }
 
+    public function getIdexam()
+    {
+        return $this->idexam;
+    }
+
+    public function setIdexam( $idexam): self
+    {
+        $this->idexam = $idexam;
+
+        return $this;
+    }
+
     public function getIduser(): ?User
     {
         return $this->iduser;
@@ -77,18 +84,6 @@ class LigneExam
     public function setIduser(?User $iduser): self
     {
         $this->iduser = $iduser;
-
-        return $this;
-    }
-
-    public function getIdexam(): ?Exam
-    {
-        return $this->idexam;
-    }
-
-    public function setIdexam(?Exam $idexam): self
-    {
-        $this->idexam = $idexam;
 
         return $this;
     }
