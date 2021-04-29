@@ -20,7 +20,7 @@ class ActivityController extends AbstractController
      */
     public function index(ActivityRepository $activityRepository): Response
     {
-        return $this->render('activity/index.html.twig', [
+        return $this->render('activity/login.html.twig', [
             'activities' => $activityRepository->findAll(),
         ]);
     }

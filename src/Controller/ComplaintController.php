@@ -38,12 +38,15 @@ class ComplaintController extends AbstractController
      * @Route("/new", name="complaint_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
-    {
+    {$currentUser = $this->getUser();
+
         $complaint = new Complaint();
         $form = $this->createForm(ComplaintType::class, $complaint);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $complaint->setCreatedBy($currentUser);
+            $complaint->setCreatedDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($complaint);
             $entityManager->flush();
@@ -100,6 +103,8 @@ $this->addFlash('success', 'Ajouté avec succées');
 
         return $this->redirectToRoute('complaint_index');
     }
+
+
 
 
 }

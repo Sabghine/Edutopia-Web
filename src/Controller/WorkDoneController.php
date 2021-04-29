@@ -20,7 +20,7 @@ class WorkDoneController extends AbstractController
      */
     public function index(WorkDoneRepository $workDoneRepository): Response
     {
-        return $this->render('work_done/index.html.twig', [
+        return $this->render('work_done/login.html.twig', [
             'work_dones' => $workDoneRepository->findAll(),
         ]);
     }

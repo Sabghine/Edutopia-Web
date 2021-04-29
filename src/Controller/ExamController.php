@@ -20,7 +20,7 @@ class ExamController extends AbstractController
      */
     public function index(ExamRepository $examRepository): Response
     {
-        return $this->render('exam/index.html.twig', [
+        return $this->render('exam/login.html.twig', [
             'exams' => $examRepository->findAll(),
         ]);
     }

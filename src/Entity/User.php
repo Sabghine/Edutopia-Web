@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -12,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="user", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="depId", columns={"depId"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface , \Serializable
 {
     /**
      * @var int
@@ -420,13 +421,66 @@ class User
         return $this;
     }
 
-    public function __toString()
-    {   $fullname = $this->name;
+
+
+
+    public function getRoles()
+    {
+        return ['ROLE_ADMIN'];
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+
+    public function serialize()
+    {
+
+        return serialize([
+            $this->id,
+            $this->email,
+            $this->password
+        ]);
+    }
+
+    /**
+     * Construct the object
+     * @param string $serialized <p>
+     * the string representation of the object
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->email,
+            $this->password
+            ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function sabrine(){
+        $fullname = $this->name;
         $fullname .= " ";
         $fullname .= $this->lastName;
         return $fullname;
     }
 
-
+    public function __toString()
+    {
+        return (string)$this->id;
+    }
 
 }

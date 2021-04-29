@@ -20,7 +20,7 @@ class RatingController extends AbstractController
      */
     public function index(RatingRepository $ratingRepository): Response
     {
-        return $this->render('rating/index.html.twig', [
+        return $this->render('rating/login.html.twig', [
             'ratings' => $ratingRepository->findAll(),
         ]);
     }

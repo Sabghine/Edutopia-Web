@@ -20,7 +20,7 @@ class SeanceController extends AbstractController
      */
     public function index(SeanceRepository $seanceRepository): Response
     {
-        return $this->render('seance/index.html.twig', [
+        return $this->render('seance/login.html.twig', [
             'seances' => $seanceRepository->findAll(),
         ]);
     }

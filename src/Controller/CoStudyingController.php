@@ -23,7 +23,7 @@ class CoStudyingController extends AbstractController
      */
     public function index(CoStudyingRepository $coStudyingRepository): Response
     {
-        return $this->render('co_studying/index.html.twig', [
+        return $this->render('co_studying/login.html.twig', [
             'co_studyings' => $coStudyingRepository->findAll(),
         ]);
     }

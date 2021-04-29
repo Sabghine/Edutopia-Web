@@ -20,7 +20,7 @@ class CostudyingtypeController extends AbstractController
      */
     public function index(CostudyingtypeRepository $costudyingtypeRepository): Response
     {
-        return $this->render('costudyingtype/index.html.twig', [
+        return $this->render('costudyingtype/login.html.twig', [
             'costudyingtypes' => $costudyingtypeRepository->findAll(),
         ]);
     }

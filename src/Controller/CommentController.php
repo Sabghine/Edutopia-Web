@@ -20,7 +20,7 @@ class CommentController extends AbstractController
      */
     public function index(CommentRepository $commentRepository): Response
     {
-        return $this->render('comment/index.html.twig', [
+        return $this->render('comment/login.html.twig', [
             'comments' => $commentRepository->findAll(),
         ]);
     }

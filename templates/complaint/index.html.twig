@@ -22,7 +22,7 @@
                 <th>Description</th>
                 <th>Status</th>
                 <th>CreatedDate</th>
-                <th>UpdatedDate</th>
+                <th>CreatedBy</th>
                 <th>ArchivedDate</th>
                 <th>actions</th>
             </tr>
@@ -36,8 +36,8 @@
                 <td>{{ complaint.status }}</td>
 
                 <td>{{ complaint.createdDate ? complaint.createdDate|date('Y-m-d') : '' }}</td>
-                <td>{{ complaint.updatedDate ? complaint.updatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ complaint.archivedDate ? complaint.archivedDate|date('Y-m-d') : '' }}</td>
+                 <td><a href="{{ path('user_show', {'id': complaint.createdBy}) }}">{{ complaint.createdBy.sabrine}}</a></td>
+
                 <td>
                     <a href="{{ path('complaint_show', {'id': complaint.id}) }}">Afficher</a>
                     <a href="{{ path('complaint_edit', {'id': complaint.id}) }}">Modifier</a>

@@ -20,7 +20,7 @@ class ForumController extends AbstractController
      */
     public function index(ForumRepository $forumRepository): Response
     {
-        return $this->render('forum/index.html.twig', [
+        return $this->render('forum/login.html.twig', [
             'forums' => $forumRepository->findAll(),
         ]);
     }

@@ -10,14 +10,12 @@
     <table class="table" id="tableac">
         <thead>
             <tr>
-                <th>Id</th>
+
                 <th>Role</th>
                 <th>Name</th>
                 <th>LastName</th>
                 <th>Cin</th>
                 <th>Email</th>
-                <th>PhoneNumber</th>
-                <th>BirthDate</th>
 {#                <th>CreatedDate</th>#}
 {#                <th>LastUpdatedDate</th>#}
 {#                <th>ArchivedDate</th>#}
@@ -33,23 +31,22 @@
         <body>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
+
                 <td>{{ user.role }}</td>
-                <td>{{ user.name }}</td>
                 <td>{{ user.lastName }}</td>
                 <td>{{ user.cin }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.phoneNumber }}</td>
-                <td>{{ user.birthDate ? user.birthDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.createdDate ? user.createdDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.lastUpdatedDate ? user.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.archivedDate ? user.archivedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.classe }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.status }}</td>
-                <td>{{ user.subjects }}</td>
-                <td>{{ user.nbasbsece }}</td>
-                <td>{{ user.mailParent }}</td>
+{#                <td>{{ user.phoneNumber }}</td>#}
+{#                <td>{{ user.birthDate ? user.birthDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.createdDate ? user.createdDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.lastUpdatedDate ? user.lastUpdatedDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.archivedDate ? user.archivedDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.classe }}</td>#}
+{#                <td>{{ user.password }}</td>#}
+{#                <td>{{ user.status }}</td>#}
+{#                <td>{{ user.subjects }}</td>#}
+{#                <td>{{ user.nbasbsece }}</td>#}
+{#                <td>{{ user.mailParent }}</td>#}
                 <td>
                     <a href="{{ path('user_show', {'id': user.id}) }}">Afficher</a>
                     <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>

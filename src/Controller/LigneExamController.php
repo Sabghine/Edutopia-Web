@@ -20,7 +20,7 @@ class LigneExamController extends AbstractController
      */
     public function index(LigneExamRepository $ligneExamRepository): Response
     {
-        return $this->render('ligne_exam/index.html.twig', [
+        return $this->render('ligne_exam/login.html.twig', [
             'ligne_exams' => $ligneExamRepository->findAll(),
         ]);
     }

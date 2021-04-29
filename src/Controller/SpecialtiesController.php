@@ -20,7 +20,7 @@ class SpecialtiesController extends AbstractController
      */
     public function index(SpecialitiesRepository $specialitiesRepository): Response
     {
-        return $this->render('specialties/index.html.twig', [
+        return $this->render('specialties/login.html.twig', [
             'specialties' => $specialitiesRepository->findAll(),
         ]);
     }
