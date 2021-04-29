@@ -1,0 +1,64 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Liste activités{% endblock %}
+{% block nouractivity %}
+    <section class="probootstrap-section" style="padding-top: 0%">
+        <h1 align="center">Liste des activités</h1>
+        <div class="container">
+            <h5 style="padding-left: 80%; width: 100%" >Nombre des activités: <b>{{ nbr }}</b></h5>
+            <br>
+            <div class="row">
+    {% for activity in activities %}
+                <div class="col-md-6">
+                    <div class="probootstrap-service-2 probootstrap-animate fadeInUp probootstrap-animated">
+                        <div class="image">
+                            <div class="image-bg">
+                                <a target="_blank" href="/uploads/{{ activity.workTodo }}">
+                                <img src="/img/pdflogo.png" >
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text">
+                            <table id="tabact">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <h3>{{ activity.name }}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                            <span class="probootstrap-meta"><i class="icon-calendar2"></i> <a href="/uploads/{{ activity.workTodo }}" style="color: green" target="_blank">{{ activity.name }}.pdf</a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h3>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                {{ include('work_done/_add_form.html.twig') }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                    </div>
+                </div>{% else %}
+        <h4>Aucune ligne trouvée</h4>
+    {% endfor %}
+            </div>
+        </div>
+
+    </section>
+    <div  style="display: flex; width: 100%;justify-content: center">
+        <div style="margin-right: 20px">
+            <form method="post" action="{{ path('forum_indexUser')}}">
+                <input type="hidden" name="_token">
+                <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">Liste des forums disponibles</button>
+            </form>
+        </div>
+    </div>
+    <br>
+{% endblock %}

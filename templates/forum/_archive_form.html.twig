@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('forum_archive', {'id': forum.id}) }}" onsubmit="return confirm('voulez vous archiver ce forum ?? Validez votre choix');">
+    <input type="hidden" name="_token" value="{{ csrf_token('archive' ~ forum.id) }}">
+    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">Archiver</button>
+</form>

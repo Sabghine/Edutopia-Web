@@ -1,4 +1,10 @@
+<style>
+    .nour{
+        width: 600px;
+        height: 100px;
+    }
+</style>
 {{ form_start(form, {'attr': {'novalidate':'novalidate'}}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Ajouter') }}</button>
+    {{ form_row(form.subject,{'attr': {'class':'nour'}}) }}
+    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

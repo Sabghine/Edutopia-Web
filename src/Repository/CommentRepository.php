@@ -47,4 +47,21 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countAvailable($value)
+    {
+
+        return (int)$this->createQueryBuilder('a')
+            ->andWhere('a.status = :val')
+            ->setParameter('val', $value)
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+    public function tri($value,$forum)
+    {
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Comment s where s.status=:status and s.idForum=:forum order by s.likes DESC')->setParameter('status',$value)->setParameter('forum',$forum);
+        return $query->getResult();
+    }
 }

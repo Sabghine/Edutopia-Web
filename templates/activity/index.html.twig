@@ -1,16 +1,28 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste activités{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>Liste des activités</h1>
-
-    <table class="table">
+    <h1>Liste des activités</h1><br>
+    <h5 style="float: right">Nombre des activités disponibles : <b>{{ nbr }}</b></h5><br>
+<div  style="display: flex; width: 0%;justify-content: left;float: left ">
+    {{ include('activity/_refresh_form.html.twig') }}
+    <p>   </p>
+    {{ form_start(form) }}
+    {{ form_row(form.trier,{'attr': {'class': 'btn btn-primary','style':'background-color: #1aa179'}}) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
+    <br><br>
+    <input type="text" id="search" name="search" class="form-control" placeholder="Chercher une activité">
+    <br>
+    <table class="table table-striped" id="tabact">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>Nom du fichier</th>
+                <th>Travail demandé</th>
                 <th>Date limite</th>
-                <th>Statut</th>
+                <th> </th>
+                <th> </th>
                 <th> </th>
                 <th> </th>
                 <th> </th>
@@ -20,15 +32,21 @@
         {% for activity in activities %}
             <tr>
                 <td>{{ activity.name }}</td>
+                <td><a href="/uploads/{{ activity.workTodo }}" style="color: green" target="_blank">{{ activity.workTodo }}.pdf</a></td>
                 <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
-                <td>{{ activity.status }}</td>
                 <td>
-                    <a href="{{ path('activity_show', {'id': activity.id}) }}">Détails</a>
+                    {{ include('activity/_details_form.html.twig') }}
                 </td>
-                <td><a href="{{ path('activity_edit', {'id': activity.id}) }}">Modifier</a></td>
                 <td>
-                <a href="{{ path('work_done_new' ,{'idActivity': activity.id}) }}">Ajouter un travail </a>
+                    {{ include('activity/_edit_form.html.twig') }}
                 </td>
+                <td>
+                    {{ include('work_done/_list_form.html.twig') }}
+                </td>
+                <td>
+                    {{ include('activity/_archive_form.html.twig') }}
+                </td>
+            </tr>
             </tr>
         {% else %}
             <tr>
@@ -37,7 +55,47 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('activity_new') }}">Ajouter une nouvelle activité</a><br>
-    <a href="{{ path('forum_index') }}">Liste des forums</a>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tabact tbody tr').each(function(){
+                    var found = 'false';
+                    $(this).each(function(){
+                        if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                        {
+                            found = 'true';
+                        }
+                    });
+                    if(found === 'true')
+                    {
+                        $(this).show();
+
+                    }
+                    else
+                    {
+                        $(this).hide();
+
+                    }
+                });
+            }
+        });
+    </script>
+    <div  style="display: flex; width: 100%;justify-content: center">
+        <div style="margin-right: 20px">
+            {{ include('activity/_add_form.html.twig') }}
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('activity/_archivedList_form.html.twig') }}
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('forum/_list_form.html.twig') }}
+        </div>
+    </div>
+
+
 {% endblock %}
 {% endblock %}

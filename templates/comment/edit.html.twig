@@ -1,14 +1,23 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Modifier commentaire{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>Modifier commentaire</h1>
-
+    <br>
+    <h1 style="color: #1aa179;font-style: revert">Modifier commentaire</h1>
+    <br>
     {{ include('comment/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br><br>
+    <div  style="display: flex; width: 100%;justify-content: center">
+        <div style="margin-right: 20px">
+            <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                <a style="color: white" href="{{ path('comment_new', {'idForum': comment.idForum.id}) }}">Retourner</a>
+            </button>
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('comment/_delete_form.html.twig') }}
+        </div>
+    </div>
 
-    <a href="{{ path('comment_index') }}">Retourner</a>
-
-    {{ include('comment/_delete_form.html.twig') }}
 {% endblock %}
 {% endblock %}

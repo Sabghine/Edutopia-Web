@@ -47,4 +47,15 @@ class ForumRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countStatus($value)
+    {
+
+        return (int)$this->createQueryBuilder('a')
+            ->andWhere('a.status = :val')
+            ->setParameter('val', $value)
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 }

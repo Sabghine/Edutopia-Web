@@ -1,0 +1,12 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Nouveau commentaire{% endblock %}
+{% block content %}
+    {% block body %}
+        <br>
+        <h1>Ajouter un nouveau commentaire</h1>
+
+        {{ include('comment/_form.html.twig') }}
+
+    {% endblock %}
+{% endblock %}

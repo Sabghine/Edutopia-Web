@@ -12,7 +12,12 @@ class ForumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject')
+            ->add('subject',TextareaType::class,[
+                'label'=>'Sujet',
+                'attr' => [
+                    'class' => 'form-group'
+                    ]
+                ])
         ;
     }
 

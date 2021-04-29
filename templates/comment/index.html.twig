@@ -1,34 +1,68 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste Commentaire{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>Liste des commentaires</h1>
-
-    <table class="table">
+    <h1 style="color: #1aa179;font-style: inherit"><b>Liste des commentaires</b></h1><br><br>
+    <h5 style="float: right"><b>Nombre des commentaires disponibles : </b>{{ nbr }}</h5><br><br>
+    <h4 style="float: left"><b>Sujet</b>: {{ subject }}</h4><br><br>
+    <input type="text" id="search" name="search" class="form-control" placeholder="Chercher une activité">
+    <br>
+    <table class="table table-striped" id="tabcom">
         <thead>
             <tr>
                 <th>Commentaire</th>
-                <th>Statut</th>
+                <th>posté/e par</th>
                 <th>Likes</th>
                 <th>Dislike</th>
-                <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
         {% for comment in comments %}
             <tr>
-                <td>{{ comment.content }}</td>
-                <td>{{ comment.status }}</td>
+                <td>{{ comment.content|trans|nl2br }}</td>
+                <td>{{ comment.createdBy }}</td>
                 <td>{{ comment.likes }}</td>
                 <td>{{ comment.dislike }}</td>
-                <td>
-                    <a href="{{ path('comment_show', {'id': comment.id}) }}">Details</a>
-                </td>
-                <td>
-                    <a href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a>
-                </td>
+                {% if comment.createdby.id !=1 %}
+                    <td  style="float: right">
+                        <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                            <a style="color: white" href="{{ path('comment_like', {'id': comment.id}) }}"><img src="/dist/img/like.png"></a>
+                        </button>
+                        <button class="btn btn-primary" style="background-color:#ee3148;border-color:#ee3148">
+                            <a style="color: white" href="{{ path('comment_dislike', {'id': comment.id}) }}"><img src="/dist/img/dislikee.png"></a>
+                        </button>
+                    </td>
+                {% endif %}
+                {% if comment.createdby.id ==1 %}
+                    <td style="float: right">
+                        <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                            <a style="color: white" href="{{ path('comment_like', {'id': comment.id}) }}"><img src="/dist/img/like.png"></a>
+                        </button>
+                        <button class="btn btn-primary" style="background-color:#ee3148;border-color:#ee3148">
+                            <a style="color: white" href="{{ path('comment_dislike', {'id': comment.id}) }}"><img src="/dist/img/dislikee.png"></a>
+                        </button>
+                    </td>
+                    <td style="float: right">
+                        <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Vous etes sure que vous voulez supprimer ce commentaire?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                            <button class="btn btn-primary" style="border-color: #ee3148;background-color: #ee3148">
+                                <a style="color: white" href="{{ path('comment_delete', {'id': comment.id}) }}"><img src="/dist/img/delete.png"></a>
+                            </button>
+                        </form>
+                        </button>
+                    </td>
+                    <td style="float: right">
+                        <button class="btn btn-primary" style="background-color: #99CDD8;border-color: #99CDD8">
+                            <a style="color: white" href="{{ path('comment_show', {'id': comment.id}) }}"><img src="/dist/img/details.png"></a>
+                        </button>
+                        <button class="btn btn-primary" style="background-color:#d58512;border-color: #d58512">
+                            <a style="color: white" href="{{ path('comment_edit', {'id': comment.id}) }}"><img src="/dist/img/edit.png"></a>
+                        </button>
+                    </td>
+
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -37,5 +71,48 @@
         {% endfor %}
         </tbody>
     </table>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tabcom tbody tr').each(function(){
+                    var found = 'false';
+                    $(this).each(function(){
+                        if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                        {
+                            found = 'true';
+                        }
+                    });
+                    if(found === 'true')
+                    {
+                        $(this).show();
+
+                    }
+                    else
+                    {
+                        $(this).hide();
+
+                    }
+                });
+            }
+        });
+    </script>
+    <br>
+    <div  style="display: flex; width: 100%;justify-content: center">
+        <div style="margin-right: 20px">
+            <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                <a style="color: white" href="{{ path('comment_new', {'idForum': forum.id}) }}">Ajouter un commentaire</a>
+            </button>
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('activity/_list_form.html.twig') }}
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('forum/_list_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
 {% endblock %}

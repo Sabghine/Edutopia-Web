@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste activités{% endblock %}
+{% block content %}
+    {% block body %}
+        <h1>Liste des activités archivés</h1><br>
+        <h5 style="float: right">Nombre des activités archivés : <b>{{ nbr }}</b></h5><br>
+        <input type="text" id="search" name="search" class="form-control" placeholder="Chercher une activité">
+        <br>
+        <table class="table table-striped" id="tabact">
+            <thead>
+            <tr>
+                <th>Nom du fichier </th>
+                <th>Date limite</th>
+                <th> </th>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for activity in activities %}
+                <tr>
+                    <td>{{ activity.name }}</td>
+                    <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
+                    <td>
+                        {{ include('activity/_active_form.html.twig') }}
+                    </td>
+                    <td >
+                        {{ include('activity/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucune ligne trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#search').keyup(function(){
+                    search_table($(this).val());
+                });
+                function search_table(value){
+                    $('#tabact tbody tr').each(function(){
+                        var found = 'false';
+                        $(this).each(function(){
+                            if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                            {
+                                found = 'true';
+                            }
+                        });
+                        if(found === 'true')
+                        {
+                            $(this).show();
+
+                        }
+                        else
+                        {
+                            $(this).hide();
+
+                        }
+                    });
+                }
+            });
+        </script>
+        <div  style="display: flex; width: 100%;justify-content: center">
+            <div style="margin-right: 20px">
+                {{ include('activity/_list_form.html.twig') }}
+            </div>
+            <div style="margin-right: 20px">
+                {{ include('forum/_list_form.html.twig') }}
+            </div>
+        </div>
+
+    {% endblock %}
+{% endblock %}

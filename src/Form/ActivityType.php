@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Activity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -15,7 +16,11 @@ class ActivityType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('deadline')
+            ->add('deadline', DateType::class, [
+
+                'required' => false,
+                'widget'=>'single_text',
+            ])
             ->add('workTodo',FileType::class, [
                 'label' => 'Fichier à ajouter',
 

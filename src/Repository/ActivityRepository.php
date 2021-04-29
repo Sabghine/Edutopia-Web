@@ -47,4 +47,33 @@ class ActivityRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countAvailable($value)
+    {
+
+        return (int)$this->createQueryBuilder('a')
+            ->andWhere('a.status = :val')
+            ->setParameter('val', $value)
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+    public function list($value)
+    {
+
+        return (int)$this->createQueryBuilder('a')
+            ->andWhere('a.status = :val')
+            ->setParameter('val', $value)
+            ->select('a.id')
+            ->orderBy('a.ceatedDate','desc')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+    public function tri($value)
+    {
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('select s from App\Entity\Activity s where s.status=:status order by s.ceatedDate DESC')->setParameter('status',$value);
+        return $query->getResult();
+    }
 }

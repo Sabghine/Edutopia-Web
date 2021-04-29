@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste forums archivés{% endblock %}
+{% block content %}
+    {% block body %}
+        <br>
+        <h1>Liste des forums archivés</h1>
+        <br><br>
+        <h5 style="float: right">Nombre des forums archivés : <b>{{ nbr }}</b></h5><br><br>
+        <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un forum archivé">
+        <br>
+        <table class="table table-striped" id="tabfr">
+            <thead>
+            <tr>
+                <th>Sujet</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for forum in forums %}
+                <tr>
+                    <td>{{ forum.subject }}</td>
+                    <td>
+                        {{ include('forum/_active_form.html.twig') }}
+                    </td>
+                    <td >
+                        {{ include('forum/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">aucun forum</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#search').keyup(function(){
+                    search_table($(this).val());
+                });
+                function search_table(value){
+                    $('#tabfr tbody tr').each(function(){
+                        var found = 'false';
+                        $(this).each(function(){
+                            if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                            {
+                                found = 'true';
+                            }
+                        });
+                        if(found === 'true')
+                        {
+                            $(this).show();
+
+                        }
+                        else
+                        {
+                            $(this).hide();
+
+                        }
+                    });
+                }
+            });
+        </script>
+        <div  style="display: flex; width: 100%;justify-content: center">
+            <div style="margin-right: 20px">
+                {{ include('forum/_list_form.html.twig') }}
+            </div>
+            <div style="margin-right: 20px">
+                {{ include('activity/_list_form.html.twig') }}
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
