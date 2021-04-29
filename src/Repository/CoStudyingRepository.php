@@ -22,11 +22,19 @@ class CoStudyingRepository extends ServiceEntityRepository
     public function OrderByName()
     {
         return $this->createQueryBuilder('CoStudying')
-
             ->orderBy('CoStudying.rating','DESC')
             ->getQuery()->getResult();
         $this->addFlash('success', 'Tri affectué!');
     }
+
+    public function OrderByRating()
+    {
+        return $this->createQueryBuilder('CoStudying')
+            ->orderBy('CoStudying.type','DESC')
+            ->getQuery()->getResult();
+        $this->addFlash('success', 'Tri affectué!');
+    }
+
 
 
 

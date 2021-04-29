@@ -3,6 +3,8 @@
 {% block title %}CoStudying{% endblock %}
 {% block content %}
 {% block body %}
+    <br>
+    <a class="btn btn-primary" href="{{ path('co_studying_index') }}">Retourner</a>
     <h1>Un contenu de l'espace Co-Studying</h1>
 
     <table class="table">
@@ -41,10 +43,18 @@
     {{ include('co_studying/_delete_form.html.twig') }}
     <br>
     <br>
-    <a class="btn btn-primary" href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">Modifier</a>
-    <br>
-    <br>
-    <a class="btn btn-primary" href="{{ path('co_studying_index') }}">Retourner</a>
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 3px 14px;
+            cursor: pointer;
+            border-radius: 300px;
+            background-color: #ADADAD;
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
 
 
 {% endblock %}

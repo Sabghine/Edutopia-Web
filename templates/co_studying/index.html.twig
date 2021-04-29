@@ -3,7 +3,11 @@
 {% block title %}CoStudying List{% endblock %}
 {% block content %}
     {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
+        <br>
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             {{ message }}
         </div>
     {% endfor %}
@@ -17,7 +21,6 @@
                     <button class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1">
                         Trier par rating
                     </button>
-
                 </div>
             </div>
         </form>
@@ -46,8 +49,26 @@
                     <td>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</td>
                     <td>{{ co_studying.lastUpdatedDate ? co_studying.lastUpdatedDate|date('Y-m-d') : '' }}</td>
                     <td>
-                        <a href="{{ path('co_studying_show', {'id': co_studying.id}) }}">Consulter</a>
-                        <a href="{{ path('co_studying_edit', {'id': co_studying.id}) }}">Modifier</a>
+                        <a href="{{ path('co_studying_show', {'id': co_studying.id}) }}">Détails</a>
+                        <form method="post" action="{{ path('co_studying_delete', {'id': co_studying.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce contenu?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ co_studying.id) }}">
+                            <button class="button butt">Supprimer</button>
+                            <style>
+                                button {
+                                }
+                                .butt{
+                                    background: none!important;
+                                    border: none;
+                                    padding: 0!important;
+                                    /*optional*/
+                                    font-family: arial, sans-serif;
+                                    /*input has OS specific font-family*/
+                                    color: #069;
+                                    text-decoration: underline;
+                                    cursor: pointer;
+                                }
+                            </style>
+                        </form>
                     </td>
                 </tr>
             {% else %}
@@ -58,8 +79,6 @@
             </tbody>
         </table>
         <body></body>
-
-        {# <a href="{{ path('co_studying_new') }}">Create new</a> #}
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <script>
@@ -87,8 +106,5 @@
                 }
             });
         </script>
-
-
-
     {% endblock %}
 {% endblock %}

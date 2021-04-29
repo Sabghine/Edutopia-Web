@@ -2,8 +2,21 @@
 
 {% block title %}CoStudying{% endblock %}
 {% block content %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+
 {% block body %}
+    <a class="btn btn-primary" href="{{ path('co_studying_font') }}">Retourner</a>
+    <br>
     <h1>Un contenu de l'espace Co-Studying</h1>
+    <h3>|{{ co_studying.type }}|</h3>
     <table class="table">
         <tbody>
 
@@ -13,7 +26,7 @@
             </tr>
             <tr>
                 <th>Nom de fichier</th>
-                <td>{{ co_studying.file }}</td>
+                <td><a href="/uploads/{{ co_studying.file }}" style="color: green" target="_blank">{{ co_studying.file }}</a></td>
             </tr>
             <tr>
                 <th>Type</th>
@@ -43,7 +56,7 @@
                                 <i class="lar la-star probootstrap-date" data-value="3"></i>
                                 <i class="lar la-star probootstrap-date" data-value="4"></i>
                                 <i class="lar la-star probootstrap-date" data-value="5"></i>
-                            <input name="note" id="note" value="0">
+                            <input type="hidden" name="note" id="note" value="0">
                             <input type="hidden" name="ratedEvent" id="ratedEvent" type="text" value={{ co_studying.id }}>
                             <script src="{{ asset('js/scripts_rating.js') }}"></script>
                             <button class="btn btn-primary" type="submit"> ✓</button>
@@ -59,18 +72,31 @@
             border-collapse: collapse;
             width: 100%;
         }
-
         th, td {
             text-align: left;
             padding: 8px;
         }
-
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
     </style>
     <br>
-    <a class="btn btn-primary" href="{{ path('co_studying_font') }}">Retourner</a>
+    {% if co_studying.idStudent.id != 1 %}
+        <button disabled class="btn btn-primary">
+            <a>Modifier</a>
+        </button>
+        <br>
+        <br>
+        <button disabled class="btn btn-primary">
+            <a>Supprimer</a>
+        </button>
+    {% endif %}
+    {% if co_studying.idStudent.id == 1 %}
+        {{ include('co_studying/_score_form.html.twig') }}
+        <br>
+        {{ include('co_studying/_score_form_delete.html.twig') }}
+    {% endif %}
+
     <br>
     <br>
 

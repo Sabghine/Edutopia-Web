@@ -4,11 +4,13 @@
 
 {% block content %}
     {% for message in app.flashes('success') %}
-        <div class="alert alert-success ">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-5' }}">
                 {{ message }}
             </nav>
-
         </div>
     {% endfor %}
     {% block body %}
@@ -75,8 +77,9 @@
                                 </div>
 
                                 <div class="probootstrap-image probootstrap-animate"
-                                     style="background-image: url(/img/slider_3.jpg)">
-                                    <a href="https://vimeo.com/45830194" class="btn-video popup-vimeo"><i
+                                     style="background-image: url(/img/slider_wow.jpg)">
+                                    <a href="https://www.youtube.com/watch?v=2nDsdtXsN0A"
+                                       class="btn-video popup-youtube"><i
                                                 class="icon-play3"></i></a>
                                 </div>
                             </div>
@@ -84,70 +87,73 @@
                     </div>
                 </div>
             </section>
+
             <div class="dropdown">
                 <form id="CatForm" method="post" action="{{ path('costudying_cat') }}">
                     <select id="selectDo" class="btn btn-primary d-block w-100 mt-3"
-                            onchange="myFunction(event); this.form.submit(); ">
-                        <option value="" disabled selected>Choose type..</option>
+                            onchange="myFunctions(event); this.form.submit(); ">
+                        <option value="" disabled selected>Choisissez la Catégorie..</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Tout</option>
                         {% for c in co_studyingtypes %}
                             <option class="dropdown-item" onclick="document.getElementById('CatForm').submit();">
                                 <i class="ri-eye-fill mr-2"></i>
                                 {{ c.name }}
                             </option>
                         {% endfor %}
-                        <input type="hidden" name="myText" id="myText" type="text" value="colors">
+                        <input type="hidden" name="myText" id="myText" type="text" value="">
                         <script>
-                            function myFunction(e) {
+                            function myFunctions(e) {
                                 document.getElementById("myText").value = e.target.value
                             }
                         </script>
                     </select>
                 </form>
-
-
             </div>
-            <section class="probootstrap-section">
 
+            <br>
+
+            <div class="dropdown">
+                <form id="CatForms" method="post" action="{{ path('triCategorieB_front') }}">
+                    <select id="selectDo" class="btn btn-primary d-block w-100 mt-3"
+                            onchange="myFunction(event); this.form.submit(); ">
+                        <option value="" disabled selected>Trier par...</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Défaut</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Rating</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Catégorie</option>
+                        <input type="hidden" name="myTexts" id="myTexts" type="text" value="">
+                        <script>
+                            function myFunction(e) {
+                                document.getElementById("myTexts").value = e.target.value
+                            }
+                        </script>
+                    </select>
+                </form>
+            </div>
+
+            <section class="probootstrap-section">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             {% for co_studying in co_studyings %}
-                                {# <div class="probootstrap-service-2 probootstrap-animate">
-                                    <div class="image">
-                                        <div class="image-bg">
-                                            <img src="../img/img_sm_1.jpg"
-                                                 alt="Free Bootstrap Template by uicookies.com">
-                                        </div>
-                                    </div>
-                                    <div class="text">
-                                        <span class="probootstrap-meta"><i
-                                                    class="icon-calendar2"></i>{{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}</span>
-                                        <h3>{{ co_studying.type }}</h3>
-                                        <p>{{ co_studying.description }}</p>
-                                        <p><a href="#" class="btn btn-primary">Download</a> <span
-                                                    class="enrolled-count">2,928 students enrolled</span>
-                                        </p>
-                                    </div>
-                                </div> #}
-
                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
-                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}" class="probootstrap-featured-news-box">
-                                        {% if co_studying.type == "Résumé"%}
-                                        <figure class="probootstrap-media"><img src="/img/img_sm_1.jpg"
-                                                                                alt="Free Bootstrap Template by uicookies.com"
-                                                                                class="img-responsive"></figure>
+                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}"
+                                       class="probootstrap-featured-news-box">
+                                        {% if co_studying.type == "Résumé" %}
+                                            <figure class="probootstrap-media"><img src="/img/img_sm_1.jpg"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
                                         {% endif %}
-                                        {% if co_studying.type == "Opportunité"%}
+                                        {% if co_studying.type == "Opportunité" %}
                                             <figure class="probootstrap-media"><img src="/img/headhunter.png"
                                                                                     alt="Free Bootstrap Template by uicookies.com"
                                                                                     class="img-responsive"></figure>
                                         {% endif %}
-                                        {% if co_studying.type == "Freelance"%}
+                                        {% if co_studying.type == "Freelance" %}
                                             <figure class="probootstrap-media"><img src="/img/salary.png"
                                                                                     alt="Free Bootstrap Template by uicookies.com"
                                                                                     class="img-responsive"></figure>
                                         {% endif %}
-                                        {% if co_studying.type == "Offre Stage"%}
+                                        {% if co_studying.type == "Offre Stage" %}
                                             <figure class="probootstrap-media"><img src="/img/job-offer.png"
                                                                                     alt="Free Bootstrap Template by uicookies.com"
                                                                                     class="img-responsive"></figure>
@@ -172,8 +178,8 @@
                                             </span>
                                         </div>
                                     </a>
-                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}"
-                                       class="btn btn-primary">Download</a>
+
+                                    <a class="btn btn-primary" target="_blank" href="/uploads/{{ co_studying.file }}">Download</a>
                                     <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}"
                                        class="btn btn-primary">Voir plus</a>
                                     <br>
@@ -308,5 +314,4 @@
         })();
     </script>
     <!--End of Tawk.to Script-->
-
 {% endblock %}

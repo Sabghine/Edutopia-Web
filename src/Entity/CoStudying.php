@@ -181,40 +181,52 @@ class CoStudying
         return $this;
     }
 
-    public function getCreatedDate(): ?\DateTimeInterface
+    /**
+     * @return \DateTime|null
+     */
+    public function getCreatedDate(): ?\DateTime
     {
         return $this->createdDate;
     }
 
-    public function setCreatedDate(?\DateTimeInterface $createdDate): self
+    /**
+     * @param \DateTime|null $createdDate
+     */
+    public function setCreatedDate(?\DateTime $createdDate): void
     {
         $this->createdDate = $createdDate;
-
-        return $this;
     }
 
-    public function getLastUpdatedDate(): ?\DateTimeInterface
+    /**
+     * @return \DateTime|null
+     */
+    public function getLastUpdatedDate(): ?\DateTime
     {
         return $this->lastUpdatedDate;
     }
 
-    public function setLastUpdatedDate(?\DateTimeInterface $lastUpdatedDate): self
+    /**
+     * @param \DateTime|null $lastUpdatedDate
+     */
+    public function setLastUpdatedDate(?\DateTime $lastUpdatedDate): void
     {
         $this->lastUpdatedDate = $lastUpdatedDate;
-
-        return $this;
     }
 
-    public function getArchivedDate(): ?\DateTimeInterface
+    /**
+     * @return \DateTime|null
+     */
+    public function getArchivedDate(): ?\DateTime
     {
         return $this->archivedDate;
     }
 
-    public function setArchivedDate(?\DateTimeInterface $archivedDate): self
+    /**
+     * @param \DateTime|null $archivedDate
+     */
+    public function setArchivedDate(?\DateTime $archivedDate): void
     {
         $this->archivedDate = $archivedDate;
-
-        return $this;
     }
 
     public function getLastUpdatedBy(): ?User

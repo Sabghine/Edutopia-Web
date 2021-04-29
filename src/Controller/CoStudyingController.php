@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\CoStudying;
 use App\Entity\Costudyingtype as Costudyingtypes;
+use App\Entity\User;
 use App\Form\CoStudyingType;
 use App\Repository\CoStudyingRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +25,7 @@ class CoStudyingController extends AbstractController
     /**
      * @Route("/", name="co_studying_index", methods={"GET"})
      */
-    public function index(CoStudyingRepository $coStudyingRepository): Response
+    public function index(CoStudyingRepository $coStudyingRepository, UserRepository $userRepository): Response
     {
         return $this->render('co_studying/index.html.twig', [
             'co_studyings' => $coStudyingRepository->findAll(),
@@ -51,7 +53,7 @@ class CoStudyingController extends AbstractController
     /**
      * @Route("/new", name="co_studying_new", methods={"GET","POST"})
      */
-    public function new(Request $request, SluggerInterface $slugger): Response
+    public function new(Request $request, SluggerInterface $slugger, UserRepository $userRepository): Response
     {
         $coStudying = new CoStudying();
         $form = $this->createForm(CoStudyingType::class, $coStudying);
@@ -83,6 +85,12 @@ class CoStudyingController extends AbstractController
                 // instead of its contents
                 $coStudying->setFile($newFilename);
             }
+            $coStudying->setCreatedDate(new \DateTime("now"));
+            $user = new User();
+            $user = $userRepository->findOneBy(['id' => 1]);
+            $coStudying->setIdStudent($user);
+            $coStudying->setRating(0);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($coStudying);
             $entityManager->flush();
@@ -121,7 +129,7 @@ class CoStudyingController extends AbstractController
     /**
      * @Route("/{id}/edit", name="co_studying_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, CoStudying $coStudying, SluggerInterface $slugger): Response
+    public function edit(Request $request, CoStudying $coStudying, SluggerInterface $slugger, UserRepository $userRepository): Response
     {
         $form = $this->createForm(CoStudyingType::class, $coStudying);
         $form->handleRequest($request);
@@ -151,13 +159,16 @@ class CoStudyingController extends AbstractController
                 // instead of its contents
                 $coStudying->setFile($newFilename);
             }
+            $coStudying->setLastUpdatedDate(new \DateTime("now"));
+            $user = new User();
+            $user = $userRepository->findOneBy(['id' => 1]);
+            $coStudying->setLastUpdatedBy($user);
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Contenu modifié avec succès!');
 
-            return $this->redirectToRoute('co_studying_index');
+            return $this->redirectToRoute('co_studying_front',['id' => $coStudying->getId()]);
         }
-
-        return $this->render('co_studying/edit.html.twig', [
+        return $this->render('co_studying/edit_front.html.twig', [
             'co_studying' => $coStudying,
             'form' => $form->createView(),
         ]);
@@ -178,25 +189,17 @@ class CoStudyingController extends AbstractController
     }
 
     /**
-     * @Route("/tri", name="/tri")
+     * @Route("/{id}/delete", name="co_studying_delete_front", methods={"POST"})
      */
-    public function Tri(Request $request)
+    public function delete_front(Request $request, CoStudying $coStudying): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $query = $em->createQuery(
-            'SELECT q FROM App\Entity\CoStudying q 
-            ORDER BY q.rating DESC'
-        );
-        var_dump($query);
-        die();
-        $costudyings = $query->getResult();
-        $this->addFlash('success', 'Tri Affectué!');
-
-
-        return $this->render('co_studying/index.html.twig',
-            array('co_studyings' => $costudying));
-
+        if ($this->isCsrfTokenValid('delete' . $coStudying->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($coStudying);
+            $entityManager->flush();
+        }
+        $this->addFlash('success', 'Contenu supprimé avec succès!');
+        return $this->redirectToRoute('co_studying_font');
     }
 
     /**
@@ -204,40 +207,84 @@ class CoStudyingController extends AbstractController
      * @return Response
      * @Route ("list" , name="triCategorieB")
      */
-
     function OrderByName(CoStudyingRepository $repository)
     {
-
         $costudyings = $repository->OrderByName();
         $this->addFlash('success', 'Contenu trié avec succès!');
         return $this->render('co_studying/index.html.twig', [
             'co_studyings' => $costudyings,
         ]);
-
-
     }
 
     /**
-     * @Route("/TriCat/show", name="costudying_cat", methods={"POST"})
+     * @param CoStudyingRepository $repository
+     * @return Response
+     * @Route ("list/front" , name="triCategorieB_front")
+     */
+    function OrderByRating(CoStudyingRepository $repository, Request $request): Response
+    {
+        $data = $request->get('myTexts');
+        if ($data == "Catégorie") {
+            $costudyings = $repository->OrderByRating();
+            $this->addFlash('success', 'Contenu trié selon catégorie avec succès!');
+        } elseif ($data == "Rating") {
+            $costudyings = $repository->OrderByName();
+            $this->addFlash('success', 'Contenu trié selon l"évaluation (rating) avec succès!');
+        } else {
+            $costudyings = $this->getDoctrine()
+                ->getRepository(CoStudying::class)
+                ->findAll();
+        }
+
+        $costudyingtypes = $this->getDoctrine()
+            ->getRepository(Costudyingtypes::class)
+            ->findAll();
+
+        return $this->render('co_studying/index_front.html.twig', [
+            'co_studyings' => $costudyings, 'co_studyingtypes' => $costudyingtypes
+        ]);
+    }
+
+
+    /**
+     * @Route("/TriCat/show", name="costudying_cat", methods={"POST", "GET"})
      */
     public function FindByCategorie(EntityManagerInterface $em, Request $request): Response
     {
-
         $data = $request->get('myText');
-        if ($data == "Opportunity") {
+        if ($data == "Opportunité") {
             $abc = 1;
-        } elseif ($data == "Summary") {
+            $queryBuilder = $em->getRepository(CoStudying::class)->createQueryBuilder('E');
+            $queryBuilder->andWhere('E.type = :name');
+            $queryBuilder->setParameter('name', $abc);
+            $costudyings = $queryBuilder->getQuery()->getResult();
+            $this->addFlash('success', 'Contenu filtré (Opportunité) avec succès!');
+        } elseif ($data == "Résumé") {
             $abc = 2;
+            $queryBuilder = $em->getRepository(CoStudying::class)->createQueryBuilder('E');
+            $queryBuilder->andWhere('E.type = :name');
+            $queryBuilder->setParameter('name', $abc);
+            $costudyings = $queryBuilder->getQuery()->getResult();
+            $this->addFlash('success', 'Contenu filtré (Résumé) avec succès!');
         } elseif ($data == "Freelance") {
             $abc = 3;
-        } else {
+            $queryBuilder = $em->getRepository(CoStudying::class)->createQueryBuilder('E');
+            $queryBuilder->andWhere('E.type = :name');
+            $queryBuilder->setParameter('name', $abc);
+            $costudyings = $queryBuilder->getQuery()->getResult();
+            $this->addFlash('success', 'Contenu filtré (Freelance) avec succès!');
+        } else if ($data == "Offre Stage") {
             $abc = 4;
+            $queryBuilder = $em->getRepository(CoStudying::class)->createQueryBuilder('E');
+            $queryBuilder->andWhere('E.type = :name');
+            $queryBuilder->setParameter('name', $abc);
+            $costudyings = $queryBuilder->getQuery()->getResult();
+            $this->addFlash('success', 'Contenu filtré (Offre Stage) avec succès!');
+        } else {
+            $costudyings = $this->getDoctrine()
+                ->getRepository(CoStudying::class)
+                ->findAll();
         }
-
-        $queryBuilder = $em->getRepository(CoStudying::class)->createQueryBuilder('E');
-        $queryBuilder->andWhere('E.type = :name');
-        $queryBuilder->setParameter('name', $abc);
-        $costudyings = $queryBuilder->getQuery()->getResult();
 
         $costudyingtypes = $this->getDoctrine()
             ->getRepository(Costudyingtypes::class)

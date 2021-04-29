@@ -1593,6 +1593,8 @@ a:hover, a:focus, a:active {
 }
 
 .probootstrap-featured-news-box .probootstrap-media {
+  position: relative;
+  z-index: 1;
 }
 
 .probootstrap-featured-news-box .probootstrap-text {
