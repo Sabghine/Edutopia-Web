@@ -1,0 +1,317 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Espace Co-Studying{% endblock %}
+
+{% block content %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-5' }}">
+                {{ message }}
+            </nav>
+        </div>
+    {% endfor %}
+    {% block body %}
+
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>uiCookies:Enlight &mdash; Free Bootstrap Theme, Free Responsive Bootstrap Website Template</title>
+            <meta name="description" content="Free Bootstrap Theme by uicookies.com">
+            <meta name="keywords"
+                  content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+            <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+            <link rel="stylesheet" href="../../public/css/styles-merged.css">
+            <link rel="stylesheet" href="../../public/css/style.min.css">
+            <link rel="stylesheet" href="../../public/css/custom.css">
+
+            <!--[if lt IE 9]>
+            <script src="../../public/js/vendor/html5shiv.min.js"></script>
+            <script src="../../public/js/vendor/respond.min.js"></script>
+            <![endif]-->
+        </head>
+        <body>
+
+        <div class="probootstrap-search" id="probootstrap-search">
+            <a href="#" class="probootstrap-close js-probootstrap-close"><i class="icon-cross"></i></a>
+            <form action="#">
+                <input type="search" name="s" id="search" placeholder="Search a keyword and hit enter...">
+            </form>
+        </div>
+
+        <div class="probootstrap-page-wrapper">
+            <!-- Fixed navbar -->
+
+            <section class="probootstrap-section probootstrap-section-colored">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-left section-heading probootstrap-animate">
+                            <h1>Espace Co-Studying</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="probootstrap-section">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="probootstrap-flex-block">
+
+                                <div class="probootstrap-text probootstrap-animate">
+                                    <div class="text-uppercase probootstrap-uppercase">Description</div>
+                                    <h3>Co-Studying</h3>
+                                    <p>Il s'agit d'un espace dédié spécifiquement aux étudiants, chacun peut y disposer
+                                        du contenu parmi les synthèses, les opportunités, les offres de stages et les
+                                        emplois indépendants.</p>
+                                    <p><a href="{{ path('co_studying_new') }}" class="btn btn-primary">Ajouter
+                                            Contenu</a> <span class="enrolled-count">2,928 étudiants ont ajouté du contenu ici</span>
+                                    </p>
+                                </div>
+
+                                <div class="probootstrap-image probootstrap-animate"
+                                     style="background-image: url(/img/slider_wow.jpg)">
+                                    <a href="https://www.youtube.com/watch?v=2nDsdtXsN0A"
+                                       class="btn-video popup-youtube"><i
+                                                class="icon-play3"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="dropdown">
+                <form id="CatForm" method="post" action="{{ path('costudying_cat') }}">
+                    <select id="selectDo" class="btn btn-primary d-block w-100 mt-3"
+                            onchange="myFunctions(event); this.form.submit(); ">
+                        <option value="" disabled selected>Choisissez la Catégorie..</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Tout</option>
+                        {% for c in co_studyingtypes %}
+                            <option class="dropdown-item" onclick="document.getElementById('CatForm').submit();">
+                                <i class="ri-eye-fill mr-2"></i>
+                                {{ c.name }}
+                            </option>
+                        {% endfor %}
+                        <input type="hidden" name="myText" id="myText" type="text" value="">
+                        <script>
+                            function myFunctions(e) {
+                                document.getElementById("myText").value = e.target.value
+                            }
+                        </script>
+                    </select>
+                </form>
+            </div>
+
+            <br>
+
+            <div class="dropdown">
+                <form id="CatForms" method="post" action="{{ path('triCategorieB_front') }}">
+                    <select id="selectDo" class="btn btn-primary d-block w-100 mt-3"
+                            onchange="myFunction(event); this.form.submit(); ">
+                        <option value="" disabled selected>Trier par...</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Défaut</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Rating</option>
+                        <option><i class="ri-eye-fill mr-2"></i>Catégorie</option>
+                        <input type="hidden" name="myTexts" id="myTexts" type="text" value="">
+                        <script>
+                            function myFunction(e) {
+                                document.getElementById("myTexts").value = e.target.value
+                            }
+                        </script>
+                    </select>
+                </form>
+            </div>
+
+            <section class="probootstrap-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% for co_studying in co_studyings %}
+                                <div class="col-md-6 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}"
+                                       class="probootstrap-featured-news-box">
+                                        {% if co_studying.type == "Résumé" %}
+                                            <figure class="probootstrap-media"><img src="/img/img_sm_1.jpg"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
+                                        {% endif %}
+                                        {% if co_studying.type == "Opportunité" %}
+                                            <figure class="probootstrap-media"><img src="/img/headhunter.png"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
+                                        {% endif %}
+                                        {% if co_studying.type == "Freelance" %}
+                                            <figure class="probootstrap-media"><img src="/img/salary.png"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
+                                        {% endif %}
+                                        {% if co_studying.type == "Offre Stage" %}
+                                            <figure class="probootstrap-media"><img src="/img/job-offer.png"
+                                                                                    alt="Free Bootstrap Template by uicookies.com"
+                                                                                    class="img-responsive"></figure>
+                                        {% endif %}
+                                        <div class="probootstrap-text">
+                                            <h3>{{ co_studying.type }}</h3>
+                                            <span class="probootstrap-date">
+                                                <i class="icon-calendar"></i>
+                                                {{ co_studying.createdDate ? co_studying.createdDate|date('Y-m-d') : '' }}
+                                            </span>
+                                            <span class="probootstrap-location">
+                                                <i class="icon-books"></i>
+                                                {{ co_studying.description }}
+                                            </span>
+                                            <span class="probootstrap-location">
+                                                <i class="icon-profile"></i>
+                                                {{ 'Propriétaire : ' ~ co_studying.idstudent }}
+                                            </span>
+                                            <span class="probootstrap-date">
+                                                {{ 'Rating :    ' ~ co_studying.rating }}
+                                                <i class="icon-star"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+
+                                    <a class="btn btn-primary" target="_blank" href="/uploads/{{ co_studying.file }}">Download</a>
+                                    <a href="{{ path('co_studying_front', {'id': co_studying.id}) }}"
+                                       class="btn btn-primary">Voir plus</a>
+                                    <br>
+                                    <br>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="probootstrap-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 text-center section-heading probootstrap-animate">
+                            <h2>Meet Our Qualified Teachers</h2>
+                            <p class="lead">Sed a repudiandae impedit voluptate nam Deleniti dignissimos perspiciatis
+                                nostrum porro nesciunt</p>
+                        </div>
+                    </div>
+                    <!-- END row -->
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="probootstrap-teacher text-center probootstrap-animate">
+                                <figure class="media">
+                                    <img src="/img/person_1.jpg"
+                                         alt="Free Bootstrap Template by uicookies.com"
+                                         class="img-responsive">
+                                </figure>
+                                <div class="text">
+                                    <h3>Chris Worth</h3>
+                                    <p>Physical Education</p>
+                                    <ul class="probootstrap-footer-social">
+                                        <li class="twitter"><a href="#"><i class="icon-twitter"></i></a></li>
+                                        <li class="facebook"><a href="#"><i class="icon-facebook2"></i></a></li>
+                                        <li class="instagram"><a href="#"><i class="icon-instagram2"></i></a></li>
+                                        <li class="google-plus"><a href="#"><i class="icon-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="probootstrap-teacher text-center probootstrap-animate">
+                                <figure class="media">
+                                    <img src="/img/person_5.jpg"
+                                         alt="Free Bootstrap Template by uicookies.com"
+                                         class="img-responsive">
+                                </figure>
+                                <div class="text">
+                                    <h3>Janet Morris</h3>
+                                    <p>English Teacher</p>
+                                    <ul class="probootstrap-footer-social">
+                                        <li class="twitter"><a href="#"><i class="icon-twitter"></i></a></li>
+                                        <li class="facebook"><a href="#"><i class="icon-facebook2"></i></a></li>
+                                        <li class="instagram"><a href="#"><i class="icon-instagram2"></i></a></li>
+                                        <li class="google-plus"><a href="#"><i class="icon-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix visible-sm-block visible-xs-block"></div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="probootstrap-teacher text-center probootstrap-animate">
+                                <figure class="media">
+                                    <img src="/img/person_6.jpg"
+                                         alt="Free Bootstrap Template by uicookies.com"
+                                         class="img-responsive">
+                                </figure>
+                                <div class="text">
+                                    <h3>Linda Reyez</h3>
+                                    <p>Math Teacher</p>
+                                    <ul class="probootstrap-footer-social">
+                                        <li class="twitter"><a href="#"><i class="icon-twitter"></i></a></li>
+                                        <li class="facebook"><a href="#"><i class="icon-facebook2"></i></a></li>
+                                        <li class="instagram"><a href="#"><i class="icon-instagram2"></i></a></li>
+                                        <li class="google-plus"><a href="#"><i class="icon-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="probootstrap-teacher text-center probootstrap-animate">
+                                <figure class="media">
+                                    <img src="/img/person_7.jpg"
+                                         alt="Free Bootstrap Template by uicookies.com"
+                                         class="img-responsive">
+                                </figure>
+                                <div class="text">
+                                    <h3>Jessa Sy</h3>
+                                    <p>Physics Teacher</p>
+                                    <ul class="probootstrap-footer-social">
+                                        <li class="twitter"><a href="#"><i class="icon-twitter"></i></a></li>
+                                        <li class="facebook"><a href="#"><i class="icon-facebook2"></i></a></li>
+                                        <li class="instagram"><a href="#"><i class="icon-instagram2"></i></a></li>
+                                        <li class="google-plus"><a href="#"><i class="icon-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <script src="/js/scripts.min.js"></script>
+        <script src="/js/main.min.js"></script>
+        <script src="/js/custom.js"></script>
+
+        </body>
+        </html>
+
+
+    {% endblock %}
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/608216395eb20e09cf35b9fe/1f3u2dkqf';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+{% endblock %}

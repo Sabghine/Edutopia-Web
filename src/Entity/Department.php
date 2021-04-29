@@ -291,5 +291,10 @@ class Department
     }
 
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 
 }

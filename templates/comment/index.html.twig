@@ -1,47 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}Comment index{% endblock %}
-
+{% block title %}Liste Commentaire{% endblock %}
+{% block content %}
 {% block body %}
-    <h1>Comment index</h1>
+    <h1>Liste des commentaires</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>Status</th>
+                <th>Commentaire</th>
+                <th>Statut</th>
                 <th>Likes</th>
                 <th>Dislike</th>
-                <th>CreatedDate</th>
-                <th>LastUpdatedDate</th>
-                <th>ArchivedDate</th>
-                <th>actions</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for comment in comments %}
             <tr>
-                <td>{{ comment.id }}</td>
                 <td>{{ comment.content }}</td>
                 <td>{{ comment.status }}</td>
                 <td>{{ comment.likes }}</td>
                 <td>{{ comment.dislike }}</td>
-                <td>{{ comment.createdDate ? comment.createdDate|date('Y-m-d') : '' }}</td>
-                <td>{{ comment.lastUpdatedDate ? comment.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ comment.archivedDate ? comment.archivedDate|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('comment_show', {'id': comment.id}) }}">show</a>
-                    <a href="{{ path('comment_edit', {'id': comment.id}) }}">edit</a>
+                    <a href="{{ path('comment_show', {'id': comment.id}) }}">Details</a>
+                </td>
+                <td>
+                    <a href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">aucun commentaire</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('comment_new') }}">Create new</a>
+{% endblock %}
 {% endblock %}

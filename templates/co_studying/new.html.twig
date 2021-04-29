@@ -1,11 +1,79 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}New CoStudying{% endblock %}
+{% block title %}Nouveau contenu Co-Studying{% endblock %}
+{% block content %}
+    <a class="btn btn-primary" href="{{ path('co_studying_font') }}" style="position:relative">Retourner</a>
+    {% block body %}
+        <h1>Creation du contenu</h1>
+        <table class="table">
+            <tbody>
 
-{% block body %}
-    <h1>Create new CoStudying</h1>
+            <tr>
+                <th>{{ form_start(form) }}
+                    {{ form_label (form.description, "Description:") }}
 
-    {{ include('co_studying/_form.html.twig') }}
+                </th>
+                <td>
+                    {{ form_widget(form.description,{'attr':{'placeholder' : ' Description'}} ) }}
+                    {{ form_errors (form.description) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.type, "Type de contenu:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.type,{'attr':{'placeholder' : ' Type '}} ) }}
+                    {{ form_errors (form.type) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.type, "Fichier:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.file,{'attr':{'placeholder' : ' File '}} ) }}
+                    {{ form_errors (form.file) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.niveau, "Niveau:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.niveau,{'attr':{'placeholder' : ' Niveau pédagogique '}} ) }}
+                    {{ form_errors (form.niveau) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.captcha, "Captcha:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.captcha,{'attr':{'placeholder' : 'Entrez le code ici'}} ) }}
+                    {{ form_errors (form.captcha) }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('co_studying_index') }}">back to list</a>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
+        {{ include('co_studying/_form.html.twig') }}
+
+    {% endblock %}
 {% endblock %}
+

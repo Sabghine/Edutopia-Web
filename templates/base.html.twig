@@ -6,7 +6,7 @@
     <title>
 
         {% block title %}
-            skyway
+            Edutopia Admins
         {% endblock %}
 
     </title>
@@ -54,6 +54,7 @@
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
+
             <!-- Navbar Search -->
             <li class="nav-item">
                 <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -180,9 +181,10 @@
 
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="min-height: 142%">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="#" class="brand-link">
             <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Edutopia</span>
         </a>
@@ -217,13 +219,12 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
-
-
                     <li class="nav-item">
-                        <a href="{{ asset('pages/layout/collapsed-sidebar.html') }}" class="nav-link">
-                            <i class="nav-icon fas fa-chart-pie"></i>
+                        <a href="{{ path('co_studying_index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
                             <p>
-                                Gestion Utilisateur
+                                Gestion des Utilisateurs
+
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -231,332 +232,79 @@
                             <li class="nav-item">
                                 <a href="{{ path('co_studying_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Utilisateur</p>
+
+
+                                    <p>Ajouter un utilisateur</p>
                                 </a>
                             </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ path('co_studying_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
 
 
-
+                                    <p>Liste des utilisateurs</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-
 
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>
-                                Gestion categorie et cours
-                                <i class="fas fa-angle-left right"></i>
+                                Liste des réclamations
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Catégorie</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Théme</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Cours</p>
-                                </a>
-                            </li>
-
-                        </ul>
                     </li>
 
-
-
-
-
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ path('co_studying_index') }}" class="nav-link">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                Gestion Test
-                                <i class="fas fa-angle-left right"></i>
+                                Co-Studying
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Gestion questions</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}"class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Gestion reponses</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Gestion certificats</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tree"></i>
-                            <p>
-                                Gestion Partenariat et promotion
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Partenariat</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Promotion</p>
-                                </a>
-                            </li>
-
-
-
-                        </ul>
-                    </li>
-
-
-
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon far fa-envelope"></i>
-                            <p>
-                                Géstion Réclamation
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Reclamation</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Feedback</p>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                                Gestion Actualités et évènements
-                                <i class="fas fa-angle-left right"></i>
+                                Départements
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Actualités</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('co_studying_index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Evenement</p>
-                                </a>
-                            </li>
-
-
-                        </ul>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Liste des matières
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Profile
+                            </p>
+                        </a>
+                    </li>
+
+
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon far fa-plus-square"></i>
                             <p>
-                                Extras
-                                <i class="fas fa-angle-left right"></i>
+                                Déconnecter
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>
-                                        Login & Register v1
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/examples/login.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Login v1</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/examples/register.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Register v1</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/examples/forgot-password.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Forgot Password v1</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/examples/recover-password.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Recover Password v1</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>
-                                        Login & Register v2
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/examples/login-v2.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Login v2</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/examples/register-v2.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Register v2</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/examples/forgot-password-v2.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Forgot Password v2</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/examples/recover-password-v2.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Recover Password v2</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/lockscreen.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Lockscreen</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/legacy-user-menu.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Legacy User Menu</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/language-menu.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Language Menu</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/404.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Error 404</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/500.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Error 500</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/pace.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pace</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/examples/blank.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Blank Page</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="starter.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Starter Page</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-search"></i>
-                            <p>
-                                Search
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="pages/search/simple.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Simple Search</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/search/enhanced.html" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Enhanced</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-
-
-
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -565,10 +313,8 @@
     </aside>
 
 
-
-
-
 {% endblock %}
+
 <div class="container">
     <center>{% block content %}</center>
 </div>
@@ -576,10 +322,10 @@
 
 {% block footer %}
     <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+        <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">Edutopia</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 3.1.0
+            <b>Version</b> 0.2.0
         </div>
     </footer>
 {% endblock %}

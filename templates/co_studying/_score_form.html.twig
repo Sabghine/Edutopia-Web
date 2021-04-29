@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('co_studying_edit', {'id': co_studying.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('Modifer' ~ co_studying.id) }}">
+    <button class="btn btn-primary" >Modifier</button>
+</form>

@@ -1,0 +1,73 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Modifer Co-Studying{% endblock %}
+{% block content %}
+    {% block body %}
+        <form method="get" action="{{ path('co_studying_font') }}">
+            <button class="btn btn-primary" value="{{ path('co_studying_font') }}">Retoruner</button>
+        </form>
+
+        <h1>Modifier Contenu</h1>
+
+        <table class="table">
+            <tbody>
+
+            <tr>
+                <th>{{ form_start(form) }}
+                    {{ form_label (form.description, "Description:") }}
+
+                </th>
+                <td>
+                    {{ form_widget(form.description,{'attr':{'placeholder' : ' Description'}} ) }}
+                    {{ form_errors (form.description) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.type, "Type de contenu:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.type,{'attr':{'placeholder' : ' Type '}} ) }}
+                    {{ form_errors (form.type) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.type, "Fichier:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.file,{'attr':{'placeholder' : ' File '}} ) }}
+                    {{ form_errors (form.file) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.niveau, "Niveau:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.niveau,{'attr':{'placeholder' : ' Niveau pédagogique '}} ) }}
+                    {{ form_errors (form.niveau) }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    {{ form_label (form.captcha, "Captcha:") }}
+                </th>
+                <td>
+                    {{ form_widget(form.captcha,{'attr':{'placeholder' : 'Entrez le code ici'}} ) }}
+                    {{ form_errors (form.captcha) }}
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+        {{ include('co_studying/_form.html.twig', {'button_label': 'Modifier'}) }}
+        {{ include('co_studying/_delete_form.html.twig') }}
+        <br>
+
+
+
+    {% endblock %}
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Forum
@@ -25,6 +26,8 @@ class Forum
      * @var string
      *
      * @ORM\Column(name="subject", type="string", length=200, nullable=false)
+     * @Assert\NotBlank(message="Vous devez entrer un sujet pour ce forum")
+     * @Assert\Length(min=10,minMessage="Doit contenir au min 10 caracteres")
      */
     private $subject;
 
@@ -207,6 +210,17 @@ class Forum
         $this->lastUpdatedBy = $lastUpdatedBy;
 
         return $this;
+    }
+
+    public function setIdCourse(?Course $idCourse): self
+    {
+        $this->idCourse = $idCourse;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->subject;
     }
 
 

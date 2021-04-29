@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Complaint index{% endblock %}
-
+{% block content %}
 {% block body %}
-    <h1>Complaint index</h1>
+    <h1>Réclamation</h1>
 
     <table class="table">
         <thead>
@@ -25,12 +25,13 @@
                 <td>{{ complaint.object }}</td>
                 <td>{{ complaint.description }}</td>
                 <td>{{ complaint.status }}</td>
+
                 <td>{{ complaint.createdDate ? complaint.createdDate|date('Y-m-d') : '' }}</td>
                 <td>{{ complaint.updatedDate ? complaint.updatedDate|date('Y-m-d') : '' }}</td>
                 <td>{{ complaint.archivedDate ? complaint.archivedDate|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('complaint_show', {'id': complaint.id}) }}">show</a>
-                    <a href="{{ path('complaint_edit', {'id': complaint.id}) }}">edit</a>
+                    <a href="{{ path('complaint_show', {'id': complaint.id}) }}">Afficher</a>
+                    <a href="{{ path('complaint_edit', {'id': complaint.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +42,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('complaint_new') }}">Create new</a>
+    <a href="{{ path('complaint_new') }}">Ajouter une réclamation</a>
 {% endblock %}
+{% endblock %}
+
