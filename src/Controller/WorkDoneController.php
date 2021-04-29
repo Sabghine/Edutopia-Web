@@ -80,25 +80,24 @@ class WorkDoneController extends AbstractController
             $entityManager->persist($workDone2);
             $entityManager->flush();
 
-// Your Account SID and Auth Token from twilio.com/console
+            // Your Account SID and Auth Token from twilio.com/console
             $account_sid = 'AC9fca576beefd8208037bf04db9b0f366';
-            $auth_token = '50f7450f3746f6c51b75fa733243ee90';
-// In production, these should be environment variables. E.g.:
-// $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
+            $auth_token = '61e52f281855a08e63f008fe2a90d197';
+            // In production, these should be environment variables. E.g.:
+            // $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
 
-// A Twilio number you own with SMS capabilities
+            // A Twilio number you own with SMS capabilities
             $twilio_number = "+17542128962";
-
             $client = new Client($account_sid, $auth_token);
             $client->messages->create(
             // Where to send a text message (your cell phone?)
                 '+21658720616',
                 array(
                     'from' => $twilio_number,
-                    'body' => 'travail rendu avec succès'
+                    'body' => 'depot avec succès'
                 )
             );
-            return $this->redirectToRoute('work_done_indexUser' ,['idActivity'=>$idActivity]);
+            return $this->redirectToRoute('work_done_index' ,['idActivity'=>$idActivity]);
         }
 
         return $this->render('work_done/new.html.twig', [

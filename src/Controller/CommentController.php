@@ -20,15 +20,15 @@ use \Expalmer\PhpBadWords\PhpBadWords as BadWords;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/{idForum}", name="comment_index", methods={"GET"})
+     * @Route("/index/{idForum}", name="comment_index", methods={"GET"},requirements={"idForum"="\d+"})
      */
-    public function index(CommentRepository $commentRepository,Comment $comment): Response
+    public function index(CommentRepository $commentRepository,Comment $comment,$idForum): Response
     {
         $subject=$comment->getIdForum()->getSubject();
         $forum=$comment->getIdForum();
-        $nbr=$commentRepository->countAvailable("Available",$comment->getIdForum());
+        $nbr=$commentRepository->countAvailable("Available",$forum);
         return $this->render('comment/index.html.twig', [
-            'comments' => $commentRepository->tri("Available",$comment->getIdForum()->getId()),
+            'comments' => $commentRepository->tri("Available",$idForum),
             'nbr'=>$nbr,
             'subject'=>$subject,
             'forum'=>$forum,

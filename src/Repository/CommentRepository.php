@@ -58,10 +58,10 @@ class CommentRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
             ;
     }
-    public function tri($value)
+    public function tri($value,$forum)
     {
         $em=$this->getEntityManager();
-        $query=$em->createQuery('select s from App\Entity\Comment s where s.status=:status order by s.likes DESC')->setParameter('status',$value);
+        $query=$em->createQuery('select s from App\Entity\Comment s where s.status=:status and s.idForum=:forum order by s.likes DESC')->setParameter('status',$value)->setParameter('forum',$forum);
         return $query->getResult();
     }
 }
