@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Complaint
@@ -25,6 +26,7 @@ class Complaint
      * @var string
      *
      * @ORM\Column(name="object", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="Object field is required")
      */
     private $object;
 
@@ -32,6 +34,7 @@ class Complaint
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=200, nullable=false)
+     * @Assert\NotBlank(message="Description field is required")
      */
     private $description;
 
@@ -39,6 +42,8 @@ class Complaint
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
+     * @Assert\NotBlank(message="Status field is required")
+     *
      */
     private $status;
 
@@ -53,6 +58,7 @@ class Complaint
      * @var \DateTime|null
      *
      * @ORM\Column(name="updated_date", type="date", nullable=true)
+     *
      */
     private $updatedDate;
 

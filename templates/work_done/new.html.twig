@@ -1,11 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}New WorkDone{% endblock %}
-
+{% block title %}Nouveau travail{% endblock %}
+{% block content %}
 {% block body %}
-    <h1>Create new WorkDone</h1>
+    <h1>Ajouter un travail</h1>
 
     {{ include('work_done/_form.html.twig') }}
 
-    <a href="{{ path('work_done_index') }}">back to list</a>
+    <a href="{{ path('work_done_index') }}">Retourner</a>
+{% endblock %}
 {% endblock %}

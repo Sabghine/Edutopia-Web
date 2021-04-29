@@ -1,47 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
-{% block title %}Activity index{% endblock %}
-
+{% block title %}Liste activités{% endblock %}
+{% block content %}
 {% block body %}
-    <h1>Activity index</h1>
+    <h1>Liste des activités</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Deadline</th>
-                <th>WorkTodo</th>
-                <th>Status</th>
-                <th>CeatedDate</th>
-                <th>LastUpdatedDate</th>
-                <th>ArchivedDate</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Date limite</th>
+                <th>Statut</th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
         {% for activity in activities %}
             <tr>
-                <td>{{ activity.id }}</td>
                 <td>{{ activity.name }}</td>
                 <td>{{ activity.deadline ? activity.deadline|date('Y-m-d') : '' }}</td>
-                <td>{{ activity.workTodo }}</td>
                 <td>{{ activity.status }}</td>
-                <td>{{ activity.ceatedDate ? activity.ceatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ activity.lastUpdatedDate ? activity.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ activity.archivedDate ? activity.archivedDate|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('activity_show', {'id': activity.id}) }}">show</a>
-                    <a href="{{ path('activity_edit', {'id': activity.id}) }}">edit</a>
+                    <a href="{{ path('activity_show', {'id': activity.id}) }}">Détails</a>
+                </td>
+                <td><a href="{{ path('activity_edit', {'id': activity.id}) }}">Modifier</a></td>
+                <td>
+                <a href="{{ path('work_done_new' ,{'idActivity': activity.id}) }}">Ajouter un travail </a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">Aucune ligne trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('activity_new') }}">Create new</a>
+    <a href="{{ path('activity_new') }}">Ajouter une nouvelle activité</a><br>
+    <a href="{{ path('forum_index') }}">Liste des forums</a>
+{% endblock %}
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -25,6 +26,8 @@ class Comment
      * @var string|null
      *
      * @ORM\Column(name="content", type="string", length=200, nullable=true)
+     * @Assert\NotBlank(message="Vous devez entrer un commentaire")
+     * @Assert\Length(min=10,minMessage="le commentaire doit contenir au min 10 caracteres")
      */
     private $content;
 
