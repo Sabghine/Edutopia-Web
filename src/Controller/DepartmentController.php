@@ -13,6 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Sonata\Exporter\Handler;
+use Sonata\Exporter\Source\PDOStatementSourceIterator;
+use Sonata\Exporter\Writer\CsvWriter;
+
 
 
 /**
@@ -32,6 +40,9 @@ class DepartmentController extends AbstractController
 
     /**
      * @Route("/new", name="department_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param FlashyNotifier $flashy
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -52,7 +63,35 @@ class DepartmentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/exportAction", name="exportAction")
+     */
+    public function exportAction(FlashyNotifier $flashy) {
 
+        $dbh = new \PDO('mysql://root:@127.0.0.1:3306/edutopia','root','');
+        $stm = $dbh->prepare('SELECT * FROM `department`');
+        $stm->execute();
+        $result = $stm->fetchAll();  // Even fetch() will do
+        if (count($result)>0) {
+            $source = new PDOStatementSourceIterator($stm);
+
+// Prepare the writer
+            $writer = new CsvWriter('data.csv');
+            $em=$this->getDoctrine()->getManager();
+            $department = $em->getRepository('App:Department')->findAll();
+            $writer->open();
+            $writer->write($department);
+
+// Export the data
+            Handler::create($source, $writer)->export();
+            $flashy->success('fichier crée!');
+        } else {
+            var_dump("no"); exit();
+
+        }
+
+        return $this->redirectToRoute('department_index');
+    }
     /**
      * @Route("/stat", name="stat", methods={"GET","POST"})
      * @param Request $request
@@ -133,14 +172,16 @@ class DepartmentController extends AbstractController
     /**
      * @Route("/{id}", name="department_delete", methods={"POST"})
      */
-    public function delete(Request $request, Department $department): Response
+    public function delete(Request $request, Department $department, FlashyNotifier $flashy): Response
     {
         if ($this->isCsrfTokenValid('delete'.$department->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($department);
             $entityManager->flush();
         }
+        $flashy->success('Departement supprimé!');
 
         return $this->redirectToRoute('department_index');
     }
+
 }

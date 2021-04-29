@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="specialties", indexes={@ORM\Index(name="update_by", columns={"update_by"}), @ORM\Index(name="idTeacher", columns={"idTeacher"}), @ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="IDX_410754B066B4BC6A", columns={"id_dep"}), @ORM\Index(name="archived_by", columns={"archived_by"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Specialties
 {
@@ -41,7 +42,7 @@ class Specialties
      *
      * @ORM\Column(name="specialty", type="string", length=3000, nullable=false)
      * @Assert\NotBlank(message="Vous devez donnez un nom de specialité")
-     * @Assert\Length(min=3,minMessage="Doit contenir au min 3 caracteres")
+     * @Assert\Length(min=2,minMessage="Doit contenir au min 3 caracteres")
      */
     private $specialty;
 
@@ -293,6 +294,20 @@ class Specialties
         $this->idDep = $idDep;
 
         return $this;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function createdTimestamps(): void
+    {
+        $this->setCreatedDate(new \DateTime('now'));
+    }
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(): void
+    {
+        $this->setUpdateDate(new \DateTime('now'));
     }
 
 

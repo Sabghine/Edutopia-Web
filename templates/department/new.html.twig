@@ -2,11 +2,22 @@
 
 {% block title %}New Department{% endblock %}
 {% block content %}
+    {% block head %}
+        <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    {% endblock %}
 {% block body %}
+
     <h1>Create new Department</h1>
 
     {{ include('department/_form.html.twig') }}
 
     <a href="{{ path('department_index') }}">back to list</a>
+
+    <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 {% endblock %}
 {% endblock %}

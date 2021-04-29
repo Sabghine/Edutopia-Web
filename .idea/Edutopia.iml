@@ -122,6 +122,14 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/macroable" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/botman/botman" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/botman/driver-web" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mgilet/notification-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/gedmo/doctrine-extensions" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/behat/transliterator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/stof/doctrine-extensions-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mercuryseries/flashy-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/csv" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sonata-project/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/egyg33k/csv-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

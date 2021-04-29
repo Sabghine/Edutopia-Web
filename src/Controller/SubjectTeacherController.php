@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+
 
 
 
@@ -111,13 +113,14 @@ class SubjectTeacherController extends AbstractController
     /**
      * @Route("/{id}", name="subject_teacher_delete", methods={"POST"})
      */
-    public function delete(Request $request, Subject $subject): Response
+    public function delete(Request $request, Subject $subject, FlashyNotifier $flashy): Response
     {
         if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($subject);
             $entityManager->flush();
         }
+        $flashy->success('matiere supprimé!');
 
         return $this->redirectToRoute('subject_teacher_index');
     }

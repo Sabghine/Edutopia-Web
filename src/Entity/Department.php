@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="department", indexes={@ORM\Index(name="created_by", columns={"created_by"}), @ORM\Index(name="last_updated_by", columns={"last_updated_by"}), @ORM\Index(name="ownerId", columns={"ownerId"}), @ORM\Index(name="archived_by", columns={"archived_by"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Department
 {
@@ -48,21 +49,18 @@ class Department
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="created_date", type="date", nullable=false)
      */
     private $createdDate;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(name="last_updated_date", type="date", nullable=true)
      */
     private $lastUpdatedDate;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(name="archived_date", type="date", nullable=true)
      */
     private $archivedDate;
@@ -277,6 +275,21 @@ class Department
     {
         return $this->name;
     }
+    /**
+     * @ORM\PrePersist
+     */
+    public function createdTimestamps(): void
+    {
+        $this->setCreatedDate(new \DateTime('now'));
+    }
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(): void
+    {
+        $this->setLastUpdatedDate(new \DateTime('now'));
+    }
+
 
 
 }

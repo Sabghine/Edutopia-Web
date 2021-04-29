@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "botman/botman": {
         "version": "2.6.1"
     },
@@ -91,11 +94,17 @@
     "egulias/email-validator": {
         "version": "3.1.1"
     },
+    "egyg33k/csv-bundle": {
+        "version": "1.0.1"
+    },
     "evenement/evenement": {
         "version": "v3.0.1"
     },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.0.5"
     },
     "laminas/laminas-code": {
         "version": "4.1.0"
@@ -105,6 +114,15 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.2.0"
+    },
+    "league/csv": {
+        "version": "9.7.1"
+    },
+    "mercuryseries/flashy-bundle": {
+        "version": "v3.0.2"
+    },
+    "mgilet/notification-bundle": {
+        "version": "4.0"
     },
     "monolog/monolog": {
         "version": "2.2.0"
@@ -175,8 +193,20 @@
             "./config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "sonata-project/exporter": {
+        "version": "2.6.2"
+    },
     "spatie/macroable": {
         "version": "1.0.1"
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        }
     },
     "symfony/asset": {
         "version": "v5.2.4"

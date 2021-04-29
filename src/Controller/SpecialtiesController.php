@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+
 
 /**
  * @Route("/specialties")
@@ -81,13 +83,14 @@ class SpecialtiesController extends AbstractController
     /**
      * @Route("/{id}", name="specialties_delete", methods={"POST"})
      */
-    public function delete(Request $request, Specialties $specialty): Response
+    public function delete(Request $request, Specialties $specialty, FlashyNotifier $flashy): Response
     {
         if ($this->isCsrfTokenValid('delete'.$specialty->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($specialty);
             $entityManager->flush();
         }
+        $flashy->success('specialité supprimé!');
 
         return $this->redirectToRoute('specialties_index');
     }

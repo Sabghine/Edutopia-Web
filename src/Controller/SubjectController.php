@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+
 
 
 
@@ -108,14 +110,14 @@ class SubjectController extends AbstractController
     /**
      * @Route("/{id}", name="subject_delete", methods={"POST"})
      */
-    public function delete(Request $request, Subject $subject): Response
+    public function delete(Request $request, Subject $subject, FlashyNotifier $flashy): Response
     {
         if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($subject);
             $entityManager->flush();
         }
-
+        $flashy->success('matiere supprimé!');
         return $this->redirectToRoute('subject_index');
     }
 

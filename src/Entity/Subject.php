@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="subject", indexes={@ORM\Index(name="update_by", columns={"update_by"}), @ORM\Index(name="id_teacher", columns={"id_teacher"}), @ORM\Index(name="archived_by", columns={"archived_by"}), @ORM\Index(name="subject_ibfk_5", columns={"id_class"}), @ORM\Index(name="created_by", columns={"created_by"})})
  * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Subject
 {
@@ -253,6 +254,20 @@ class Subject
         $this->idClass = $idClass;
 
         return $this;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function createdTimestamps(): void
+    {
+        $this->setCreatedDate(new \DateTime('now'));
+    }
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(): void
+    {
+        $this->setUpdateDate(new \DateTime('now'));
     }
 
 
