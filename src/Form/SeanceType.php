@@ -16,8 +16,7 @@ class SeanceType extends AbstractType
             ->add('date')
             ->add('url')
             ->add('matiere')
-            ->add('idClasse')
-            ->add('idTeacher')
+
         ;
     }
 

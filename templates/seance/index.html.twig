@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Seance index{% endblock %}
-
+{% block content %}
 {% block body %}
     <h1>Seance index</h1>
 
@@ -29,6 +29,7 @@
                     <a href="{{ path('seance_edit', {'id': seance.id}) }}">edit</a>
                 </td>
             </tr>
+
         {% else %}
             <tr>
                 <td colspan="6">no records found</td>
@@ -36,6 +37,10 @@
         {% endfor %}
         </tbody>
     </table>
+    <div border-bottom-color: coral; >
+<a href="https://meet.google.com/">go to meet</a>
+    </div>
 
     <a href="{{ path('seance_new') }}">Create new</a>
+{% endblock %}
 {% endblock %}
