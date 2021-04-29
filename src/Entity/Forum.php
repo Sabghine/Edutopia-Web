@@ -216,9 +216,6 @@ class Forum
     {
         return $this->subject;
     }
-    public function __toString()
-    {
-        return $this->subject;
-    }
+
 
 }

@@ -8,6 +8,7 @@ use App\Entity\Subject;
 use App\Entity\User;
 use App\Form\ExamType;
 use App\Repository\ExamRepository;
+use FontLib\Table\Type\cmap;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,26 +20,26 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExamController extends AbstractController
 {
-    private $userId=1;
+    private $userId = 1;
     /**
      * @Route("/", name="exam_index", methods={"GET"})
-
-    public function index(Subject $subject): Response
-    {
-        $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$subject->getId()]);
-
-        return $this->render('exam/index.html.twig', [
-            'exams' => $exams,
-        ]);
-    }
-*/
+     *
+     * public function index(Subject $subject): Response
+     * {
+     * $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$subject->getId()]);
+     *
+     * return $this->render('exam/index.html.twig', [
+     * 'exams' => $exams,
+     * ]);
+     * }
+     */
     /**
      * @Route("/exam_bysubject/{id}", name="exam_bysubject", methods={"GET"})
      */
     public function exam_bysubject(Subject $subject): Response
     {
 
-        $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$subject->getId()]);
+        $exams = $this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject' => $subject->getId()]);
 
         return $this->render('exam/index.html.twig', [
             'exams' => $exams,
@@ -47,23 +48,25 @@ class ExamController extends AbstractController
     }
 
     /**
-     * @Route ("/search", name="ajax_search_exam")
+     * @Route ("/search", name="ajax_search_exams")
      */
-    public function searchAction( Request $request) {
+    public function searchAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $requestString = $request->get('q');
-        $posts =  $em->getRepository('App:Exam')->findCourseByType($requestString);
-        if(!$posts) {
+        $posts = $em->getRepository('App:Exam')->findCourseByType($requestString);
+        if (!$posts) {
             $result['posts']['error'] = "Exam Not found :( ";
         } else {
             $result['posts'] = $this->getRealEntities($posts);
         }
         return new Response(json_encode($result));
-
     }
-    public function getRealEntities($Exam) {
+
+    public function getRealEntities($Exam)
+    {
         foreach ($Exam as $Exams) {
-            $realExam[$Exams->getIdExam()] =[$Exams->getType()];
+            $realExam[$Exams->getIdExam()] = [$Exams->getType()];
         }
         return $realExam;
     }
@@ -74,68 +77,55 @@ class ExamController extends AbstractController
      */
     public function exam_consultertoday(): Response
     {
-        $lignes=$this->getDoctrine()->getManager()->getRepository(LigneExam::class)->findBy(["iduser"=>$this->userId]);
+        $lignes = $this->getDoctrine()->getManager()->getRepository(LigneExam::class)->findBy(["iduser" => $this->userId]);
 
-
-        $str="";
+        $str = "";
         foreach ($lignes as $item) {
             $str .= $item->getIdExam()->getIdexam() . ",";
 
         }
-        $str =rtrim($str,',');
+        $str = rtrim($str, ',');
 
 
-        if($str!='')
-        $exams=$this->getDoctrine()->getManager()->createQuery("select distinct e from  App\Entity\Exam e where e.idExam not in (".$str.")  and e.startDate='".date("Y-m-d")."'")->getResult();
+        if ($str != '')
+            $exams = $this->getDoctrine()->getManager()->createQuery("select distinct e from  App\Entity\Exam e where e.idExam not in (" . $str . ")  and e.startDate='" . date("Y-m-d") . "'")->getResult();
         else
-        $exams=$this->getDoctrine()->getManager()->createQuery("select distinct e from  App\Entity\Exam e where  e.startDate='".date("Y-m-d")."'")->getResult();
+            $exams = $this->getDoctrine()->getManager()->createQuery("select distinct e from  App\Entity\Exam e where  e.startDate='" . date("Y-m-d") . "'")->getResult();
 
         return $this->render('exam/FrontConsulterExamenToday.html.twig', [
-            "exams"=>$exams
-        ]);
-    }
-    /**
-     * @Route("/exam_bysubject/{id}", name="exam_bysubject", methods={"GET"})
-     */
-    public function exam_bysubject(Subject $subject): Response
-    {
-
-        $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$subject->getId()]);
-
-        return $this->render('exam/index.html.twig', [
-            'exams' => $exams,
-            'subject' => $subject,
+            "exams" => $exams
         ]);
     }
 
     /**
-     * @Route("/exam_passage/{idExam}", name="exam_passage", methods={"GET"})
+     * @Route("/exam_passage/{idExam}", name="exam_passage", methods={"GET","POST"})
      */
     public function exam_passage(Exam $exam): Response
     {
-        $questions=$this->getDoctrine()->getManager()->createQuery("select distinct q from App\Entity\Question q where  q.idExam =".$exam->getIdExam())->getResult();
-        $user=$this->getDoctrine()->getManager()->getRepository(User::class)->find(1);
+        $questions = $this->getDoctrine()->getManager()->createQuery("select distinct q from App\Entity\Question q where  q.idExam =" . $exam->getIdExam())->getResult();
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find(1);
 
         return $this->render('exam/frontpassagexam.html.twig', [
             'exam' => $exam,
-            'questions'=>$questions,
-            'u'=>$user
+            'questions' => $questions,
+            'u' => $user
         ]);
     }
 
     /**
      * @Route("/exam_passage/exam_resultat", name="exam_resultat", methods={"GET","POST"})
      */
-    public  function exam_resultat(Request $request){
+    public function exam_resultat(Request $request)
+    {
 
-        $iduser =$request->get('iduser');
+        $iduser = $request->get('iduser');
         $idexam = $request->get('idexam');
         $note = $request->get('note');
 
-        $user=$this->getDoctrine()->getManager()->getRepository(User::class)->find($iduser);
-        $exam=$this->getDoctrine()->getManager()->getRepository(Exam::class)->find($idexam);
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($iduser);
+        $exam = $this->getDoctrine()->getManager()->getRepository(Exam::class)->find($idexam);
 
-        $ligne=new LigneExam();
+        $ligne = new LigneExam();
         $ligne->setIdexam($exam);
         $ligne->setIduser($user);
         $ligne->setNote($note);
@@ -146,21 +136,19 @@ class ExamController extends AbstractController
 
         return new JsonResponse("ok");
 
-
     }
 
     /**
      * @Route("/exam_passer", name="exam_passer", methods={"GET","POST"})
      */
-    public  function exam_passer(Request $request){
+    public function exam_passer(Request $request)
+    {
 
-        $user=$this->getDoctrine()->getManager()->getRepository(User::class)->find($this->userId);
-        $lexam=$this->getDoctrine()->getManager()->getRepository(LigneExam::class)->findBy(["iduser"=>$user->getId()]);
-
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($this->userId);
+        $lexam = $this->getDoctrine()->getManager()->getRepository(LigneExam::class)->findBy(["iduser" => $user->getId()]);
 
         return $this->render('exam/FrontExamPasser.html.twig', [
             'lignes' => $lexam,
-
         ]);
 
     }
@@ -169,13 +157,14 @@ class ExamController extends AbstractController
     /**
      * @Route("/exam_calendar", name="exam_calendar", methods={"GET","POST"})
      */
-    public  function exam_calendar(Request $request){
+    public function exam_calendar(Request $request)
+    {
 
-        $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findAll();
+        $exams = $this->getDoctrine()->getManager()->getRepository(Exam::class)->findAll();
 
         $rdvs = [];
 
-        foreach($exams as $ex){
+        foreach ($exams as $ex) {
             $rdvs[] = [
                 'id' => $ex->getIdExam(),
                 'start' => $ex->getStartDate()->format('Y-m-d H:i:s'),
@@ -188,18 +177,17 @@ class ExamController extends AbstractController
 
         $data = json_encode($rdvs);
 
-        return $this->render('exam/calendarexam.html.twig',compact('data')
+        return $this->render('exam/calendarexam.html.twig', compact('data')
 
         );
 
     }
 
 
-
     /**
      * @Route("/{id}/new", name="exam_new", methods={"GET","POST"})
      */
-    public function new(Request $request,Subject $subject): Response
+    public function new(Request $request, Subject $subject): Response
     {
         $exam = new Exam();
         $form = $this->createForm(ExamType::class, $exam);
@@ -211,7 +199,7 @@ class ExamController extends AbstractController
             $entityManager->persist($exam);
             $entityManager->flush();
 
-            $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$exam->getIdSubject()]);
+            $exams = $this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject' => $exam->getIdSubject()]);
 
             return $this->render('exam/index.html.twig', [
                 'exams' => $exams,
@@ -231,11 +219,11 @@ class ExamController extends AbstractController
      */
     public function show(Exam $exam): Response
     {
-        $questions=$this->getDoctrine()->getManager()->createQuery("select distinct q from App\Entity\Question q where  q.idExam =".$exam->getIdExam())->getResult();
+        $questions = $this->getDoctrine()->getManager()->createQuery("select distinct q from App\Entity\Question q where  q.idExam =" . $exam->getIdExam())->getResult();
 
         return $this->render('exam/show.html.twig', [
             'exam' => $exam,
-            'questions'=>$questions
+            'questions' => $questions
         ]);
     }
 
@@ -251,7 +239,7 @@ class ExamController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
 
-            $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$exam->getIdSubject()]);
+            $exams = $this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject' => $exam->getIdSubject()]);
 
             return $this->render('exam/index.html.twig', [
                 'exams' => $exams,
@@ -266,31 +254,27 @@ class ExamController extends AbstractController
     }
 
 
-
-
     /**
      * @Route("/{idExam}", name="exam_delete", methods={"POST"})
      */
     public function delete(Request $request, Exam $exam): Response
     {
-        $ids= $exam->getIdSubject();
-        if ($this->isCsrfTokenValid('delete'.$exam->getIdExam(), $request->request->get('_token'))) {
+        $ids = $exam->getIdSubject();
+        if ($this->isCsrfTokenValid('delete' . $exam->getIdExam(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($exam);
             $entityManager->flush();
         }
 
 
-        $exams=$this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject'=>$ids]);
-        $subject=$this->getDoctrine()->getManager()->getRepository(Subject::class)->find($ids);
+        $exams = $this->getDoctrine()->getManager()->getRepository(Exam::class)->findBy(['idSubject' => $ids]);
+        $subject = $this->getDoctrine()->getManager()->getRepository(Subject::class)->find($ids);
 
         return $this->render('exam/index.html.twig', [
             'exams' => $exams,
             'subject' => $subject,
         ]);
     }
-
-
 
 
 }

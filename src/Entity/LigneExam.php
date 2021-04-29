@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LigneExam
  *
- * @ORM\Table(name="ligne_exam", indexes={@ORM\Index(name="iduser", columns={"iduser"}), @ORM\Index(name="idexam", columns={"idexam"})})
- * @ORM\Entity
+ * @ORM\Table(name="ligne_exam", indexes={@ORM\Index(name="idexam", columns={"idexam"}), @ORM\Index(name="iduser", columns={"iduser"})})
+ * @ORM\Entity(repositoryClass="App\Repository\LigneExamRepository")
  */
 class LigneExam
 {
@@ -29,24 +29,24 @@ class LigneExam
     private $note;
 
     /**
-     * @ORM\OneToOne(targetEntity="Exam")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
-     * })
-     */
-    private $iduser;
-
-    /**
-     * @var \Exam
      *
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\OneToOne(targetEntity="Exam")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexam", referencedColumnName="id_Exam")
      * })
      */
     private $idexam;
 
-    
+    /**
+     * @var \User
+     *
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
+     * })
+     */
+    private $iduser;
+
     public function getIdligne(): ?int
     {
         return $this->idligne;
@@ -84,7 +84,6 @@ class LigneExam
     public function setIduser(?User $iduser): self
     {
         $this->iduser = $iduser;
-
         return $this;
     }
 

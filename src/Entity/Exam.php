@@ -174,4 +174,10 @@ class Exam
         $this->finishDate = new \DateTime();
         $this->createdDate = new \DateTime();
     }
+
+
+    public function __toString()
+    {
+        return $this->type;
+    }
 }

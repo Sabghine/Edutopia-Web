@@ -1,4 +1,4 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base_front_amine.html.twig' %}
 
 {% block title %}Exam index{% endblock %}
 
@@ -25,43 +25,55 @@
                 <p id="notef"> note:../20</p>
             </th>
         </tr>
-        </table>{%  set compteur=0 %}
+        </table>{% set compteur=0 %}
         {% for ques in questions %}
-            {%  set compteur=compteur+1 %}
+            {% set compteur=compteur+1 %}
             <div>
-                <p style="color: red"> Question {{ compteur }} :  {{ ques.question }} </p>
-                <input type="radio" name="{{ ques.id }}"  class="{{ ques.id }}" value="{{ ques.proposition1 == ques.bonnereponse }}" />   {{ ques.proposition1 }} <br>
-                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}" value="{{ ques.proposition2== ques.bonnereponse }}" />   {{ ques.proposition2 }} <br>
-                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}" value="{{ ques.proposition3== ques.bonnereponse }}" />   {{ ques.proposition3 }} <br>
-                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}" value="{{ ques.proposition4== ques.bonnereponse }}" />   {{ ques.proposition4 }} <br><br>
+                <p style="color: red"> Question {{ compteur }} : {{ ques.question }} </p>
+                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}"
+                       value="{{ ques.proposition1 == ques.bonnereponse }}"/> {{ ques.proposition1 }} <br>
+                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}"
+                       value="{{ ques.proposition2== ques.bonnereponse }}"/> {{ ques.proposition2 }} <br>
+                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}"
+                       value="{{ ques.proposition3== ques.bonnereponse }}"/> {{ ques.proposition3 }} <br>
+                <input type="radio" name="{{ ques.id }}" class="{{ ques.id }}"
+                       value="{{ ques.proposition4== ques.bonnereponse }}"/> {{ ques.proposition4 }} <br><br>
             </div>
-
-
         {% endfor %}
-        <button id="valider"> Valider </button>
+        <button id="valider">Valider</button>
+        <form id="RatingForm" method="post" action="{{ path('ligne_exam_new') }}">
+            <div class="share-block d-flex align-items-center feather-icon mr-3">
+                <div class="stars">
+                    <input type="hidden" name="ratedEvent" id="ratedEvent" type="text" value={{ exam.idExam }}>
+                    <input type="hidden" name="iduser" id="iduser" type="text" value={{ u.id }}>
+                    <input type="hidden" name="note" id="note" type="text" value="0">
+                    <button class="btn btn-primary" type="submit" id="valider">Envoyer</button>
+                </div>
+            </div>
+        </form>
 
         <div id="final" style="display: none;">
-            {%  set compteurfinal=0 %}
+            {% set compteurfinal=0 %}
             {% for ques in questions %}
-                {%  set compteurfinal=compteurfinal+1 %}
+                {% set compteurfinal=compteurfinal+1 %}
                 <span style="color: #ff0000"> Question( {{ compteurfinal }} )   {{ ques.question }}  ?</span> : {{ ques.bonnereponse }}
                 <br>
             {% endfor %}
         </div>
 
-    {%  endblock %}
+    {% endblock %}
 
     {% block javascripts %}
         <script>
-            $(document).ready(function() {
-
-                var count=0;
-                var exist=[];
-                $('#valider').on("click",function(){
-                        var client=    $('#client').val();
-                        var exam=    $('#exam').val();
-                        var nombreq=    $('#nombreq').val();
-                        var note= (count*20)/parseInt(nombreq);
+            $(document).ready(function () {
+                var count = 0;
+                var exist = [];
+                const notes = document.querySelector("#note");
+                $('#valider').on("click", function () {
+                        var client = $('#client').val();
+                        var exam = $('#exam').val();
+                        var nombreq = $('#nombreq').val();
+                        var note = (count * 20) / parseInt(nombreq);
                         $.ajax({
                             url: 'exam_resultat',
                             type: 'POST',
@@ -70,39 +82,34 @@
                                 'iduser': client, 'idexam': exam, 'note': note,
                                 async: true,
                                 success: function (data) {
-                                    $("#notef").html(' <p>'+note+' /20 </p>');
-                                    alert("vous avez"+note+"/20");
+                                    $("#notef").html(' <p>' + note + ' /20 </p>');
+                                    notes.value = note;
+                                    alert("vous avez " + note + "/20");
                                     $("#valider").hide();
                                     $("#final").css("display", "block");
-
                                 },
                                 error: function (xhr, textStatus, errorThrown) {
                                     //alert('Ajax request failed.');
                                 }
-
-
                             }
                         });
                     }
                 );
-                $("input[value='1']").on("change",function () {
+                $("input[value='1']").on("change", function () {
                     count++;
                     exist.push($(this).attr('class'));
                     //   alert(count);
                 })
-
-                $("input[value!='1']").on("change",function () {
-                    if(count>0){
+                $("input[value!='1']").on("change", function () {
+                    if (count > 0) {
                         const index = exist.indexOf($(this).attr('class'));
                         if (index > -1) {
                             exist.splice(index, 1);
                             count--;
                         }
                     }
-
                     //    alert(count);
                 })
-
             });
         </script>
     {% endblock %}

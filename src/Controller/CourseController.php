@@ -155,33 +155,7 @@ class CourseController extends AbstractController
             'subject' => $subject
         ]);
     }
-    /**
-     * @Route("/course_bysubjectStudent/{id}", name="course_bysubjectStudent", methods={"GET"})
-     */
-    public function course_bysubjectStudent(Subject $subject): Response
-    {
 
-        $courses=$this->getDoctrine()->getManager()->getRepository(Course::class)->findBy(['idSubject'=>$subject->getId()]);
-
-        return $this->render('course/showcours.html.twig', [
-            'courses' => $courses,
-            'subject' => $subject,
-        ]);
-    }
-
-    /**
-     * @Route("/course_bysubject/{id}", name="course_bysubject", methods={"GET"})
-     */
-    public function course_bysubject(Subject $subject): Response
-    {
-
-        $courses=$this->getDoctrine()->getManager()->getRepository(Course::class)->findBy(['idSubject'=>$subject->getId()]);
-
-        return $this->render('course/index.html.twig', [
-            'courses' => $courses,
-            'subject' => $subject,
-        ]);
-    }
     /**
      * @Route("/{id}", name="course_show", methods={"GET"})
      */

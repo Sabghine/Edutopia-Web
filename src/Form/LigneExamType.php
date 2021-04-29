@@ -11,12 +11,7 @@ class LigneExamType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('idligne')
-            ->add('note')
-            ->add('idexam')
-            ->add('iduser')
-        ;
+        $builder;
     }
 
     public function configureOptions(OptionsResolver $resolver)
