@@ -175,9 +175,9 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_indexUser', ['idForum' => $comment->getIdForum()->getId()]);
+            return $this->redirectToRoute('comment_index', ['idForum' => $comment->getIdForum()->getId()]);
         }
-        return $this->render('comment/editUser.html.twig', [
+        return $this->render('comment/edit.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
         ]);
@@ -211,9 +211,9 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_index', ['idForum' => $comment->getIdForum()->getId()]);
+            return $this->redirectToRoute('comment_indexUser', ['idForum' => $comment->getIdForum()->getId()]);
         }
-        return $this->render('comment/edit.html.twig', [
+        return $this->render('comment/editUser.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
         ]);

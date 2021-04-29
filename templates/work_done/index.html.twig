@@ -26,9 +26,6 @@
                     {{ include('work_done/_details_form.html.twig') }}
                 </td>
                 <td>
-                    {{ include('work_done/_edit_form.html.twig') }}
-                </td>
-                <td>
                     {% if work_done.status =="ScoreAdded" %}
                         <button disabled class="btn btn-primary" style="background-color: #1aa179">
                         <a style="color: white">Noter </a>

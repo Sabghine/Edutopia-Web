@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1db0ad542e418e83afd169dda2ca4199",
+    "content-hash": "e16cd34aff2222b28540b8510380639a",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1752,56 +1752,6 @@
             "time": "2021-04-01T18:37:14+00:00"
         },
         {
-
-            "name": "egyg33k/csv-bundle",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/EGYG33K/CsvBundle.git",
-                "reference": "8ccb7883b20723510d7f29739898f64f4edf77bc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/EGYG33K/CsvBundle/zipball/8ccb7883b20723510d7f29739898f64f4edf77bc",
-                "reference": "8ccb7883b20723510d7f29739898f64f4edf77bc",
-                "shasum": ""
-            },
-            "require": {
-                "league/csv": ">=5.0.0-stable",
-                "php": ">=5.5.9",
-                "symfony/framework-bundle": ">=2.0.0-stable"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Egyg33k\\CsvBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Amr Samy",
-                    "email": "me@amrsamy.com"
-                }
-            ],
-            "description": "Integration of League CSV into Symfony",
-            "homepage": "https://github.com/EGYG33K/CsvBundle",
-            "keywords": [
-                "csv"
-            ],
-            "support": {
-                "issues": "https://github.com/EGYG33K/CsvBundle/issues",
-                "source": "https://github.com/EGYG33K/CsvBundle/tree/1.0.1"
-            },
-            "time": "2016-02-05T03:06:55+00:00"
-        }, 
-        {
             "name": "expalmer/php-bad-words",
             "version": "0.1.3",
             "source": {
@@ -1833,7 +1783,6 @@
             ],
             "authors": [
                 {
-            
                     "name": "Palmer Oliveira",
                     "email": "expalmer@gmail.com"
                 }
@@ -1848,7 +1797,6 @@
                 "source": "https://github.com/expalmer/php-bad-words/tree/master"
             },
             "time": "2015-06-25T20:39:53+00:00"
-
         },
         {
             "name": "friendsofphp/proxy-manager-lts",

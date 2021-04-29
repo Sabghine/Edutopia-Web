@@ -98,12 +98,6 @@
     "egulias/email-validator": {
         "version": "3.1.1"
     },
-    "egyg33k/csv-bundle": {
-        "version": "1.0.1"
-    },
-    "evenement/evenement": {
-        "version": "v3.0.1"
-
     "expalmer/php-bad-words": {
         "version": "0.1.3"
     },

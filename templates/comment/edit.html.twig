@@ -11,13 +11,12 @@
     <div  style="display: flex; width: 100%;justify-content: center">
         <div style="margin-right: 20px">
             <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
-                <a style="color: white" href="{{ path('comment_new', {'idForum': comment.idForum.id}) }}">Retourner</a>
+                <a style="color: white" href="{{ path('comment_index', {'idForum': comment.idForum.id}) }}">Retourner</a>
             </button>
         </div>
         <div style="margin-right: 20px">
             {{ include('comment/_delete_form.html.twig') }}
         </div>
     </div>
-
 {% endblock %}
 {% endblock %}
