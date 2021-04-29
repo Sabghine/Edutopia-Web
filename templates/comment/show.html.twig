@@ -1,35 +1,54 @@
-{% extends 'base_front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Details commentaire{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>Details du commentaire</h1>
-
-    <table class="table">
+    <br>
+    <h1 style="color: #1aa179;font-style: initial">Details du commentaire</h1>
+    <br> <br>
+    <table class="table table-striped">
         <tbody>
+            <tr>
+                <th>Forum</th>
+                <td>{{ comment.idForum.subject }}</td>
+            </tr>
             <tr>
                 <th>Commentaire</th>
                 <td>{{ comment.content }}</td>
             </tr>
             <tr>
-                <th>Statut</th>
-                <td>{{ comment.status }}</td>
+                <th>Posté/e par </th>
+                <td>{{ comment.createdby }}</td>
+            </tr>
+            <tr>
+                <th>Date de dépot</th>
+                <td>{{ comment.createdDate ? comment.createdDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
                 <th>Likes</th>
                 <td>{{ comment.likes }}</td>
             </tr>
             <tr>
-                <th>Dislike</th>
+                <th>Dislikes</th>
                 <td>{{ comment.dislike }}</td>
             </tr>
         </tbody>
     </table>
+    <div  style="display: flex; width: 100%;justify-content: center">
+        <div style="margin-right: 20px">
+            <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                <a style="color: white" href="{{ path('comment_index', {'idForum': comment.idForum.id}) }}">Retourner</a>
+            </button>
+        </div>
+        <div style="margin-right: 20px">
+            <button class="btn btn-primary" style="background-color: #d58512;border-color: #d58512">
+                <a style="color:white" href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a>
+            </button>
+        </div>
+        <div style="margin-right: 20px">
+            {{ include('comment/_delete_form.html.twig') }}
+        </div>
 
-    <a href="{{ path('comment_index',{'idForum': comment.idForum}) }}">Retourner</a>
-
-    <a href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a>
-
-    {{ include('comment/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
 {% endblock %}

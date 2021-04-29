@@ -45,16 +45,23 @@
                         </button>
                     </td>
                     <td style="float: right">
+                        <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Vous etes sure que vous voulez supprimer ce commentaire?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                            <button class="btn btn-primary" style="border-color: #ee3148;background-color: #ee3148">
+                                <a style="color: white" href="{{ path('comment_delete', {'id': comment.id}) }}"><img src="/dist/img/delete.png"></a>
+                            </button>
+                        </form>
+                        </button>
+                    </td>
+                    <td style="float: right">
                         <button class="btn btn-primary" style="background-color: #99CDD8;border-color: #99CDD8">
                             <a style="color: white" href="{{ path('comment_show', {'id': comment.id}) }}"><img src="/dist/img/details.png"></a>
                         </button>
                         <button class="btn btn-primary" style="background-color:#d58512;border-color: #d58512">
                             <a style="color: white" href="{{ path('comment_edit', {'id': comment.id}) }}"><img src="/dist/img/edit.png"></a>
                         </button>
-                        <button class="btn btn-primary" style="background-color:#ee3148;border-color: #ee3148">
-                            <a style="color: white" href="{{ path('comment_delete', {'id': comment.id}) }}"><img src="/dist/img/delete.png"></a>
-                        </button>
                     </td>
+
                 {% endif %}
             </tr>
         {% else %}
