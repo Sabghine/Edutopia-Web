@@ -33,6 +33,21 @@ class CommentController extends AbstractController
             'forum'=>$forum,
         ]);
     }
+    /**
+     * @Route("/{idForum}/indexUser", name="comment_indexUser", methods={"GET"})
+     */
+    public function indexUser(CommentRepository $commentRepository,Comment $comment): Response
+    {
+        $subject=$comment->getIdForum()->getSubject();
+        $forum=$comment->getIdForum();
+        $nbr=$commentRepository->countAvailable("Available",$comment->getIdForum());
+        return $this->render('comment/indexUser.html.twig', [
+            'comments' => $commentRepository->tri("Available",$comment->getIdForum()->getId()),
+            'nbr'=>$nbr,
+            'subject'=>$subject,
+            'forum'=>$forum,
+        ]);
+    }
 
     /**
      * @Route("/new/{idForum}", name="comment_new", methods={"GET","POST"})

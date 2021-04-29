@@ -85,7 +85,10 @@
     #}
     <div  style="display: flex; width: 100%;justify-content: center">
         <div style="margin-right: 20px">
-            {{ include('forum/_list_form.html.twig') }}
+            <form method="post" action="{{ path('forum_indexUser')}}">
+                <input type="hidden" name="_token">
+                <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">Liste des forums disponibles</button>
+            </form>
         </div>
     </div>
 {% endblock %}

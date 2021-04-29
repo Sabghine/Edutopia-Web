@@ -3,55 +3,92 @@
 {% block title %}Liste Commentaire{% endblock %}
 {% block content %}
     {% block body %}
-        <h1>Liste des commentaires</h1>
-        <h5 style="float: right">Nombre des activités disponibles : <b>{{ nbr }}</b></h5><br>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Commentaire</th>
-                <th>posté/e par</th>
-                <th>Likes</th>
-                <th>Dislike</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for comment in comments %}
-                <tr>
-                    <td>{{ comment.content }}</td>
-                    <td>{{ comment.createdBy }}</td>
-                    <td>{{ comment.likes }}</td>
-                    <td>{{ comment.dislike }}</td>
-                    <td>
-                        <button class="btn btn-primary" style="background-color: #1aa179">
-                            <a style="color: white" href="{{ path('comment_show', {'id': comment.id}) }}">Details</a>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" style="background-color: #1aa179">
-                            <a style="color: white" href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" style="background-color: #1aa179">
-                            <a style="color: white" href="{{ path('comment_like', {'id': comment.id}) }}">Like</a>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" style="background-color: #1aa179">
-                            <a style="color: white" href="{{ path('comment_dislike', {'id': comment.id}) }}">Dislike</a>
-                        </button>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="9">aucun commentaire</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <section class="probootstrap-section" style="padding-top: 0%">
+            <h1 align="center">Liste des commentaires</h1>
+            <div class="container">
+                <h5 style="float: right">Nombre des commentaires disponibles : <b>{{ nbr }}</b></h5></h5>
+                <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un commentaire">
+                <br><br>
+                {% for comment in comments %}
+                <div class="col-md-6" style="width: 100%">
+                    <div class="probootstrap-service-2 probootstrap-animate fadeInUp probootstrap-animated" style="width: 100%">
+                        <div class="text" style="width: 100%">
+                                <table id="tabact">
+                                    <thead>
+                                    <tr>
+                                        <th >Commentaire</th>
+                                        <th>posté/e par</th>
+                                        <th>Likes</th>
+                                        <th>Dislike</th>
+                                        <th style="width: 10%"></th>
+                                        <th style="width: 10%"></th>
+                                        <th style="width: 10%"></th>
+                                        <th style="width: 10%"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        {% if comment.createdby.id !=1 %}
+                                            <td style="width: 20%">{{ comment.content|trans|nl2br }}</td>
+                                            <td>{{ comment.createdBy }}</td>
+                                            <td>{{ comment.likes }}</td>
+                                            <td>{{ comment.dislike }}</td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td style="padding-right: 10px">
+                                                <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                                                    <a style="color: white" href="{{ path('comment_like', {'id': comment.id}) }}"><img src="/dist/img/like.png"></a>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary" style="background-color:#ee3148;border-color:#ee3148">
+                                                    <a style="color: white" href="{{ path('comment_dislike', {'id': comment.id}) }}"><img src="/dist/img/dislikee.png"></a>
+                                                </button>
+                                            </td>
+                                        {% endif %}
+                                        {% if comment.createdby.id ==1 %}
+                                            <td style="width: 20%">{{ comment.content|trans|nl2br }}&nbsp &nbsp</td>
+                                            <td>{{ comment.createdBy }}</td>
+                                            <td>{{ comment.likes }}</td>
+                                            <td>{{ comment.dislike }}</td>
+                                            <td style="padding-right: 10px">
+                                                <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Vous etes sure que vous voulez supprimer ce commentaire?');">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                                    <button class="btn btn-primary" style="border-color: #ee3148;background-color: #ee3148">
+                                                        <a style="color: white" href="{{ path('comment_delete', {'id': comment.id}) }}"><img src="/dist/img/delete.png"></a>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td style="padding-right: 10px">
+                                                <button class="btn btn-primary" style="background-color:#d58512;border-color: #d58512">
+                                                    <a style="color: white" href="{{ path('comment_edit', {'id': comment.id}) }}"><img src="/dist/img/edit.png"></a>
+                                                </button>
+                                            </td>
+                                            <td style="padding-right: 10px">
+                                                <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                                                    <a style="color: white" href="{{ path('comment_like', {'id': comment.id}) }}"><img src="/dist/img/like.png"></a>
+                                                </button>
+                                            </td>
+                                            <td style="padding-right: 10px">
+                                                <button class="btn btn-primary" style="background-color:#ee3148;border-color:#ee3148">
+                                                    <a style="color: white" href="{{ path('comment_dislike', {'id': comment.id}) }}"><img src="/dist/img/dislikee.png"></a>
+                                                </button>
+                                            </td>
+
+                                        {% endif %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                {% else %}
+                    <tr>
+                        <td colspan="9">aucun commentaire</td>
+                    </tr>
+                {% endfor %}
+            </div>
+        </section>
+
     {% endblock %}
 {% endblock %}

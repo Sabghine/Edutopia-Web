@@ -27,6 +27,17 @@ class ForumController extends AbstractController
         ]);
     }
     /**
+     * @Route("/indexUser", name="forum_indexUser", methods={"GET","POST"})
+     */
+    public function indexUser(ForumRepository $forumRepository): Response
+    {
+        $nbr=$forumRepository->countStatus("Available");
+        return $this->render('forum/indexUser.html.twig', [
+            'forums' => $forumRepository->findBy(["status" => "Available"]),
+            'nbr' => $nbr,
+        ]);
+    }
+    /**
      * @Route("/ArchivedList", name="forum_ArchivedList", methods={"GET","POST"})
      */
     public function ArchivedList(ForumRepository $forumRepository): Response

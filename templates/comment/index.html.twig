@@ -4,7 +4,7 @@
 {% block content %}
 {% block body %}
     <h1 style="color: #1aa179;font-style: inherit"><b>Liste des commentaires</b></h1><br><br>
-    <h5 style="float: right"><b>Nombre des activités disponibles : </b>{{ nbr }}</h5><br><br>
+    <h5 style="float: right"><b>Nombre des commentaires disponibles : </b>{{ nbr }}</h5><br><br>
     <h4 style="float: left"><b>Sujet</b>: {{ subject }}</h4><br><br>
     <input type="text" id="search" name="search" class="form-control" placeholder="Chercher une activité">
     <br>
@@ -21,7 +21,7 @@
         <tbody>
         {% for comment in comments %}
             <tr>
-                <td>{{ comment.content }}</td>
+                <td>{{ comment.content|trans|nl2br }}</td>
                 <td>{{ comment.createdBy }}</td>
                 <td>{{ comment.likes }}</td>
                 <td>{{ comment.dislike }}</td>
