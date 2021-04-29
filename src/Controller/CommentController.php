@@ -78,6 +78,35 @@ class CommentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/newUser/{idForum}", name="comment_newUser", methods={"GET","POST"})
+     */
+    public function newUser(Request $request,Comment $comment,UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findOneBy(['id' => 1]);
+        $comment2 = new Comment();
+        $idForum=$comment->getIdForum();
+        $comment2->setIdForum($idForum);
+        $form = $this->createForm(CommentType::class, $comment2);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment2->setCreatedBy($user);
+            $comment2->setStatus("Available");
+            $comment2->setLikes(0);
+            $comment2->setDislike(0);
+            $comment2->setCreatedDate(new \DateTime('now'));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment2);
+            $entityManager->flush();
+            return $this->redirectToRoute('comment_indexUser',['idForum'=>$idForum->getId()]);
+        }
+
+        return $this->render('comment/newUser.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/{id}/details", name="comment_show", methods={"GET"})

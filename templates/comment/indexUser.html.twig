@@ -89,6 +89,25 @@
                 {% endfor %}
             </div>
         </section>
+        <div  style="display: flex; width: 100%;justify-content: center">
+            <div style="margin-right: 20px">
+                <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                    <a style="color: white" href="{{ path('comment_newUser', {'idForum': forum.id}) }}">Ajouter un commentaire</a>
+                </button>
+            </div>
+            <div style="margin-right: 20px">
+                <form method="post" action="{{ path('activity_indexUser')}}">
+                    <input type="hidden" name="_token">
+                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">Liste des activités disponibles</button>
+                </form>
+            </div>
+            <div style="margin-right: 20px">
+                <form method="post" action="{{ path('forum_indexUser')}}">
+                    <input type="hidden" name="_token">
+                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">Liste des forums disponibles</button>
+                </form>
+            </div>
+        </div>
 
     {% endblock %}
 {% endblock %}

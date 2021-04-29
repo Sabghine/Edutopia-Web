@@ -4,8 +4,38 @@
 {% block content %}
     {% block body %}
         <h1>Liste des forums</h1>
-        <br>
-        <h5 style="float: right">Nombre des forums disponibles : <b>{{ nbr }}</b></h5><br><br>
+        <h5 style="float: right">Nombre des forums disponibles : <b>{{ nbr }}</b></h5>
+        <section class="probootstrap-section">
+            <div class="container">
+
+                <div class="row">
+                    {% for forum in forums %}
+                    <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+                        <a href="#" class="probootstrap-featured-news-box">
+                            <figure class="probootstrap-media"><img src="/dist/img/img_sm_1.png" alt="Free Bootstrap Template by uicookies.com" class="img-responsive"></figure>
+                            <div class="probootstrap-text">
+                                <b>Sujet : </b>{{ forum.subject }}<br>
+                                <i class="icon-calendar"></i>{{ forum.createdDate ? forum.createdDate|date('Y-m-d') : '' }}
+                                <div style="padding-top: 2%">
+                                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                                        <a style="color: white" href="{{ path('comment_indexUser', {'idForum': forum.id}) }}">Liste des commentaires</a>
+                                    </button>
+                                </div>
+                                <br>
+                                    <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
+                                        <a style="color: white" href="{{ path('comment_newUser', {'idForum': forum.id}) }}">Ajouter un commentaire</a>
+                                    </button>
+                            </div>
+                        </a>
+                    </div>
+                    {% else %}aucun forum
+                    {% endfor %}
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+
+                </div>
+            </div>
+        </section>
+{#
         <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un forum disponible">
         <br>
         <table class="table table-striped" id="tabfr">
@@ -16,7 +46,6 @@
             </tr>
             </thead>
             <tbody>
-            {% for forum in forums %}
                 <tr>
                     <td>{{ forum.subject }}</td>
                     <td style="float: right">
@@ -64,18 +93,11 @@
                 }
             });
         </script>
-        <div  style="display: flex; width: 100%;justify-content: center">
-            <div style="margin-right: 20px">
+#}
+            <div  style="display: flex; width: 100%;justify-content: center">
                 <button class="btn btn-primary" style="background-color: #1aa179;border-color: #1aa179">
-                    <a style="color: white" href="{{ path('forum_new') }}">Ajouter un nouveau forum</a>
+                    <a style="color: white" href="{{ path('activity_indexUser')}}">Liste des activités disponible</a>
                 </button>
             </div>
-            <div style="margin-right: 20px">
-                {{ include('forum/_archivedList_form.html.twig') }}
-            </div>
-            <div style="margin-right: 20px">
-                {{ include('activity/_list_form.html.twig') }}
-            </div>
-        </div>
     {% endblock %}
 {% endblock %}

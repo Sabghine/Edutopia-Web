@@ -58,6 +58,18 @@ class ActivityRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
             ;
     }
+    public function list($value)
+    {
+
+        return (int)$this->createQueryBuilder('a')
+            ->andWhere('a.status = :val')
+            ->setParameter('val', $value)
+            ->select('a.id')
+            ->orderBy('a.ceatedDate','desc')
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
     public function tri($value)
     {
         $em=$this->getEntityManager();
