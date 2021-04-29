@@ -212,12 +212,6 @@ class Forum
         return $this;
     }
 
-    public function setIdCourse(?Course $idCourse): self
-    {
-        $this->idCourse = $idCourse;
-
-        return $this;
-    }
     public function __toString()
     {
         return $this->subject;

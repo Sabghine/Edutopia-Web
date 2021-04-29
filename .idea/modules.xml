@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Edutopia.iml" filepath="$PROJECT_DIR$/.idea/Edutopia.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../Bureau/Web/FirstProject/.idea/FirstProject.iml" filepath="$PROJECT_DIR$/../../../../Bureau/Web/FirstProject/.idea/FirstProject.iml" />
-      <module fileurl="file://$USER_HOME$/PhpstormProjects/PI-dev-INNOVAH-/.idea/PI-dev-INNOVAH-.iml" filepath="$USER_HOME$/PhpstormProjects/PI-dev-INNOVAH-/.idea/PI-dev-INNOVAH-.iml" />
     </modules>
   </component>
 </project>

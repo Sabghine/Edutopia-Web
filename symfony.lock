@@ -107,9 +107,10 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
-    "gedmo/doctrine-extensions": {
 
-        "version": "v3.0.4"
+    "gedmo/doctrine-extensions": {
+        "version": "v3.0.5"
+
     },
     "gregwar/captcha": {
         "version": "v1.1.9"
@@ -144,17 +145,16 @@
     "nikic/php-parser": {
         "version": "v4.10.4"
     },
-
     "opis/closure": {
         "version": "3.6.2"
     },
-
     "phenx/php-font-lib": {
         "version": "0.5.2"
     },
     "phenx/php-svg-lib": {
-        "version": "v0.3.3"
+        "version": "v0.3.3
     },
+
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -199,10 +199,11 @@
     },
     "react/stream": {
         "version": "v1.1.1"
+    },
     "sabberworm/php-css-parser": {
         "version": "8.3.1"
-
     },
+
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {
@@ -230,10 +231,9 @@
             "branch": "master",
             "version": "1.2",
             "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
-        }
-
         },
-        "files": [
+
+    "files": [
             "./config/packages/stof_doctrine_extensions.yaml"
         ]
     },

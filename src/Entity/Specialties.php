@@ -135,16 +135,6 @@ class Specialties
      */
     private $idDep;
 
-    /**
-     * @var \Department
-     *
-     * @ORM\ManyToOne(targetEntity="Department")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_dep", referencedColumnName="id")
-     * })
-     */
-    private $idDep;
-
     public function getId(): ?int
     {
         return $this->id;

@@ -275,6 +275,7 @@ class Department
     {
         return $this->name;
     }
+
     /**
      * @ORM\PrePersist
      */
@@ -291,10 +292,7 @@ class Department
     }
 
 
-    public function __toString()
-    {
-        return $this->name;
-    }
+
 
 
 }
