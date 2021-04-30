@@ -12,6 +12,7 @@ class ForumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('subject')
             ->add('status')
             ->add('createdDate')

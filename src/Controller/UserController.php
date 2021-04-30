@@ -105,7 +105,7 @@ class UserController extends AbstractController
             ->setFrom('sabrine.mokhtar@esprit.tn')
             ->setTo('sabrine.mokhtar@esprit.tn')
             ->setBody(
-                ' Welcome to your new E_learning platform "Edutopia" , your account has been created with success,Please check with the administration for login details '
+                ' Welcome to your new E_learning platform "Edutopia" , your account has been created with success,Please check with the adminstration for more details  '
             )
         ;
 
