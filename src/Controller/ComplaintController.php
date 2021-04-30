@@ -15,6 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ComplaintController extends AbstractController
 {
+
+    /**
+     * @Route("/stats", name="stats")
+     */
+    public function stat(){
+        return $this->render('complaint/stats.html.twig', [
+            ]);
+    }
+
     /**
      * @Route("/", name="complaint_index", methods={"GET"})
      */
@@ -29,19 +38,22 @@ class ComplaintController extends AbstractController
      * @Route("/new", name="complaint_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
-    {
+    {$currentUser = $this->getUser();
+
         $complaint = new Complaint();
         $form = $this->createForm(ComplaintType::class, $complaint);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $complaint->setCreatedBy($currentUser);
+            $complaint->setCreatedDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($complaint);
             $entityManager->flush();
 
             return $this->redirectToRoute('complaint_index');
         }
-
+$this->addFlash('success', 'Ajouté avec succées');
         return $this->render('complaint/new.html.twig', [
             'complaint' => $complaint,
             'form' => $form->createView(),
@@ -91,4 +103,8 @@ class ComplaintController extends AbstractController
 
         return $this->redirectToRoute('complaint_index');
     }
+
+
+
+
 }

@@ -25,7 +25,7 @@ class CourseController extends AbstractController
      */
     public function index(CourseRepository $courseRepository): Response
     {
-        return $this->render('course/index.html.twig', [
+        return $this->render('course/login.html.twig', [
             'courses' => $courseRepository->findAll(),
         ]);
     }

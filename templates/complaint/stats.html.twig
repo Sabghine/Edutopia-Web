@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+ {%block content %}
+ {%block body %}
+     <!DOCTYPE HTML>
+     <html>
+     <head>
+         <script type="text/javascript">
+             window.onload = function () {
+                 var chart = new CanvasJS.Chart("chartContainer", {
+
+                     title:{
+                         text: "Statistiques sur les réclamations"
+                     },
+                     data: [//array of dataSeries
+                         { //dataSeries object
+
+                             /*** Change type "column" to "bar", "area", "line" or "pie"***/
+                             type: "pie",
+                             dataPoints: [
+                                 { label: "Urgent", y: 4 },
+                                 { label: "Moyenne", y: 3 },
+                                 { label: "Faible", y: 1 },
+
+                             ]
+                         }
+                     ]
+                 });
+
+                 chart.render();
+             }
+         </script>
+         <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+     </head>
+     <body>
+     <div id="chartContainer" style="height: 500px; width: 100%;">
+     </div>
+     </body>
+     </html>
+
+
+
+    {# <!doctype html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <script src="{{ asset("https://cdn.jsdelivr.net/npm/chart.js@2.8.0")}}"></script>
+
+         <meta name="viewport"
+               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+         <title>Document</title>
+     </head>
+     <body>
+
+     <div style="width: 75%">
+         <canvas id="myChart"></canvas>
+     </div>
+     {% set nbtraite=0 %}
+     {% set nbnontraite=0%}
+
+     {% for f in Status %}
+
+
+         {% if 'urgent' == f.status %}
+             {% set  nbtraite=nbtraite+1 %}
+
+         {%endif %}
+         {% if 'faible' == f.status %}
+             {% set  nbnontraite=nbnontraite+1 %}
+         {%endif %}
+
+     {% endfor %}
+
+     <script>
+         Chart.defaults.global.title.display=true;
+     </script>
+
+     <script language="javascript">
+         var ctx = document.getElementById('myChart').getContext('2d');
+         var chart = new Chart(ctx, {
+             // The type of chart we want to create
+             type: 'pie',
+
+             // The data for our dataset
+             data: {
+                 labels: ['','urgent','faible'],
+                 datasets: [{
+                     label: 'Nombres Totales des Reclamations: {{Status|length}}',
+                     backgroundColor: 'rgb(255, 99, 132)',
+                     borderColor: 'rgb(255, 99, 101)',
+                     data: [0,{{nbtraite}},{{nbnontraite}},]
+                 }]
+             },
+
+             // Configuration options go here
+             options: {
+                 title:{
+
+                     text:"Liste des reclamations "
+                 }
+
+             }
+         });
+     </script>
+
+
+
+
+     </body>
+     </html>#}
+ {% endblock %}
+ {% endblock %}

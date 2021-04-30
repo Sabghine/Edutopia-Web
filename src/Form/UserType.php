@@ -19,19 +19,8 @@ class UserType extends AbstractType
             ->add('email')
             ->add('phoneNumber')
             ->add('birthDate')
-            ->add('createdDate')
-            ->add('lastUpdatedDate')
-            ->add('archivedDate')
-            ->add('classe')
             ->add('password')
-            ->add('status')
-            ->add('subjects')
-            ->add('nbasbsece')
-            ->add('mailParent')
-            ->add('archivedBy')
-            ->add('createdBy')
-            ->add('lastUpdatedBy')
-            ->add('depid')
+
         ;
     }
 

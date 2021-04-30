@@ -26,7 +26,7 @@ class SubjectController extends AbstractController
      */
     public function index(SubjectRepository $subjectRepository): Response
     {
-        return $this->render('subject/index.html.twig', [
+        return $this->render('subject/login.html.twig', [
             'subjects' => $subjectRepository->findAll(),
         ]);
     }

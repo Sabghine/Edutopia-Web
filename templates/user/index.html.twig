@@ -3,58 +3,57 @@
 {% block title %}User index{% endblock %}
 {% block content %}
 {% block body %}
-    <h1>User index</h1>
+    <h1>Liste des utilisateurs</h1>
 
-    <table class="table">
+    <input type="text" id="search" name="search" class="form-control" placeholder="Chercher un utilisateur">
+    <br>
+    <table class="table" id="tableac">
         <thead>
             <tr>
-                <th>Id</th>
+
                 <th>Role</th>
                 <th>Name</th>
                 <th>LastName</th>
                 <th>Cin</th>
                 <th>Email</th>
-                <th>PhoneNumber</th>
-                <th>BirthDate</th>
-                <th>CreatedDate</th>
-                <th>LastUpdatedDate</th>
-                <th>ArchivedDate</th>
-                <th>Classe</th>
-                <th>Password</th>
-                <th>Status</th>
-                <th>Subjects</th>
-                <th>Nbasbsece</th>
-                <th>MailParent</th>
-                <th>actions</th>
+{#                <th>CreatedDate</th>#}
+{#                <th>LastUpdatedDate</th>#}
+{#                <th>ArchivedDate</th>#}
+{#                <th>Classe</th>#}
+{#                <th>Password</th>#}
+{#                <th>Status</th>#}
+{#                <th>Subjects</th>#}
+{#                <th>Nbasbsece</th>#}
+{#                <th>MailParent</th>#}
+{#                <th>actions</th>#}
             </tr>
         </thead>
-        <tbody>
+        <body>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
+
                 <td>{{ user.role }}</td>
-                <td>{{ user.name }}</td>
                 <td>{{ user.lastName }}</td>
                 <td>{{ user.cin }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.phoneNumber }}</td>
-                <td>{{ user.birthDate ? user.birthDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.createdDate ? user.createdDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.lastUpdatedDate ? user.lastUpdatedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.archivedDate ? user.archivedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ user.classe }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.status }}</td>
-                <td>{{ user.subjects }}</td>
-                <td>{{ user.nbasbsece }}</td>
-                <td>{{ user.mailParent }}</td>
+{#                <td>{{ user.phoneNumber }}</td>#}
+{#                <td>{{ user.birthDate ? user.birthDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.createdDate ? user.createdDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.lastUpdatedDate ? user.lastUpdatedDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.archivedDate ? user.archivedDate|date('Y-m-d') : '' }}</td>#}
+{#                <td>{{ user.classe }}</td>#}
+{#                <td>{{ user.password }}</td>#}
+{#                <td>{{ user.status }}</td>#}
+{#                <td>{{ user.subjects }}</td>#}
+{#                <td>{{ user.nbasbsece }}</td>#}
+{#                <td>{{ user.mailParent }}</td>#}
                 <td>
                     <form method="POST" action="{{ path('add_presence') }}">
                         <input type="text" value="{{ user.id}}"  name="wissem" hidden>
                         <input type="submit" value="present(e)">
                     </form>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">Afficher</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -62,9 +61,44 @@
                 <td colspan="18">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
+        </body>
+
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
+
+
+    <a href="{{ path('user_new') }}">Ajouter un utilisateur</a>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                search_table($(this).val());
+            });
+            function search_table(value){
+                $('#tableac tbody tr').each(function(){
+                    var found = 'false';
+                    $(this).each(function(){
+                        if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                        {
+                            found = 'true';
+                        }
+                    });
+                    if(found === 'true')
+                    {
+                        $(this).show();
+
+                    }
+                    else
+                    {
+                        $(this).hide();
+
+                    }
+                });
+            }
+        });
+    </script>
+
 {% endblock %}
 {% endblock %}
