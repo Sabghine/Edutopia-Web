@@ -83,12 +83,59 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     *
+     * @Route("/mail", name = "aziz", methods = {"GET", "POST"})
+     *
+     */
+    public
+    function mail($name = null, \Swift_Mailer $mailer, UserRepository $userRepository)
+    {
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('azizhelmi.louati@esprit.tn')
+            ->setTo('zizoulouati7@gmail.com')
+            ->setBody(
+                ' sent by the administration , you have passed 10 absence '
+            );
+
+        $mailer->send($message);
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);
+
+
+    }
+
+    /**
+     *
+     * @Route("/add", name="add_presence",  methods={"GET","POST"})
+     *
+     */
+    public
+    function add(Request $request, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findOneBySomeField($request->get("wissem"));
+
+        $user->setNbasbsece($user->getNbasbsece() + 1);
+
+        if ($user->getNbasbsece() > 10) {
+            $user->setNbasbsece(0);
+        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('user_index');
+
+    }
+
+
 }

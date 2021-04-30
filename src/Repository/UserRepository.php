@@ -18,16 +18,18 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
-    public function findByDepid($int) {
+
+    public function findByDepid($int)
+    {
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT u
                 FROM App:User u
                 WHERE d.depId LIKE :int AND role LIKE :role AND status != :status '
             )
-            ->setParameter('int','%'.$int.'%')
-            ->setParameter('role',Teacher)
-            ->setParameter('status',Archived)
+            ->setParameter('int', '%' . $int . '%')
+            ->setParameter('role', Teacher)
+            ->setParameter('status', Archived)
             ->getResult();
     }
 
@@ -48,15 +50,13 @@ class UserRepository extends ServiceEntityRepository
     }
     */
 
-    /*
     public function findOneBySomeField($value): ?User
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
+
 }
