@@ -39,8 +39,8 @@
                  <td><a href="{{ path('user_show', {'id': complaint.createdBy}) }}">{{ complaint.createdBy.sabrine}}</a></td>
 
                 <td>
-                    <a href="{{ path('complaint_show', {'id': complaint.id}) }}">Afficher</a>
-                    <a href="{{ path('complaint_edit', {'id': complaint.id}) }}">Modifier</a>
+                    <a class="btn btn-info btn-sm" href="{{ path('complaint_show', {'id': complaint.id}) }}">Afficher</a>
+                    <a class="btn btn-info btn-sm" href="{{ path('complaint_edit', {'id': complaint.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -51,8 +51,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('complaint_new') }}">Ajouter une réclamation</a>
-    <a href="{{ path('stats') }}">Statistiques</a>
+    <a class="btn btn-danger btn-sm" href="{{ path('complaint_new') }}">Ajouter une réclamation</a>
+    <a  class="btn btn-success btn-sm" href="{{ path('stats') }}">Statistiques</a>
 
 {% endblock %}
 {% endblock %}
