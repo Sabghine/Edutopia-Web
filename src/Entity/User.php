@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * User
@@ -21,13 +22,16 @@ class User implements UserInterface , \Serializable
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("users")
      */
+
     private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=20, nullable=false)
+     * @Groups("users")
      */
     private $role;
 
@@ -35,6 +39,7 @@ class User implements UserInterface , \Serializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=20, nullable=false)
+     * @Groups("users")
      */
     private $name;
 
@@ -42,6 +47,7 @@ class User implements UserInterface , \Serializable
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=20, nullable=false)
+     * @Groups("users")
      */
     private $lastName;
 
@@ -49,6 +55,7 @@ class User implements UserInterface , \Serializable
      * @var int
      *
      * @ORM\Column(name="cin", type="integer", nullable=false)
+     * @Groups("users")
      */
     private $cin;
 
@@ -56,6 +63,7 @@ class User implements UserInterface , \Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     * @Groups("users")
      */
     private $email;
 
@@ -63,6 +71,7 @@ class User implements UserInterface , \Serializable
      * @var int
      *
      * @ORM\Column(name="phone_number", type="integer", nullable=false)
+     * @Groups("users")
      */
     private $phoneNumber;
 
@@ -70,81 +79,18 @@ class User implements UserInterface , \Serializable
      * @var \DateTime
      *
      * @ORM\Column(name="birth_date", type="date", nullable=false)
+     * @Groups("users")
      */
     private $birthDate;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="created_date", type="date", nullable=true)
-     */
-    private $createdDate;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="last_updated_date", type="date", nullable=true)
-     */
-    private $lastUpdatedDate;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="archived_date", type="date", nullable=true)
-     */
-    private $archivedDate;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="classe", type="string", length=50, nullable=true)
-     */
-    private $classe;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @Groups("users")
      */
     private $password;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="status", type="string", length=30, nullable=true)
-     */
-    private $status;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="subjects", type="string", length=3000, nullable=true)
-     */
-    private $subjects;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="nbasbsece", type="integer", nullable=true)
-     */
-    private $nbasbsece;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="mail_parent", type="string", length=250, nullable=true)
-     */
-    private $mailParent;
-
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="archived_by", referencedColumnName="id")
-     * })
-     */
-    private $archivedBy;
 
     /**
      * @var \User
@@ -156,30 +102,7 @@ class User implements UserInterface , \Serializable
      */
     private $createdBy;
 
-    /**
-     * @var \User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="last_updated_by", referencedColumnName="id")
-     * })
-     */
-    private $lastUpdatedBy;
 
-    /**
-     * @var \Department
-     *
-     * @ORM\ManyToOne(targetEntity="Department")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="depId", referencedColumnName="id")
-     * })
-     */
-    private $depid;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getRole(): ?string
     {
@@ -265,54 +188,6 @@ class User implements UserInterface , \Serializable
         return $this;
     }
 
-    public function getCreatedDate(): ?\DateTimeInterface
-    {
-        return $this->createdDate;
-    }
-
-    public function setCreatedDate(?\DateTimeInterface $createdDate): self
-    {
-        $this->createdDate = $createdDate;
-
-        return $this;
-    }
-
-    public function getLastUpdatedDate(): ?\DateTimeInterface
-    {
-        return $this->lastUpdatedDate;
-    }
-
-    public function setLastUpdatedDate(?\DateTimeInterface $lastUpdatedDate): self
-    {
-        $this->lastUpdatedDate = $lastUpdatedDate;
-
-        return $this;
-    }
-
-    public function getArchivedDate(): ?\DateTimeInterface
-    {
-        return $this->archivedDate;
-    }
-
-    public function setArchivedDate(?\DateTimeInterface $archivedDate): self
-    {
-        $this->archivedDate = $archivedDate;
-
-        return $this;
-    }
-
-    public function getClasse(): ?string
-    {
-        return $this->classe;
-    }
-
-    public function setClasse(?string $classe): self
-    {
-        $this->classe = $classe;
-
-        return $this;
-    }
-
     public function getPassword(): ?string
     {
         return $this->password;
@@ -325,65 +200,25 @@ class User implements UserInterface , \Serializable
         return $this;
     }
 
-    public function getStatus(): ?string
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
-        return $this->status;
+        return $this->id;
     }
 
-    public function setStatus(?string $status): self
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
     {
-        $this->status = $status;
-
-        return $this;
+        $this->id = $id;
     }
 
-    public function getSubjects(): ?string
-    {
-        return $this->subjects;
-    }
 
-    public function setSubjects(?string $subjects): self
-    {
-        $this->subjects = $subjects;
 
-        return $this;
-    }
 
-    public function getNbasbsece(): ?int
-    {
-        return $this->nbasbsece;
-    }
-
-    public function setNbasbsece(?int $nbasbsece): self
-    {
-        $this->nbasbsece = $nbasbsece;
-
-        return $this;
-    }
-
-    public function getMailParent(): ?string
-    {
-        return $this->mailParent;
-    }
-
-    public function setMailParent(?string $mailParent): self
-    {
-        $this->mailParent = $mailParent;
-
-        return $this;
-    }
-
-    public function getArchivedBy(): ?self
-    {
-        return $this->archivedBy;
-    }
-
-    public function setArchivedBy(?self $archivedBy): self
-    {
-        $this->archivedBy = $archivedBy;
-
-        return $this;
-    }
 
     public function getCreatedBy(): ?self
     {
@@ -393,30 +228,6 @@ class User implements UserInterface , \Serializable
     public function setCreatedBy(?self $createdBy): self
     {
         $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    public function getLastUpdatedBy(): ?self
-    {
-        return $this->lastUpdatedBy;
-    }
-
-    public function setLastUpdatedBy(?self $lastUpdatedBy): self
-    {
-        $this->lastUpdatedBy = $lastUpdatedBy;
-
-        return $this;
-    }
-
-    public function getDepid(): ?Department
-    {
-        return $this->depid;
-    }
-
-    public function setDepid(?Department $depid): self
-    {
-        $this->depid = $depid;
 
         return $this;
     }

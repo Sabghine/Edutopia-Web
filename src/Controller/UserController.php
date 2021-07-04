@@ -5,12 +5,17 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\UserType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\SerializerAwareInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/user")
@@ -26,18 +31,44 @@ class UserController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
+    /**
+     * @Route("/liste", name="liste" ,  methods={"GET"} )
+     */
 
+    public function GetUsers(UserRepository $repository, SerializerInterface $serializerInterface)
+    {
+        $users = $repository->findAll();
+        $json = $serializerInterface->serialize($users,'json',['Groups'=>'users']);
+        dump($json);
+        die;
+
+    }
+    /**
+     * @Route("/add" ,name="add_user")
+     */
+
+    public function addUser (Request $request,SerializerInterface  $serializer,EntityManagerInterface $em)
+    {
+        $content=$request->getContent();
+        $data=$serializer->deserialize($content,User::class,'json');
+         $em->persist($data);
+         $em->flush();
+         return new Response('User added successfully');
+
+
+
+    }
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $encoder ,$name=null, \Swift_Mailer $mailer,UserRepository $userRepository): Response
+    public function new(Request $request, UserPasswordEncoderInterface $encoder, $name = null, \Swift_Mailer $mailer, UserRepository $userRepository): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->mail($name=null, $mailer, $userRepository );
+            $this->mail($name = null, $mailer, $userRepository);
 
             $user->setPassword($encoder->encodePassword($user, $form->get('password')->getData()));
             $entityManager = $this->getDoctrine()->getManager();
@@ -88,7 +119,7 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
@@ -96,24 +127,25 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
     /**
      * @Route("/email", name="email",  methods={"GET","POST"})
      */
-    public function mail($name=null, \Swift_Mailer $mailer, UserRepository $userRepository   )
+    public function mail($name = null, \Swift_Mailer $mailer, UserRepository $userRepository)
     {
         $message = (new \Swift_Message('Hello Email'))
             ->setFrom('sabrine.mokhtar@esprit.tn')
             ->setTo('sabrine.mokhtar@esprit.tn')
             ->setBody(
                 ' Welcome to your new E_learning platform "Edutopia" , your account has been created with success,Please check with the adminstration for more details  '
-            )
-        ;
+            );
 
         $mailer->send($message);
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
-
-
     }
+
+
+
 }

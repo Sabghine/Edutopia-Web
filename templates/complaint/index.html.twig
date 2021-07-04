@@ -22,8 +22,8 @@
                 <th>Description</th>
                 <th>Status</th>
                 <th>CreatedDate</th>
-                <th>CreatedBy</th>
-                <th>ArchivedDate</th>
+{#                <th>CreatedBy</th>#}
+{#                <th>ArchivedDate</th>#}
                 <th>actions</th>
             </tr>
         </thead>
@@ -36,7 +36,7 @@
                 <td>{{ complaint.status }}</td>
 
                 <td>{{ complaint.createdDate ? complaint.createdDate|date('Y-m-d') : '' }}</td>
-                 <td><a href="{{ path('user_show', {'id': complaint.createdBy}) }}">{{ complaint.createdBy.sabrine}}</a></td>
+{#                 <td><a href="{{ path('user_show', {'id': complaint.createdBy}) }}">{{ complaint.createdBy.sabrine}}</a></td>#}
 
                 <td>
                     <a class="btn btn-info btn-sm" href="{{ path('complaint_show', {'id': complaint.id}) }}">Afficher</a>

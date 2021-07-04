@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Complaint
@@ -19,6 +20,7 @@ class Complaint
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("complaints")
      */
     private $id;
 
@@ -27,6 +29,7 @@ class Complaint
      *
      * @ORM\Column(name="object", type="string", length=100, nullable=false)
      * @Assert\NotBlank(message="Object field is required")
+     * @Groups("complaints")
      */
     private $object;
 
@@ -35,6 +38,7 @@ class Complaint
      *
      * @ORM\Column(name="description", type="string", length=200, nullable=false)
      * @Assert\NotBlank(message="Description field is required")
+     * @Groups("complaints")
      */
     private $description;
 
@@ -43,7 +47,7 @@ class Complaint
      *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
      * @Assert\NotBlank(message="Status field is required")
-     *
+     * @Groups("complaints")
      */
     private $status;
 
@@ -76,6 +80,7 @@ class Complaint
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      * })
+     * @Groups("complaints")
      */
     private $createdBy;
 
